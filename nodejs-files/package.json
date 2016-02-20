@@ -1,0 +1,11 @@
+{
+  "name": "node-printnetwork-app",
+  "main": "pn-server.js",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^5.7.0",
+    "mongoose": "^4.4.3",
+    "morgan": "^1.6.1"
+  }
+}
