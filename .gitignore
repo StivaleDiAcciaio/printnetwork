@@ -40,3 +40,5 @@ Thumbs.db
 
 /web/nbproject/
 /web/test/
+/nodejs-files/nbproject/
+/nodejs-files/node_modules/
