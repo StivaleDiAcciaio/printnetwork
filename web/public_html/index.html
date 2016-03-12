@@ -1,16 +1,66 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+    <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <body>
-        <div>TODO write content</div>
+
+        <div ng-app="myApp" ng-controller="myCtrl">
+
+            Output (GET): {{outRestCall}}
+            <br>
+            <button ng-click="cliccaLogin()">Login</button>
+            <br>
+            Output (POST): {{outRestCallPOST}}
+            <br>
+            <button ng-click="cliccaStampa()">Stampa</button>
+        </div>
+
+        <script>
+            var app = angular.module('myApp', []);
+            app.controller('myCtrl', function ($scope, $http) {
+                $scope.outRestCall = "";
+                $scope.outRestCallPOST = "";
+
+                $scope.cliccaLogin = function () {
+
+                    var url = 'http://127.0.0.1:3000/apinode/login';
+                    /*$http({
+                     method: 'POST',
+                     url: url,
+                     data: {fkey: "Arinisi"},
+                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                     }).then(function (response) {
+                     alert('Response from localhost');
+                     $scope.outRestCall = response.data;
+                     },function (err){
+                     alert (err.data);
+                     });*/
+                    var myCall = $http({
+                        method: 'GET',
+                        url: url,
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    myCall.then(function (response) {
+                        $scope.outRestCall = response.data;
+                    });
+                };
+
+                $scope.cliccaStampa = function () {
+
+                    var url = 'http://127.0.0.1:3000/apinode/2d';
+                    var myCall = $http({
+                        method: 'POST',
+                        url: url,
+                        data: {token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoic2FzYSIsImlhdCI6MTQ1Nzc3NjQ1NSwiZXhwIjoxNDU3Nzk0NDU1fQ.owKVfgwY0Tc7nBydMqQysnZcXOjQnMYiiibwm7jPGgw'},
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    myCall.then(function (response) {
+                        $scope.outRestCallPOST = response.data;
+                    });
+                };
+
+            });
+
+        </script>
+
     </body>
 </html>
