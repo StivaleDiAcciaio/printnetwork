@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 appRouter.get('/login', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    res.header("Access-Control-Allow-Methods", "GET");
 
     var user = {
         nome: 'sasa'
@@ -32,20 +32,28 @@ appRouter.get('/login', function (req, res) {
 appRouter.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST DELETE");
+    
+    console.log("metodo di accesso "+req.method);
+    //aggiungere IF sul metodo della request
+    
     // controllo header o parametri url o parametri post per il token
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
+    console.log("req.body.token "+req.body.token);
+    
     // decode token
     if (token) {
         // verifica secret e scadenza
         jwt.verify(token, app.get('superSecret'), function (err, decoded) {
             if (err) {
-                return res.json({success: false, message: 'Token invalido!'});
+                console.log("Token invalido");
+        /*        res.status(500).send({
+                    success: false,
+                    message: 'Token invalido!'
+                });*/
+                res.json({data: 'TEST!', message: 'token invalido.'});
             } else {
                 // se OK, salvo la richiesta per gli altri routes
-                console.log('Token ok');
                 req.decoded = decoded;
                 next();
             }
@@ -53,27 +61,18 @@ appRouter.use(function (req, res, next) {
     } else {
         // se non è presente nessun token
         // restituisco un errore
-        /*        console.log("Token non fornito");
-         return res.status(403).send({
-         success: false,
-         message: 'Nessun token fornito.'
-         });*/
-        res.json({data: 'nessun token fornito',
-            token: token
-        }
-        );
-
-
+        console.log("nessun token");
+        /*res.status(500).send({
+            success: false,
+            message: 'No token provided.'
+        });*/
+        res.json({data: 'TEST!', message: 'No token provided.'});
     }
 });
 
 
 appRouter.post('/2D', function (req, res) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
     console.log("Stampa 2d: token" + req.body.token);
-    
     req.accepts('application/json');
     res.json({data: 'stampa 2D avviata!', token: req.decoded});
 });
