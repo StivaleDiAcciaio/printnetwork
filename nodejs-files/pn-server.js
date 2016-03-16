@@ -33,40 +33,47 @@ appRouter.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST DELETE");
-    
-    console.log("metodo di accesso "+req.method);
+
+    console.log("metodo di accesso " + req.method);
     //aggiungere IF sul metodo della request
-    
-    // controllo header o parametri url o parametri post per il token
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    console.log("req.body.token "+req.body.token);
-    
-    // decode token
-    if (token) {
-        // verifica secret e scadenza
-        jwt.verify(token, app.get('superSecret'), function (err, decoded) {
-            if (err) {
-                console.log("Token invalido");
-        /*        res.status(500).send({
-                    success: false,
-                    message: 'Token invalido!'
-                });*/
-                res.json({data: 'TEST!', message: 'token invalido.'});
-            } else {
-                // se OK, salvo la richiesta per gli altri routes
-                req.decoded = decoded;
-                next();
-            }
-        });
-    } else {
-        // se non è presente nessun token
-        // restituisco un errore
-        console.log("nessun token");
-        /*res.status(500).send({
-            success: false,
-            message: 'No token provided.'
-        });*/
-        res.json({data: 'TEST!', message: 'No token provided.'});
+    if (req.method === 'GET' ||
+            req.method === 'PUT' ||
+            req.method === 'POST' ||
+            req.method === 'DELETE') {
+        // controllo header o parametri url o parametri post per il token
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+        console.log("Token " + token);
+
+        // decode token
+        if (token) {
+            // verifica secret e scadenza
+            jwt.verify(token, app.get('superSecret'), function (err, decoded) {
+                if (err) {
+                    console.log("Token invalido");
+                    res.status(400).send({
+                     success: false,
+                     message: 'Token invalido!'
+                     });
+                } else {
+                    // se OK, salvo la richiesta per gli altri routes
+                    req.decoded = decoded;
+                    next();
+                }
+            });
+        } else {
+            // se non è presente nessun token
+            // restituisco un errore
+            console.log("nessun token");
+            res.status(400).send({
+             success: false,
+             message: 'Nessun Token Fornito.'
+             });
+        }
+    }else{
+        //In caso di metodo OPTIONS restituisco 
+        //un json vuoto
+        res.status(200);
+        res.json({});
     }
 });
 
