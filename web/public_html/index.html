@@ -5,13 +5,17 @@
 
         <div ng-app="myApp" ng-controller="myCtrl">
 
-            Output (GET): {{outRestCall}}
+            Output Login: {{outRestCall}}
             <br>
             <button ng-click="cliccaLogin()">Login</button>
             <br>
-            Output (POST): {{outRestCallPOST}}
+            Output Stampa: {{outRestCallPOST}}
             <br>
             <button ng-click="cliccaStampa()">Stampa</button>
+            <br>
+            Output Registrazione: {{outRegistrazione}}
+            <br>
+            <button ng-click="cliccaRegistrazione()">Registrazione</button>
         </div>
 
         <script>
@@ -40,7 +44,7 @@
                     var myCall = $http({
                         method: 'POST',
                         url: url,
-                        data: {token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoic2FzYSIsImlhdCI6MTQ1ODE1NjYzMCwiZXhwIjoxNDU4MTc0NjMwfQ.4FQJJxyle3w8VY1pQsa3SywbhJqddLVqMiL0W6p7Ay8'},
+                        data: {token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoic2FzYSIsImlhdCI6MTQ1ODQ3MDA5NSwiZXhwIjoxNDU4NDg4MDk1fQ.IQud9gIHOh0XdqyVS2oDfMiAqkiHhvyuDWPnuuNfHHw'},
                         headers: {'Content-Type': 'application/json'}
                     });
                     myCall.then(function (response) {
@@ -49,7 +53,22 @@
                         alert("errore ("+err.status+") "+err.data.message);
                     });
                 };
-
+                $scope.cliccaRegistrazione = function () {
+                    
+                    var url = 'http://localhost/printnetwork/apinode/registrazione';
+                   
+                    var myCall = $http({
+                        method: 'POST',
+                        url: url,
+                       // data: {},
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    myCall.then(function (response) {
+                        $scope.outRegistrazione = response.data;
+                    },function(err){
+                        alert("errore ("+err.status+") "+err.data.message);
+                    });
+                };
             });
 
         </script>
