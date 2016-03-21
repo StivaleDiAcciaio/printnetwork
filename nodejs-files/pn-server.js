@@ -10,6 +10,8 @@ var appRouter = express.Router();
 var jwt = require('jsonwebtoken'); // usato per creare e verificare tokens
 var config = require('./config'); // mio file di configurazione
 var Utente = require('./app/models/utente'); // mongoose model
+var log4js = require('log4js');
+
 // =======================
 // Configurazione ============
 // =======================
@@ -21,6 +23,20 @@ app.set('superSecret', config.secret);
 app.use(bodyParser.urlencoded({extended: false}));
 // create application/json parser
 app.use(bodyParser.json());
+
+log4js.configure({
+  appenders: [
+    { type: 'file', filename: 'app/pn-server.log', category: 'pn-server' }
+  ],
+  replaceConsole: true
+});
+// =======================
+// ============
+// =======================
+var logger = log4js.getLogger('pn-server');
+logger.setLevel('ERROR');
+logger.error('ERRORE DI TEST22');
+
 
 //Il metodo di Login non richiede autenticazione
 appRouter.get('/login', function (req, res) {
