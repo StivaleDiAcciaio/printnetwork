@@ -9,6 +9,7 @@ var appRouter = express.Router();
 
 var jwt = require('jsonwebtoken'); // usato per creare e verificare tokens
 var config = require('./config'); // mio file di configurazione
+var mioModulo = require('./app/custom_modules/mioModulo');
 var Utente = require('./app/models/utente'); // mongoose model
 var log4js = require('log4js');
 
@@ -25,17 +26,18 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 log4js.configure({
-  appenders: [
-    { type: 'file', filename: 'app/pn-server.log', category: 'pn-server' }
-  ],
-  replaceConsole: true
+    appenders: [
+        {type: 'file', filename: 'app/pn-server.log', category: 'pn-server'}
+    ],
+     replaceConsole: true
 });
+var logger = log4js.getLogger('pn-server');
+logger.setLevel('DEBUG');
+
+// 
 // =======================
 // ============
 // =======================
-var logger = log4js.getLogger('pn-server');
-logger.setLevel('ERROR');
-logger.error('ERRORE DI TEST22');
 
 
 //Il metodo di Login non richiede autenticazione
@@ -61,23 +63,18 @@ appRouter.post('/registrazione', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
-    // create a sample user
-    var nick = new Utente({
-        nome: 'Marta',
-        cognome: 'Arinisi',
-        email: 'marta.arinisi@gmail.com',
-        nick: 'martuccia',
-        password: '123',
-        tipologiaUtente: 'privato'
+    mioModulo.creaUtente(function (risultato) {
+        if (!risultato.esito) {
+            logger.error('errore durante creazione utente');
+            logger.error(risultato.messaggio);
+            res.status(500).send({
+                esito: risultato.esito, messaggio: 'errore durante creazione utente'
+            });
+        } else {
+            res.json({esito: risultato.esito, messaggio: risultato.messaggio});
+        }
     });
-   // save the sample user
-    nick.save(function (err) {
-        if (err)
-            console.log("errore salvataggio");
 
-        console.log('Utente salvato successfully');
-        res.json({success: true});
-    });
 });
 
 /* Route middleware per verificare il token
@@ -102,8 +99,8 @@ appRouter.use(function (req, res, next) {
             jwt.verify(token, app.get('superSecret'), function (err, decoded) {
                 if (err) {
                     res.status(400).send({
-                        success: false,
-                        message: 'Token invalido!'
+                        esito: false,
+                        messaggio: 'Token invalido!'
                     });
                 } else {
                     // se OK, salvo la richiesta per gli altri routes
@@ -115,8 +112,8 @@ appRouter.use(function (req, res, next) {
             // se non è presente nessun token
             // restituisco un errore
             res.status(400).send({
-                success: false,
-                message: 'Nessun Token Fornito.'
+                esito: false,
+                messaggio: 'Nessun Token Fornito.'
             });
         }
     } else {
@@ -140,4 +137,4 @@ appRouter.post('/2D', function (req, res) {
 //Imposto radice /apinode per tutte le chiamate ai rest nodejs (es: /apinode/login )
 app.use('/apinode', appRouter);
 app.listen(porta);
-console.log('nodJs server in ascolto sulla porta ' + porta);
+logger.debug('nodJs server in ascolto sulla porta ' + porta);
