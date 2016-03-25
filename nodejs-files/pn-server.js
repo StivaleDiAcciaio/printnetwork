@@ -68,10 +68,12 @@ appRouter.post('/registrazione', function (req, res) {
             logger.error('errore durante creazione utente');
             logger.error(risultato.messaggio);
             res.status(500).send({
-                esito: risultato.esito, messaggio: 'errore durante creazione utente'
+                esito: risultato.esito, 
+                messaggio: 'errore durante creazione utente'
             });
         } else {
-            res.json({esito: risultato.esito, messaggio: risultato.messaggio});
+            res.json({esito: risultato.esito, 
+                messaggio: risultato.messaggio});
         }
     });
 
