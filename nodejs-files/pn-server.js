@@ -9,7 +9,7 @@ var appRouter = express.Router();
 
 var jwt = require('jsonwebtoken'); // usato per creare e verificare tokens
 var config = require('./config'); // mio file di configurazione
-var mioModulo = require('./app/custom_modules/mioModulo');
+var moduloDbUtente = require('./app/custom_modules/moduloDbUtente');
 var Utente = require('./app/models/utente'); // mongoose model
 var log4js = require('log4js');
 
@@ -63,7 +63,7 @@ appRouter.post('/registrazione', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
-    mioModulo.creaUtente(function (risultato) {
+    moduloDbUtente.creaUtente(function (risultato) {
         if (!risultato.esito) {
             logger.error('errore durante creazione utente');
             logger.error(risultato.messaggio);
