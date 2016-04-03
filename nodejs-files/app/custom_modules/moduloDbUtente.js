@@ -1,17 +1,20 @@
 var Utente = require('../models/utente'); // mongoose model
 
 module.exports = {
-    creaUtente: function (callback) {
-        // create a sample user
+    creaUtente: function (utenteReq,callback) {
+        // crea un Modello Utente definito nello schema di mongoDB 
         var nick = new Utente({
-            nome: 'Topolino',
-            cognome: 'Marta',
-            email: 'topolino@gmail.com',
-            nick: 'TopoMarta',
-            password: '123',
-            tipologiaUtente: 'privato'
+            nome: utenteReq.nome,
+            cognome: utenteReq.cognome,
+            email: utenteReq.email,
+            indirizzo: utenteReq.indirizzo,
+            nick: utenteReq.nick,
+            password: utenteReq.password,
+            tipologiaUtente: utenteReq.tipologiaUtente,
+            tipologiaStampa: utenteReq.tipologiaStampa
         });
-        // save the sample user
+        
+        // salva Utente nel DB
         nick.save(function (err) {
             if (err) {
                 var data={};

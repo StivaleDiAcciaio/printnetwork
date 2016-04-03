@@ -50,7 +50,7 @@
                     myCall.then(function (response) {
                         $scope.outRestCallPOST = response.data;
                     },function(err){
-                        alert("errore ("+err.status+") "+err.data.message);
+                        alert("errore ("+err.status+") "+err.data.messaggio);
                     });
                 };
                 $scope.cliccaRegistrazione = function () {
@@ -66,7 +66,7 @@
                     myCall.then(function (response) {
                         $scope.outRegistrazione = response.data;
                     },function(err){
-                        alert("errore ("+err.status+") "+err.data.message);
+                        alert("errore ("+err.status+") "+err.data.messaggio);
                     });
                 };
             });

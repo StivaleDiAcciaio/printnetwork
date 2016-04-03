@@ -60,10 +60,32 @@ appRouter.get('/login', function (req, res) {
 
 //Il metodo di Registrazione non richiede autenticazione
 appRouter.post('/registrazione', function (req, res) {
+    //======== Abilito il CROSS DOMAIN 
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
-    moduloDbUtente.creaUtente(function (risultato) {
+    //================================
+    
+    var utenteReq = {};
+    utenteReq.nome = 'Salvatore';
+    utenteReq.cognome = 'Arinisi';
+    utenteReq.email = 'Salvatore.Arinisi@gmail.com';
+    utenteReq.indirizzo = 'Legnano, via ester cuttica n.16'
+    utenteReq.nick = 'SASA';
+    utenteReq.password = '123';
+    utenteReq.tipologiaUtente = 'P';
+    var stampa2D = {};
+    stampa2D.colore = 'C';
+    stampa2D.formato = ['A4','A3'];
+    var stampa3D = {};
+    stampa3D.dimensioniMax = '30x30x30 cm';
+    stampa3D.materiale = 'Plastica';
+    var tipologiaStampa = {};
+    tipologiaStampa.stampa2D = stampa2D;
+    tipologiaStampa.stampa3D = stampa3D;
+    utenteReq.tipologiaStampa = tipologiaStampa;
+    
+    moduloDbUtente.creaUtente(utenteReq,function (risultato) {
         if (!risultato.esito) {
             logger.error('errore durante creazione utente');
             logger.error(risultato.messaggio);
