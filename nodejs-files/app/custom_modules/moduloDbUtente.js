@@ -4,10 +4,10 @@ module.exports = {
     creaUtente: function (callback) {
         // create a sample user
         var nick = new Utente({
-            nome: 'Stivale2',
-            cognome: 'DiAcciaio',
-            email: 'lostivalediacciaio@gmail.com',
-            nick: 'Stivale2',
+            nome: 'Topolino',
+            cognome: 'Marta',
+            email: 'topolino@gmail.com',
+            nick: 'TopoMarta',
             password: '123',
             tipologiaUtente: 'privato'
         });
