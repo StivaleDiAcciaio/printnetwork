@@ -78,7 +78,8 @@ appRouter.post('/registrazione', function (req, res) {
     stampa2D.colore = 'C';
     stampa2D.formato = ['A4','A3'];
     var stampa3D = {};
-    stampa3D.dimensioniMax = '30x30x30 cm';
+    stampa3D.dimensioniMax = '30x30x30';
+    stampa3D.unitaDimisura = 'cm';
     stampa3D.materiale = 'Plastica';
     var tipologiaStampa = {};
     tipologiaStampa.stampa2D = stampa2D;

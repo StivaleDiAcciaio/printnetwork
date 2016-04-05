@@ -19,7 +19,8 @@ module.exports = mongoose.model('Utente', new Schema({
             formato: [String] /* A4,A3,A2...TUTTI */
         },
         stampa3D:{
-            dimensioniMax:String, /* altezza X larghezza X profondita  (cm) */
+            dimensioniMax: String, /* altezza X larghezza X profondita  (cm) */
+            unitaDimisura: String,
             materiale: String /* Legno, PVC etc..*/
         }        
     }
