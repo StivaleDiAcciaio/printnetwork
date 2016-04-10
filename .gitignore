@@ -42,3 +42,4 @@ Thumbs.db
 /web/test/
 /nodejs-files/nbproject/
 /nodejs-files/node_modules/
+/web/public_html/node_modules/

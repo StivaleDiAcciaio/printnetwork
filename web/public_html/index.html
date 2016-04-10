@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <head>
+        <!--Librerie Angular core e moduli aggiuntivi -->
+        <script	src="node_modules/jquery/dist/jquery.js"></script>
+        <script	src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+        <script	src="node_modules/angular/angular.js"></script>
+        <script	src="node_modules/angular-i18n/angular-locale_it-it.js"></script>
+        <script	src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+        <script	src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+        <script	src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
+        <script	src="node_modules/angular-translate/dist/angular-translate-loader-partial/angular-translate-loader-partial.min.js"></script>
+        <script	src="node_modules/angular-ui-router/build/angular-ui-router.js"></script>
+        <script src="node_modules/nya-bootstrap-select/dist/js/nya-bs-select.min.js" type="text/javascript"></script>
+
+    </head>
     <body>
 
         <div ng-app="myApp" ng-controller="myCtrl">
@@ -25,7 +38,7 @@
                 $scope.outRestCallPOST = "";
 
                 $scope.cliccaLogin = function () {
-                        
+
                     var url = 'http://localhost/printnetwork/apinode/login';
                     var myCall = $http({
                         method: 'GET',
@@ -38,9 +51,9 @@
                 };
 
                 $scope.cliccaStampa = function () {
-                    
+
                     var url = 'http://localhost/printnetwork/apinode/2d';
-                   
+
                     var myCall = $http({
                         method: 'POST',
                         url: url,
@@ -49,24 +62,24 @@
                     });
                     myCall.then(function (response) {
                         $scope.outRestCallPOST = response.data;
-                    },function(err){
-                        alert("errore ("+err.status+") "+err.data.messaggio);
+                    }, function (err) {
+                        alert("errore (" + err.status + ") " + err.data.messaggio);
                     });
                 };
                 $scope.cliccaRegistrazione = function () {
-                    
+
                     var url = 'http://localhost/printnetwork/apinode/registrazione';
-                   
+
                     var myCall = $http({
                         method: 'POST',
                         url: url,
-                       // data: {},
+                        // data: {},
                         headers: {'Content-Type': 'application/json'}
                     });
                     myCall.then(function (response) {
                         $scope.outRegistrazione = response.data;
-                    },function(err){
-                        alert("errore ("+err.status+") "+err.data.messaggio);
+                    }, function (err) {
+                        alert("errore (" + err.status + ") " + err.data.messaggio);
                     });
                 };
             });
