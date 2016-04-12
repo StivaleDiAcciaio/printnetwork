@@ -1,9 +1,9 @@
 ;
 (function () {
     'use strict';
-    angular.module('tellmeApp').controller('testCtrl',
+    angular.module('printNetworkApp').controller('testAppCtrl',
             ['$scope', 'apiService',
                 function ($scope, api) {
-                    console.log("controller testCtrl");
+                    console.log("testapp controller ");
                 }]);
 }());

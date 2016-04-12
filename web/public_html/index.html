@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Print Network</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <!--Librerie Angular core e moduli aggiuntivi -->
         <script	src="node_modules/jquery/dist/jquery.js"></script>
         <script	src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
@@ -12,79 +16,17 @@
         <script	src="node_modules/angular-translate/dist/angular-translate-loader-partial/angular-translate-loader-partial.min.js"></script>
         <script	src="node_modules/angular-ui-router/build/angular-ui-router.js"></script>
         <script src="node_modules/nya-bootstrap-select/dist/js/nya-bs-select.min.js" type="text/javascript"></script>
+        <!-- moduli, servizi, costanti, direttive etc.. -->
+        <script src="app/app.module.js"></script>
+        <script src="app/app.routes.js"></script>
+        <script src="app/app.service.js"></script>
+        <script src="app/components/home/homeCtrl.js"></script>
+        <script src="app/components/test/testCtrl.js"></script>
 
     </head>
     <body>
-
-        <div ng-app="myApp" ng-controller="myCtrl">
-
-            Output Login: {{outRestCall}}
-            <br>
-            <button ng-click="cliccaLogin()">Login</button>
-            <br>
-            Output Stampa: {{outRestCallPOST}}
-            <br>
-            <button ng-click="cliccaStampa()">Stampa</button>
-            <br>
-            Output Registrazione: {{outRegistrazione}}
-            <br>
-            <button ng-click="cliccaRegistrazione()">Registrazione</button>
+        <div id="ng-app" ng-app="printNetworkApp">
+            <div ui-view="content"></div>
         </div>
-
-        <script>
-            var app = angular.module('myApp', []);
-            app.controller('myCtrl', function ($scope, $http) {
-                $scope.outRestCall = "";
-                $scope.outRestCallPOST = "";
-
-                $scope.cliccaLogin = function () {
-
-                    var url = 'http://localhost/printnetwork/apinode/login';
-                    var myCall = $http({
-                        method: 'GET',
-                        url: url,
-                        headers: {'Content-Type': 'application/json'}
-                    });
-                    myCall.then(function (response) {
-                        $scope.outRestCall = response.data;
-                    });
-                };
-
-                $scope.cliccaStampa = function () {
-
-                    var url = 'http://localhost/printnetwork/apinode/2d';
-
-                    var myCall = $http({
-                        method: 'POST',
-                        url: url,
-                        data: {token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoic2FzYSIsImlhdCI6MTQ1ODQ3MDA5NSwiZXhwIjoxNDU4NDg4MDk1fQ.IQud9gIHOh0XdqyVS2oDfMiAqkiHhvyuDWPnuuNfHHw'},
-                        headers: {'Content-Type': 'application/json'}
-                    });
-                    myCall.then(function (response) {
-                        $scope.outRestCallPOST = response.data;
-                    }, function (err) {
-                        alert("errore (" + err.status + ") " + err.data.messaggio);
-                    });
-                };
-                $scope.cliccaRegistrazione = function () {
-
-                    var url = 'http://localhost/printnetwork/apinode/registrazione';
-
-                    var myCall = $http({
-                        method: 'POST',
-                        url: url,
-                        // data: {},
-                        headers: {'Content-Type': 'application/json'}
-                    });
-                    myCall.then(function (response) {
-                        $scope.outRegistrazione = response.data;
-                    }, function (err) {
-                        alert("errore (" + err.status + ") " + err.data.messaggio);
-                    });
-                };
-            });
-
-        </script>
-
     </body>
 </html>

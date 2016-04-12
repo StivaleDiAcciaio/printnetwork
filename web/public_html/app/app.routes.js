@@ -1,7 +1,7 @@
 ;
 (function () {
     'use strict';
-    angular.module('tellmeApp')
+    angular.module('printNetworkApp')
             .config(function ($stateProvider, $urlRouterProvider) {
 
                 $stateProvider
@@ -15,9 +15,9 @@
                         })
                         .state('test', {
                             url: '/test',
-                            views: {'content2@': {
+                            views: {'content@': {
                                     templateUrl: 'app/components/test/test.html',
-                                    controller: 'testCtrl'
+                                    controller: 'testAppCtrl'
                                 }
                             }
                         });

@@ -1,6 +1,6 @@
 ;
 (function () {
-    angular.module('tellmeApp').factory('apiService',
+    angular.module('printNetworkApp').factory('apiService',
             ['CONST', '$http', '$location', '$q',
                 function (CONST, $http, $location, $q) {
                     var ApiService = function () {
