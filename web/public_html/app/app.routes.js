@@ -13,11 +13,11 @@
                                 }
                             }
                         })
-                        .state('test', {
-                            url: '/test',
+                        .state('registrazione', {
+                            url: '/registrazione',
                             views: {'content@': {
-                                    templateUrl: 'app/components/test/test.html',
-                                    controller: 'testAppCtrl'
+                                    templateUrl: 'app/components/registrazione/registrazione.html',
+                                    controller: 'registrazioneCtrl'
                                 }
                             }
                         });

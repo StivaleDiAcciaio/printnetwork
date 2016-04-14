@@ -1,5 +1,5 @@
 
-angular.module('tellmeApp')
+angular.module('printNetworkApp')
 	.directive('onlyDigits', function () {
 		return {
 			require: 'ngModel',
@@ -22,7 +22,7 @@ angular.module('tellmeApp')
 		};
 	});
 
-angular.module('tellmeApp')
+angular.module('printNetworkApp')
 	.directive('onlyAlphabetic', function () {
 		return {
 			require: 'ngModel',
@@ -45,7 +45,7 @@ angular.module('tellmeApp')
 		};
 	});
 
-angular.module('tellmeApp')
+angular.module('printNetworkApp')
 	.directive('currency', function () {
 		return {
 			require: 'ngModel',
@@ -87,7 +87,7 @@ angular.module('tellmeApp')
 
 
 
-angular.module('tellmeApp')
+angular.module('printNetworkApp')
 	.directive('formatValidation', function () {
 		return {
 			require: ['ngModel'],
@@ -111,7 +111,7 @@ angular.module('tellmeApp')
 
 
 
-angular.module('tellmeApp')
+angular.module('printNetworkApp')
 .directive('percent', function () {
 	return {
 		require: 'ngModel',

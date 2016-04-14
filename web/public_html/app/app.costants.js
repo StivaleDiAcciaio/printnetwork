@@ -1,12 +1,12 @@
 // constants holder module
 ;
 (function () {
-    var contextRoot = '/tellmeApp/';
-    angular.module('tellmeApp').constant('CONST', {
+    var contextRoot = '/printNetworkApp/';
+    angular.module('printNetworkApp').constant('CONST', {
         "CONTEXT_ROOT": contextRoot,
         "ENDPOINT":
                 {
-                    "TELLME": contextRoot + "rest/tellme/"
+                    "REGISTRAZIONE": contextRoot + "rest/registrazione/"
                 }
     });
 }());

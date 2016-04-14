@@ -1,5 +1,5 @@
 
-angular.module('tellmeApp')
+angular.module('printNetworkApp')
 	.filter('unique', function() {
 		return function(collection, keyname) {
 			var output = [], keys = [];
