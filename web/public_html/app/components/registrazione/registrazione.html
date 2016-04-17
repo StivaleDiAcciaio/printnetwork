@@ -1,10 +1,24 @@
+<!--PAGINA DI REGISTRAZIONE -->
+<div>
+    <form class="form-signin" name="formRegistrazione">
+        <h2 class="form-signin-heading">Registrazione</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input ng-model="utente.email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input ng-model="utente.password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="inputNome" class="sr-only">Nome</label>
+        <input ng-model="utente.nome" type="password" id="inputNome" class="form-control" placeholder="nome" required>
+        <button class="btn btn-lg btn-primary btn-block" ng-click="cliccaRegistrazione(formRegistrazione)">Salva</button>
+         Output Registrazione: {{outRegistrazione}}
+    </form>
+</div>
 
 <div class="starter-template">
     Output Stampa: {{outRestCallPOST}}
     <br>
     <button ng-click="cliccaStampa()">Stampa</button>
     <br>
-    Output Registrazione: {{outRegistrazione}}
+
     <br>
     <button ng-click="cliccaRegistrazione()">Registrazione</button>
 </div>

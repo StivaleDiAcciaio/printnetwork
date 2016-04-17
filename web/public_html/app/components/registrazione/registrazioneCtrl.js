@@ -2,24 +2,11 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('registrazioneCtrl',
-            ['$scope', '$http','apiService',
-                function ($scope,$http, serviziCustom) {
+            ['$scope', '$http', 'apiService',
+                function ($scope, $http, serviziCustom) {
                     console.log("registrazioneCtrl controller ");
                     $scope.outRestCall = "";
                     $scope.outRestCallPOST = "";
-
-                    $scope.cliccaLogin = function () {
-
-                        var url = 'http://localhost/printnetwork/apinode/login';
-                        var myCall = $http({
-                            method: 'GET',
-                            url: url,
-                            headers: {'Content-Type': 'application/json'}
-                        });
-                        myCall.then(function (response) {
-                            $scope.outRestCall = response.data;
-                        });
-                    };
 
                     $scope.cliccaStampa = function () {
 
@@ -37,22 +24,22 @@
                             alert("errore (" + err.status + ") " + err.data.messaggio);
                         });
                     };
-                    $scope.cliccaRegistrazione = function () {
+                    $scope.cliccaRegistrazione = function (formRegistrazione) {
+                        if (formRegistrazione.$valid) {
+                            var url = 'http://localhost/printnetwork/apinode/registrazione';
 
-                        var url = 'http://localhost/printnetwork/apinode/registrazione';
-
-                        var myCall = $http({
-                            method: 'POST',
-                            url: url,
-                            // data: {},
-                            headers: {'Content-Type': 'application/json'}
-                        });
-                        myCall.then(function (response) {
-                            $scope.outRegistrazione = response.data;
-                        }, function (err) {
-                            alert("errore (" + err.status + ") " + err.data.messaggio);
-                        });
+                            var myCall = $http({
+                                method: 'POST',
+                                url: url,
+                                // data: {},
+                                headers: {'Content-Type': 'application/json'}
+                            });
+                            myCall.then(function (response) {
+                                $scope.outRegistrazione = response.data;
+                            }, function (err) {
+                                alert("errore (" + err.status + ") " + err.data.messaggio);
+                            });
+                        }
                     };
-
                 }]);
 }());
