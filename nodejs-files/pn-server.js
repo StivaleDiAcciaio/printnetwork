@@ -29,7 +29,7 @@ log4js.configure({
     appenders: [
         {type: 'file', filename: 'app/pn-server.log', category: 'pn-server'}
     ],
-     replaceConsole: true
+    replaceConsole: true
 });
 var logger = log4js.getLogger('pn-server');
 logger.setLevel('DEBUG');
@@ -41,18 +41,25 @@ logger.setLevel('DEBUG');
 
 
 //Il metodo di Login non richiede autenticazione
-appRouter.get('/login', function (req, res) {
+appRouter.post('/login', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "GET");
+    res.header("Access-Control-Allow-Methods", "POST");
+    var esito=null;
+    var token=null;
+    logger.debug("email "+req.body.utente.email);
+    logger.debug("password "+req.body.utente.password);
+    if (req.body.utente) {
+        //verifica utente su DB
+        //..
+        token = jwt.sign(req.body.utente, app.get('superSecret'), {
+            expiresIn: '5h'
+        });
+        esito='login effettuato';
+    }
 
-    var user = {
-        nome: 'sasa'
-    };
-    var token = jwt.sign(user, app.get('superSecret'), {
-        expiresIn: '5h'
-    });
-    res.json({data: 'login effettuato!',
+    res.json({
+        data: esito,
         token: token
     }
     );
@@ -65,7 +72,7 @@ appRouter.post('/registrazione', function (req, res) {
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
     //================================
-    
+
     var utenteReq = {};
     utenteReq.nome = 'Salvatore';
     utenteReq.cognome = 'Arinisi';
@@ -76,7 +83,7 @@ appRouter.post('/registrazione', function (req, res) {
     utenteReq.tipologiaUtente = 'P';
     var stampa2D = {};
     stampa2D.colore = 'C';
-    stampa2D.formato = ['A4','A3'];
+    stampa2D.formato = ['A4', 'A3'];
     var stampa3D = {};
     stampa3D.dimensioniMax = '30x30x30';
     stampa3D.unitaDimisura = 'cm';
@@ -85,17 +92,17 @@ appRouter.post('/registrazione', function (req, res) {
     tipologiaStampa.stampa2D = stampa2D;
     tipologiaStampa.stampa3D = stampa3D;
     utenteReq.tipologiaStampa = tipologiaStampa;
-    
-    moduloDbUtente.creaUtente(utenteReq,function (risultato) {
+
+    moduloDbUtente.creaUtente(utenteReq, function (risultato) {
         if (!risultato.esito) {
             logger.error('errore durante creazione utente');
             logger.error(risultato.messaggio);
             res.status(500).send({
-                esito: risultato.esito, 
+                esito: risultato.esito,
                 messaggio: 'errore durante creazione utente'
             });
         } else {
-            res.json({esito: risultato.esito, 
+            res.json({esito: risultato.esito,
                 messaggio: risultato.messaggio});
         }
     });

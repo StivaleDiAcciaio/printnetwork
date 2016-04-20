@@ -12,8 +12,9 @@
                         if (formLogin.$valid) {
                             var url = 'http://localhost/printnetwork/apinode/login';
                             var myCall = $http({
-                                method: 'GET',
+                                method: 'POST',
                                 url: url,
+                                data: {utente:$scope.utente},
                                 headers: {'Content-Type': 'application/json'}
                             });
                             myCall.then(function (response) {
