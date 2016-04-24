@@ -1,9 +1,9 @@
 ;
 (function () {
-    angular.module('printNetworkApp').factory('apiService',
+    angular.module('printNetworkApp').factory('serviziCustom',
             ['CONST', '$http', '$location', '$q',
                 function (CONST, $http, $location, $q) {
-                    var ApiService = function () {
+                    var ServiziCustom = function () {
                         
                         this.getHostAddressAndPort = function () {
                             return 'http://' + $location.host() + ':' + $location.port() + "/";
@@ -14,6 +14,10 @@
 
                         this.leggiMessaggio = function (richiesta) {
                             return this.get(CONST.ENDPOINT.TELLME,richiesta);
+                        };
+
+                        this.serviceLogin = function (utente) {
+                            return this.post(CONST.ENDPOINT.LOGIN,utente);
                         };
 
                         this.post = function (url, data, config) {
@@ -41,6 +45,6 @@
                             return q.promise;
                         };
                     };
-                    return new ApiService();
+                    return new ServiziCustom();
                 }]);
 }());

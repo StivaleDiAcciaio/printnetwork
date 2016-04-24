@@ -2,7 +2,7 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('registrazioneCtrl',
-            ['$scope', '$http', 'apiService',
+            ['$scope', '$http', 'serviziCustom',
                 function ($scope, $http, serviziCustom) {
                     console.log("registrazioneCtrl controller ");
                     $scope.outRestCall = "";

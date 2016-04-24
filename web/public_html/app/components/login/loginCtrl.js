@@ -2,23 +2,13 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('loginCtrl',
-            ['$scope', '$http', 'apiService',
-                function ($scope, $http, serviziCustom) {
-                    console.log("loginCtrl controller ");
-                    $scope.outRestCall = "";
-                    $scope.outRestCallPOST = "";
-
+            ['$scope', 'serviziCustom',
+                function ($scope, serviziCustom) {
                     $scope.cliccaLogin = function (formLogin) {
                         if (formLogin.$valid) {
-                            var url = 'http://localhost/printnetwork/apinode/login';
-                            var myCall = $http({
-                                method: 'POST',
-                                url: url,
-                                data: {utente:$scope.utente},
-                                headers: {'Content-Type': 'application/json'}
-                            });
-                            myCall.then(function (response) {
-                                $scope.outRestCall = response.data;
+                            serviziCustom.serviceLogin({utente: $scope.utente}).then(function (response) {
+                                $scope.setToken(response.token);
+                                $scope.goToPage('pannelloControllo');
                             });
                         }
                     };

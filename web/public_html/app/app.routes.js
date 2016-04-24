@@ -27,6 +27,14 @@
                                     controller: 'loginCtrl'
                                 }
                             }
+                        })
+                        .state('pannelloControllo', {
+                            url: '/pannelloControllo',
+                            views: {'content@': {
+                                    templateUrl: 'app/components/pannelloControllo/pannelloControllo.html',
+                                    controller: 'pannelloControlloCtrl'
+                                }
+                            }
                         });
                 $urlRouterProvider.otherwise('/');
             });
