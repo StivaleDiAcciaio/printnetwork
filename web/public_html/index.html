@@ -15,6 +15,8 @@
         <!-- Custom styles for this template -->
         <link href="assets/css/starter-template.css" rel="stylesheet">
         <link href="assets/css/signin.css" rel="stylesheet">
+        <link href="assets/css/printNetwork.css" rel="stylesheet">
+
     </head>
     <body id="ng-app" ng-app="printNetworkApp" ng-controller="homeCtrl">
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -38,8 +40,14 @@
                 </div><!--/.nav-collapse -->
             </div>
         </nav>	
-        <div class="container">
-            <div style="margin-top: 80px;" ui-view="content"></div>
+        <div class="container margineContainer">
+            <div ng-show="messaggio">
+                <p ng-class="messaggio.level == 'INFO' ? 'alert alert-info' :
+                                        messaggio.level == 'WARNING' ? 'alert alert-warning' :
+                                        'alert alert-danger'">
+                    {{messaggio.contenuto}}</p>    
+            </div>
+            <div ui-view="content"></div>
         </div>
 
         <!--Librerie Angular core e moduli aggiuntivi -->

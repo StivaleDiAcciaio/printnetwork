@@ -6,9 +6,15 @@
                 function ($scope, serviziCustom) {
                     $scope.cliccaLogin = function (formLogin) {
                         if (formLogin.$valid) {
-                            serviziCustom.serviceLogin({utente: $scope.utente}).then(function (response) {
-                                $scope.setToken(response.token);
-                                $scope.goToPage('pannelloControllo');
+                            serviziCustom.autenticazione({utente: $scope.utente}).then(function (response) {
+                                if (response.esito) {
+                                    $scope.setToken(response.token);
+                                    $scope.setUtenteLoggato(response.utenteLoggato);
+                                    $scope.vaiAllaPagina('pannelloControllo');
+                                }else{
+                                    var messaggio ='email o password errati';
+                                    $scope.mostraMessaggioError(messaggio);
+                                }
                             });
                         }
                     };

@@ -16,7 +16,7 @@
                             return this.get(CONST.ENDPOINT.TELLME,richiesta);
                         };
 
-                        this.serviceLogin = function (utente) {
+                        this.autenticazione = function (utente) {
                             return this.post(CONST.ENDPOINT.LOGIN,utente);
                         };
 

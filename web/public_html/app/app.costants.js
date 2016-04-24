@@ -9,6 +9,11 @@
                 {
                     "REGISTRAZIONE": contextRoot + "apinode/registrazione",
                     "LOGIN": contextRoot + "apinode/login"
-                }
+                },
+        "MESSAGE_LEVEL":{
+                "INFO":"INFO",
+                "WARNING":"WARNING",
+                "ERROR":"ERROR"
+        }
     });
 }());

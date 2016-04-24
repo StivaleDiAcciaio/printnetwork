@@ -47,20 +47,24 @@ appRouter.post('/login', function (req, res) {
     res.header("Access-Control-Allow-Methods", "POST");
     var esito=null;
     var token=null;
-    logger.debug("email "+req.body.utente.email);
-    logger.debug("password "+req.body.utente.password);
+   // logger.debug("email "+req.body.utente.email);
+   // logger.debug("password "+req.body.utente.password);
     if (req.body.utente) {
         //verifica utente su DB
         //..
+        var utenteLoggato = {};
+        utenteLoggato.nick ='Sasaurus';
+        //...
         token = jwt.sign(req.body.utente, app.get('superSecret'), {
             expiresIn: '5h'
         });
-        esito='login effettuato';
+        esito=false;
     }
 
     res.json({
-        data: esito,
-        token: token
+        esito: esito,
+        token: token,
+        utenteLoggato:utenteLoggato
     }
     );
 });
