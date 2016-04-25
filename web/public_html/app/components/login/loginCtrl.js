@@ -12,8 +12,7 @@
                                     $scope.setUtenteLoggato(response.utenteLoggato);
                                     $scope.vaiAllaPagina('pannelloControllo');
                                 }else{
-                                    var messaggio ='email o password errati';
-                                    $scope.mostraMessaggioError(messaggio);
+                                    $scope.mostraMessaggioError(response.messaggio);
                                 }
                             });
                         }

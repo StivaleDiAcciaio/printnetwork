@@ -1,9 +1,9 @@
 var Utente = require('../models/utente'); // mongoose model
 
 module.exports = {
-    creaUtente: function (utenteReq,callback) {
+    creaUtente: function (utenteReq, callback) {
         // crea un Modello Utente definito nello schema di mongoDB 
-        var nick = new Utente({
+        var utente = new Utente({
             nome: utenteReq.nome,
             cognome: utenteReq.cognome,
             email: utenteReq.email,
@@ -13,20 +13,44 @@ module.exports = {
             tipologiaUtente: utenteReq.tipologiaUtente,
             tipologiaStampa: utenteReq.tipologiaStampa
         });
-        
+
         // salva Utente nel DB
-        nick.save(function (err) {
+        utente.save(function (err) {
+            var data = {};
             if (err) {
-                var data={};
                 data.esito = false;
-                data.messaggio=err;
-                callback(data);
+                data.messaggio = err;
             } else {
-                var data={};
                 data.esito = true;
-                data.messaggio='salvataggio effettuato con successo';
-                callback(data);
+                data.messaggio = 'salvataggio effettuato con successo';
             }
+            callback(data);
+        });
+    },
+    cercaUtente: function (utenteReq, callback) {
+        // ricerca Utente
+        Utente.findOne({
+            email: utenteReq.email
+        }, function (err, utente) {
+            var data = {};
+            if (err) {
+                data.esito = false;
+                data.messaggio = err;
+            } else if (!utente) {
+                data.esito = false;
+                data.messaggio = 'Autenticazione fallita. Utente non trovato.';
+            } else if (utente) {
+                // controllo password
+                if (utente.password !== utenteReq.password) {
+                    data.esito = false;
+                    data.messaggio = 'Autenticazione fallita. Email/password errati.';
+                } else {
+                    data.esito = true;
+                    data.messaggio = 'Autenticazione riuscita.';
+                    data.utente = utente;
+                }
+            }
+            callback(data);
         });
     }
 };

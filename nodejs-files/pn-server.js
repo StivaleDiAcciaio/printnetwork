@@ -45,28 +45,34 @@ appRouter.post('/login', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
-    var esito=null;
-    var token=null;
-   // logger.debug("email "+req.body.utente.email);
-   // logger.debug("password "+req.body.utente.password);
+    var esito = null;
+    var token = null;
+    
+    // logger.debug("password "+req.body.utente.password);
     if (req.body.utente) {
+        logger.debug("email da verificare "+req.body.utente.email);
         //verifica utente su DB
-        //..
-        var utenteLoggato = {};
-        utenteLoggato.nick ='Sasaurus';
-        //...
-        token = jwt.sign(req.body.utente, app.get('superSecret'), {
-            expiresIn: '5h'
+        moduloDbUtente.cercaUtente(req.body.utente, function (risultato) {
+            if (!risultato.esito) {
+                logger.error(risultato.messaggio);
+                res.json({
+                    esito: risultato.esito,
+                    messaggio: risultato.messaggio
+                });
+            } else {
+                var utenteLoggato = risultato.utente;
+                token = jwt.sign(utenteLoggato, app.get('superSecret'), {
+                    expiresIn: '5h'
+                });
+                res.json({
+                    esito: risultato.esito,
+                    messaggio: risultato.messaggio,
+                    token: token,
+                    utenteLoggato: utenteLoggato
+                });
+            }
         });
-        esito=false;
     }
-
-    res.json({
-        esito: esito,
-        token: token,
-        utenteLoggato:utenteLoggato
-    }
-    );
 });
 
 //Il metodo di Registrazione non richiede autenticazione
@@ -110,7 +116,6 @@ appRouter.post('/registrazione', function (req, res) {
                 messaggio: risultato.messaggio});
         }
     });
-
 });
 
 /* Route middleware per verificare il token

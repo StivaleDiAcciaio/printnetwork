@@ -17,39 +17,6 @@
         <link href="assets/css/signin.css" rel="stylesheet">
         <link href="assets/css/printNetwork.css" rel="stylesheet">
 
-    </head>
-    <body id="ng-app" ng-app="printNetworkApp" ng-controller="homeCtrl">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <a href="#" class="navbar-brand"><img style="float:left;" src="assets/img/logo_80x80.gif"></a>
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Print Network</a>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#registrazione">Registrazione</a></li>
-                        <li><a href="#login">Login</a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>	
-        <div class="container margineContainer">
-            <div ng-show="messaggio">
-                <p ng-class="messaggio.level == 'INFO' ? 'alert alert-info' :
-                                        messaggio.level == 'WARNING' ? 'alert alert-warning' :
-                                        'alert alert-danger'">
-                    {{messaggio.contenuto}}</p>    
-            </div>
-            <div ui-view="content"></div>
-        </div>
-
         <!--Librerie Angular core e moduli aggiuntivi -->
         <script src="node_modules/jquery/dist/jquery.js"></script>
         <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
@@ -75,5 +42,38 @@
         <script src="app/components/registrazione/registrazioneCtrl.js"></script>
         <script src="app/components/login/loginCtrl.js"></script>
         <script src="app/components/pannelloControllo/pannelloControlloCtrl.js"></script>
+
+    </head>
+    <body id="ng-app" ng-app="printNetworkApp" ng-controller="homeCtrl">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <a href="#" class="navbar-brand"><img style="float:left;" src="assets/img/logo_80x80.gif"></a>
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Print Network</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#registrazione">Registrazione</a></li>
+                        <li><a href="#login">Login</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>	
+        <div class="container margineContainer">
+            <div ng-show="messaggio" class="starter-template">
+                <div ng-class="messaggio.level == 'INFO' ?    'alert alert-info' :
+                             messaggio.level == 'WARNING' ? 'alert alert-warning' :
+                                                            'alert alert-danger'">
+                    {{messaggio.contenuto}}</div>    
+            </div>
+            <div ui-view="content"></div>
+        </div>
     </body>
 </html>
