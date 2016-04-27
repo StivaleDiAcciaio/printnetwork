@@ -1,15 +1,22 @@
 var Utente = require('../models/utente'); // mongoose model
+var md5 = require('js-md5');
 
 module.exports = {
     creaUtente: function (utenteReq, callback) {
         // crea un Modello Utente definito nello schema di mongoDB 
+        //cifro password prima di salvarla
+        md5(utenteReq.password);
+        var hash = md5.create();
+        hash.update(utenteReq.password);
+        var pwdCriptata = hash.hex();
+
         var utente = new Utente({
             nome: utenteReq.nome,
             cognome: utenteReq.cognome,
             email: utenteReq.email,
             indirizzo: utenteReq.indirizzo,
             nick: utenteReq.nick,
-            password: utenteReq.password,
+            password: pwdCriptata,
             tipologiaUtente: utenteReq.tipologiaUtente,
             tipologiaStampa: utenteReq.tipologiaStampa
         });
@@ -40,8 +47,13 @@ module.exports = {
                 data.esito = false;
                 data.messaggio = 'Autenticazione fallita. Utente non trovato.';
             } else if (utente) {
+                //cifro password
+                md5(utenteReq.password);
+                var hash = md5.create();
+                hash.update(utenteReq.password);
+                var pwdCriptata = hash.hex();
                 // controllo password
-                if (utente.password !== utenteReq.password) {
+                if (utente.password !== pwdCriptata) {
                     data.esito = false;
                     data.messaggio = 'Autenticazione fallita. Email/password errati.';
                 } else {
