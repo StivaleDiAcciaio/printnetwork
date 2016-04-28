@@ -9,7 +9,7 @@
                             serviziCustom.autenticazione({utente: $scope.utente}).then(function (response) {
                                 if (response.esito) {
                                     $cookies.put('token', response.token);
-                                    $cookies.put('utenteLoggato', response.utenteLoggato);
+                                    $cookies.put('utenteLoggato', JSON.stringify(response.utenteLoggato));
                                     $scope.vaiAllaPagina('pannelloControllo');
                                 }else{
                                     $scope.mostraMessaggioError(response.messaggio);
