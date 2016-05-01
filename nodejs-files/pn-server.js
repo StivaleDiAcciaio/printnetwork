@@ -46,7 +46,7 @@ var express = require('express');
                 var token = null;
                 // logger.debug("password "+req.body.utente.password);
                 if (req.body.utente) {
-        logger.debug("email da verificare " + req.body.utente.email);
+                //logger.debug("email da verificare " + req.body.utente.email);
                 //verifica utente su DB
                 moduloDbUtente.cercaUtente(req.body.utente, function (risultato) {
                 if (!risultato.esito) {
