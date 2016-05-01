@@ -4,6 +4,9 @@
     angular.module('printNetworkApp').controller('loginCtrl',
             ['$scope','serviziCustom',
                 function ($scope, serviziCustom) {
+                    if (localStorage.getItem('token')){
+                        $scope.vaiAllaPagina(('pannelloControllo'));
+                    }
                     $scope.cliccaLogin = function (formLogin) {
                         if (formLogin.$valid) {
                             serviziCustom.autenticazione({utente: $scope.utente}).then(function (response) {

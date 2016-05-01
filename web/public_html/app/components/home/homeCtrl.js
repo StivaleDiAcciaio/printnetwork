@@ -21,6 +21,9 @@
                     $scope.resetMessaggioUtente = function () {
                         $scope.messaggio = null;
                     };
+                    $scope.logout = function (){
+                        localStorage.removeItem("token");
+                    };
                     function mostraMessaggioUtente(messaggio, level, scope) {
                         scope.messaggio = {};
                         scope.messaggio.contenuto = messaggio;
