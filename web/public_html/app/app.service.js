@@ -1,9 +1,9 @@
 ;
 (function () {
-    angular.module('printNetworkApp').factory('serviziCustom',
+    angular.module('printNetworkApp').factory('serviziRest',
             ['CONST', '$http', '$location', '$q',
                 function (CONST, $http, $location, $q) {
-                    var ServiziCustom = function () {
+                    var ServiziRest = function () {
 
                         this.getHostAddressAndPort = function () {
                             return 'http://' + $location.host() + ':' + $location.port() + "/";
@@ -45,6 +45,6 @@
                             return q.promise;
                         };
                     };
-                    return new ServiziCustom();
+                    return new ServiziRest();
                 }]);
 }());
