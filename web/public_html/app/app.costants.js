@@ -18,7 +18,8 @@
         "ENDPOINT":
                 {
                     "REGISTRAZIONE": contextRoot + "apinode/registrazione",
-                    "LOGIN": contextRoot + "apinode/login"
+                    "LOGIN": contextRoot + "apinode/login",
+                    "STAMPA_2D":contextRoot +"apinode/2d"
                 },
         "MESSAGE_LEVEL": {
             "INFO": "INFO",

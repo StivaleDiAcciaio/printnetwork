@@ -8,16 +8,7 @@
                     $scope.outRestCallPOST = "";
 
                     $scope.cliccaStampa = function () {
-
-                        var url = 'http://localhost/printnetwork/apinode/2d';
-
-                        var myCall = $http({
-                            method: 'POST',
-                            url: url,
-                            data: {token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoic2FzYSIsImlhdCI6MTQ1ODQ3MDA5NSwiZXhwIjoxNDU4NDg4MDk1fQ.IQud9gIHOh0XdqyVS2oDfMiAqkiHhvyuDWPnuuNfHHw'},
-                            headers: {'Content-Type': 'application/json'}
-                        });
-                        myCall.then(function (response) {
+                        serviziRest.stampa2D({stampa: "stampa2d"}).then(function (response) {
                             $scope.outRestCallPOST = response.data;
                         }, function (err) {
                             alert("errore (" + err.status + ") " + err.data.messaggio);

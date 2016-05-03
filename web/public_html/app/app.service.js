@@ -2,25 +2,23 @@
 (function () {
     angular.module('printNetworkApp').factory('serviziRest',
             ['CONST', '$http', '$location', '$q',
-                function (CONST, $http, $location, $q) {
+                function (COSTANTI, $http, $location, $q) {
                     var ServiziRest = function () {
 
                         this.getHostAddressAndPort = function () {
                             return 'http://' + $location.host() + ':' + $location.port() + "/";
                         };
-                        this.inviaMessaggio = function (richiesta) {
-                            return this.post(CONST.ENDPOINT.TELLME, richiesta);
-                        };
-
-                        this.leggiMessaggio = function (richiesta) {
-                            return this.get(CONST.ENDPOINT.TELLME, richiesta);
-                        };
-
                         this.autenticazione = function (utente) {
-                            return this.post(CONST.ENDPOINT.LOGIN, utente);
+                            return this.post(COSTANTI.ENDPOINT.LOGIN, utente);
                         };
-
+                        this.registrazione = function (utente) {
+                            return this.post(COSTANTI.ENDPOINT.REGISTRAZIONE, utente);
+                        };
+                        this.stampa2D = function (data) {
+                            return this.post(COSTANTI.ENDPOINT.STAMPA_2D, data);
+                        };
                         this.post = function (url, data, config) {
+                            $http.defaults.headers.common.token = localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN);
                             var response = $q.defer();
                             $http.post(url, data, config).then(function (promoteResponse) {
                                 response.resolve(promoteResponse.data);
@@ -30,6 +28,7 @@
                             return response.promise;
                         };
                         this.get = function (url, config) {
+                            $http.defaults.headers.common.token = localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN);
                             var q = $q.defer();
                             $http.get(url, config).then(function (d) {
                                 var p = d.data;
