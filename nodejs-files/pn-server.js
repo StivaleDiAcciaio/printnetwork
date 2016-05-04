@@ -78,26 +78,7 @@ appRouter.post('/registrazione', function (req, res) {
     res.header("Access-Control-Allow-Methods", "POST");
     //================================
 
-    var utenteReq = {};
-    utenteReq.nome = 'Salvatore';
-    utenteReq.cognome = 'Arinisi';
-    utenteReq.email = 'Salvatore.Arinisi@gmail.com';
-    utenteReq.indirizzo = 'Legnano, via ester cuttica n.16'
-    utenteReq.nick = 'SASA';
-    utenteReq.password = '123';
-    utenteReq.tipologiaUtente = 'P';
-    var stampa2D = {};
-    stampa2D.colore = 'C';
-    stampa2D.formato = ['A4', 'A3'];
-    var stampa3D = {};
-    stampa3D.dimensioniMax = '30x30x30';
-    stampa3D.unitaDimisura = 'cm';
-    stampa3D.materiale = 'Plastica';
-    var tipologiaStampa = {};
-    tipologiaStampa.stampa2D = stampa2D;
-    tipologiaStampa.stampa3D = stampa3D;
-    utenteReq.tipologiaStampa = tipologiaStampa;
-    moduloDbUtente.creaUtente(utenteReq, function (risultato) {
+    moduloDbUtente.creaUtente(req.body.utente, function (risultato) {
         if (!risultato.esito) {
             logger.error('errore durante creazione utente');
             logger.error(risultato.messaggio);
@@ -131,7 +112,7 @@ appRouter.use(function (req, res, next) {
             // verifica secret e scadenza
             jwt.verify(token, app.get('superSecret'), function (err, decoded) {
                 if (err) {
-                    res.status(400).send({
+                    res.status(401).send({
                         esito: false,
                         messaggio: 'Utente non autenticato!'
                     });
@@ -144,7 +125,7 @@ appRouter.use(function (req, res, next) {
         } else {
             // se non è presente nessun token
             // restituisco un errore
-            res.status(400).send({
+            res.status(401).send({
                 esito: false,
                 messaggio: 'Utente non autenticato!'
             });
