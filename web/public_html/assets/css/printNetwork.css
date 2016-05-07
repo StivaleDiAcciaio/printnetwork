@@ -2,7 +2,7 @@
     Created on : 24-apr-2016, 20.34.22
     Author     : stivale
 */
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100,700,500);
+@import url("fontcss.css");
 
 .margineContainer{
     margin-top: 80px;
