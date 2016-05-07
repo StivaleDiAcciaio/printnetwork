@@ -2,8 +2,9 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('registrazioneCtrl',
-            ['$scope', '$http', 'serviziRest', 'CONST',
-                function ($scope, $http, serviziRest, COSTANTI) {
+            ['$scope','$state' ,'$http', 'serviziRest', 'CONST',
+                function ($scope, $state,$http, serviziRest, COSTANTI) {
+                    $scope.setPaginaCorrente($state.current.name);
                     $scope.outRestCall = "";
                     $scope.outRestCallPOST = "";
 

@@ -8,7 +8,11 @@
     margin-top: 80px;
 }
 
-.bodyClass {
+.bodyHome{
+    text-align: center;
+}
+
+.bodyMain {
   padding-top: 90px;
   background:#F7F7F7;
   color:#666666;
@@ -16,7 +20,7 @@
   font-weight:100;
 }
 
-.bodyClass{
+.bodyMain{
   width: 100%;
   background: -webkit-linear-gradient(left, #22d686, #24d3d3, #22d686, #24d3d3);
   background: linear-gradient(to right, #22d686, #24d3d3, #22d686, #24d3d3);

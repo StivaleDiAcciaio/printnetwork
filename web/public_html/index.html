@@ -39,13 +39,15 @@
         <script src="app/app.routes.js"></script>
         <script src="app/app.costants.js"></script>
         <script src="app/app.service.js"></script>
+        <script src="app/components/mainCtrl.js"></script>
         <script src="app/components/home/homeCtrl.js"></script>
         <script src="app/components/registrazione/registrazioneCtrl.js"></script>
         <script src="app/components/login/loginCtrl.js"></script>
         <script src="app/components/pannelloControllo/pannelloControlloCtrl.js"></script>
 
     </head>
-    <body class="bodyClass" id="ng-app" ng-app="printNetworkApp" ng-controller="homeCtrl">
+    <body class="bodyMain" id="ng-app" ng-app="printNetworkApp" ng-controller="mainCtrl">
+        
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <a href="#" class="navbar-brand"><img style="float:left;" src="assets/img/logo_80x80.gif"></a>
             <a ng-if="checkToken()" href="#login" class="navbar-brand" style="float:right;" ng-click="logout()">Esci</a>
@@ -69,7 +71,8 @@
             </div>
         </nav>	
         <div class="container margineContainer">
-            <div ng-show="messaggio" class="starter-template">
+            ECCOMI {{paginaCorrente.nome}}
+            <div ng-show="messaggio">
                 <div ng-class="messaggio.level == 'INFO' ?    'alert alert-info' :
                              messaggio.level == 'WARNING' ? 'alert alert-warning' :
                                                             'alert alert-danger'">
