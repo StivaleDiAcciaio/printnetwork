@@ -46,8 +46,8 @@
         <script src="app/components/pannelloControllo/pannelloControlloCtrl.js"></script>
 
     </head>
-    <body class="bodyMain" id="ng-app" ng-app="printNetworkApp" ng-controller="mainCtrl">
-        
+    <body id="ng-app" ng-app="printNetworkApp" ng-controller="mainCtrl"
+          ng-class="paginaCorrente.nome != 'home'?'bodyMain':'bodyHome'">
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <a href="#" class="navbar-brand"><img style="float:left;" src="assets/img/logo_80x80.gif"></a>
             <a ng-if="checkToken()" href="#login" class="navbar-brand" style="float:right;" ng-click="logout()">Esci</a>
@@ -71,7 +71,6 @@
             </div>
         </nav>	
         <div class="container margineContainer">
-            ECCOMI {{paginaCorrente.nome}}
             <div ng-show="messaggio">
                 <div ng-class="messaggio.level == 'INFO' ?    'alert alert-info' :
                              messaggio.level == 'WARNING' ? 'alert alert-warning' :

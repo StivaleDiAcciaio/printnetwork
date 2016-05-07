@@ -2,15 +2,14 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('mainCtrl',
-            ['$scope', '$state', 'serviziRest', 'CONST',
-                function ($scope, $state, serviziRest, COSTANTI) {
-                    $scope.paginaCorrente={}
-                    $scope.paginaCorrente.nome=$state.current.name;
+            ['$rootScope', '$scope', '$state', 'serviziRest', 'CONST',
+                function ($rootScope, $scope, $state, serviziRest, COSTANTI) {
+                    $scope.paginaCorrente = null;
                     $scope.messaggio = null;
-                    
+
                     $scope.setPaginaCorrente = function (pagina) {
-                        $scope.paginaCorrente={};
-                        $scope.paginaCorrente.nome=pagina;
+                        $scope.paginaCorrente = {};
+                        $scope.paginaCorrente.nome = pagina;
                     };
                     $scope.vaiAllaPagina = function (pagina) {
                         $state.go(pagina);
@@ -58,11 +57,13 @@
                             $scope.vaiAllaPagina(COSTANTI.PAGINA.LOGIN);
                         }
                     };
-                    
-                    /*Eventi del Routing */
-                    $scope.$on('$viewContentLoaded', function (event) {
-                        $scope.resetMessaggioUtente();
-                    });
 
+                    /*Eventi del Routing */
+                    $scope.$on('$viewContentLoaded', function (event, viewConfig) {
+                        $scope.resetMessaggioUtente();
+                        if (viewConfig.context) {
+                            $scope.setPaginaCorrente(viewConfig.context.name);
+                        }
+                    });
                 }]);
 }());

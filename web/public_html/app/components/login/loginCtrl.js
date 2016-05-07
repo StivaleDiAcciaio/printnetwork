@@ -4,7 +4,7 @@
     angular.module('printNetworkApp').controller('loginCtrl',
             ['$scope','$state','serviziRest','CONST',
                 function ($scope, $state,serviziRest,COSTANTI) {
-                    $scope.setPaginaCorrente($state.current.name);
+                    
                     if ($scope.checkToken()){
                         $scope.vaiAllaPagina(COSTANTI.PAGINA.PANNELLO_CONTROLLO);
                     }

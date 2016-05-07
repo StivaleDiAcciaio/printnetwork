@@ -4,7 +4,7 @@
     angular.module('printNetworkApp').controller('registrazioneCtrl',
             ['$scope','$state' ,'$http', 'serviziRest', 'CONST',
                 function ($scope, $state,$http, serviziRest, COSTANTI) {
-                    $scope.setPaginaCorrente($state.current.name);
+                    
                     $scope.outRestCall = "";
                     $scope.outRestCallPOST = "";
 
