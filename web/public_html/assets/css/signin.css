@@ -2,11 +2,6 @@
     Created on : 17-apr-2016, 14.12.09
     Author     : stivale
 */
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
-}
 
 .form-signin {
   max-width: 330px;

@@ -13,9 +13,9 @@
         <link href="node_modules/nya-bootstrap-select/dist/css/nya-bs-select.min.css" rel="stylesheet" type="text/css"/>
 
         <!-- Custom styles for this template -->
-        <link href="assets/css/starter-template.css" rel="stylesheet">
-        <link href="assets/css/signin.css" rel="stylesheet">
         <link href="assets/css/printNetwork.css" rel="stylesheet">
+        <link href="assets/css/signin.css" rel="stylesheet">
+        <link href="assets/css/form-autenticazione.css" rel="stylesheet">
 
         <!--Librerie Angular core e moduli aggiuntivi -->
         <script src="node_modules/jquery/dist/jquery.js"></script>
@@ -45,7 +45,7 @@
         <script src="app/components/pannelloControllo/pannelloControlloCtrl.js"></script>
 
     </head>
-    <body id="ng-app" ng-app="printNetworkApp" ng-controller="homeCtrl">
+    <body class="bodyClass" id="ng-app" ng-app="printNetworkApp" ng-controller="homeCtrl">
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <a href="#" class="navbar-brand"><img style="float:left;" src="assets/img/logo_80x80.gif"></a>
             <a ng-if="checkToken()" href="#login" class="navbar-brand" style="float:right;" ng-click="logout()">Esci</a>
