@@ -108,12 +108,12 @@ label {
   -moz-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
-.panel-login>.panel-heading a#register-form-link {
+.panel-login>.panel-heading a#idFormRegistrazioneLink {
   color: #fff;
   width: 100%;
   text-align: right;
 }
-.panel-login>.panel-heading a#login-form-link {
+.panel-login>.panel-heading a#idFormLoginLink {
   width: 100%;
   text-align: left;
 }

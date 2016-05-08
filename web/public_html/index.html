@@ -17,7 +17,7 @@
         <link href="assets/css/signin.css" rel="stylesheet">
         <link href="assets/css/form-autenticazione.css" rel="stylesheet">
         <link href="assets/css/font-awesome.min_4.2.0.css" rel="stylesheet">
-        
+
         <!--Librerie Angular core e moduli aggiuntivi -->
         <script src="node_modules/jquery/dist/jquery.js"></script>
         <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
@@ -49,10 +49,10 @@
 
     </head>
     <body id="ng-app" ng-app="printNetworkApp" ng-controller="mainCtrl"
-          ng-class="paginaCorrente.nome != 'home'?'bodyMain':'bodyHome'">
+          ng-class="paginaCorrente.nome != 'home' ? 'bodyMain' : 'bodyHome'">
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <a href="#" class="navbar-brand"><img style="float:left;" src="assets/img/logo_80x80.gif"></a>
-            <a ng-if="checkToken()" href="#login" class="navbar-brand" style="float:right;" ng-click="logout()">Esci</a>
+            <a ng-if="checkToken()" href="#autenticazione" class="navbar-brand" style="float:right;" ng-click="logout()">Esci</a>
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -74,13 +74,13 @@
             </div>
         </nav>	
         <div class="container margineContainer">
-            <div ng-show="messaggio">
-                <div ng-class="messaggio.level == 'INFO' ?    'alert alert-info' :
-                             messaggio.level == 'WARNING' ? 'alert alert-warning' :
-                                                            'alert alert-danger'">
-                    {{messaggio.contenuto}}</div>    
-            </div>
             <div ui-view="content"></div>
+            <div ng-show="messaggio" style="text-align: center">
+                <h3><span ng-class="messaggio.level == 'INFO' ? 'label label-info' :
+                                        messaggio.level == 'WARNING' ? 'label label-warning' :
+                                        'label label-danger'">
+                        {{messaggio.contenuto}}</span></h3>
+            </div>
         </div>
     </body>
 </html>

@@ -2,13 +2,19 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('autenticazioneCtrl',
-            ['$scope', '$state', 'serviziRest', 'CONST',
-                function ($scope, $state, serviziRest, COSTANTI) {
-                    console.log("Autenticazione form");
+            ['$scope', 'serviziRest', 'CONST',
+                function ($scope, serviziRest, COSTANTI) {
+                    $scope.utente={};
+                    if ($scope.getRicordami()) {
+                        $scope.utente.email = $scope.getRicordami().email;
+                        $scope.utente.password = $scope.getRicordami().pwd;
+                    }
                     $scope.login = function (formLogin) {
-                        alert('Completare la funzione');
                         if (formLogin.$valid) {
                             serviziRest.autenticazione({utente: $scope.utente}).then(function (response) {
+                                if ($scope.ricordami) {
+                                    $scope.setRicordami($scope.utente.email, $scope.utente.password);
+                                }
                                 if (response.esito) {
                                     $scope.setToken(response.token);
                                     $scope.setUtenteLoggato(response.utenteLoggato);
@@ -16,6 +22,39 @@
                                 } else {
                                     $scope.mostraMessaggioError(response.messaggio);
                                 }
+                            });
+                        }
+                    };
+                    $scope.registrazione = function (formRegistrazione) {
+                        var utenteReq = {};
+                        utenteReq.nome = 'Salvatore';
+                        utenteReq.cognome = 'Arinisi';
+                        utenteReq.email = 'Salvatore.Arinisi@gmail.com';
+                        utenteReq.indirizzo = 'Legnano, via ester cuttica n.16'
+                        utenteReq.nick = 'SASA';
+                        utenteReq.password = '123';
+                        utenteReq.tipologiaUtente = 'P';
+                        var stampa2D = {};
+                        stampa2D.colore = 'C';
+                        stampa2D.formato = ['A4', 'A3'];
+                        var stampa3D = {};
+                        stampa3D.dimensioniMax = '30x30x30';
+                        stampa3D.unitaDimisura = 'cm';
+                        stampa3D.materiale = 'Plastica';
+                        var tipologiaStampa = {};
+                        tipologiaStampa.stampa2D = stampa2D;
+                        tipologiaStampa.stampa3D = stampa3D;
+                        utenteReq.tipologiaStampa = tipologiaStampa;
+                        if (formRegistrazione.$valid) {
+                            serviziRest.registrazione({utente: $scope.utente}).then(function (response) {
+                                if (response.esito) {
+                                    $scope.mostraMessaggioInfo(response.messaggio);
+                                    $scope.outRegistrazione = response.data;
+                                } else {
+                                    $scope.mostraMessaggioError(response.messaggio);
+                                }
+                            }, function (err) {
+                                $scope.mostraMessaggioError(err.data.messaggio);
                             });
                         }
                     };

@@ -5,14 +5,15 @@
     var contextRoot = 'http://localhost/printnetwork/';
     angular.module('printNetworkApp').constant('CONST', {
         "CONTEXT_ROOT": contextRoot,
+        "RICORDAMI":"ricordami",
         "LOCAL_STORAGE": {
             TOKEN: "token",
             UTENTE_LOGGATO: "utenteLoggato"
         },
         "PAGINA": {
             "PANNELLO_CONTROLLO": "pannelloControllo",
-            "LOGIN": "login",
-            "REGISTRAZIONE": "registrazione",
+            "LOGIN": "autenticazione",
+            "REGISTRAZIONE": "autenticazione",
             "HOME": "home"
         },
         "ENDPOINT":

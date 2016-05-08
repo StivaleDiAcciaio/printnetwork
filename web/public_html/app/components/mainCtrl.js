@@ -29,6 +29,8 @@
                     };
                     $scope.logout = function () {
                         localStorage.removeItem(COSTANTI.LOCAL_STORAGE.TOKEN);
+                        localStorage.removeItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO);
+                        localStorage.removeItem(COSTANTI.RICORDAMI);
                     };
                     $scope.checkToken = function () {
                         return localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN) != null;
@@ -45,6 +47,19 @@
                     $scope.setToken = function (token) {
                         localStorage.setItem(COSTANTI.LOCAL_STORAGE.TOKEN, token);
                     };
+                    $scope.setRicordami = function (email,pwd) {
+                        var ricordaAccesso={};
+                        ricordaAccesso.email=email;
+                        ricordaAccesso.pwd=pwd;
+                        localStorage.setItem(COSTANTI.RICORDAMI, JSON.stringify(ricordaAccesso));
+                    };                    
+                    $scope.getRicordami = function () {
+                        if (localStorage.getItem(COSTANTI.RICORDAMI)){
+                            return JSON.parse(localStorage.getItem(COSTANTI.RICORDAMI));
+                        }
+                        return null;
+                    };                    
+                    
                     function mostraMessaggioUtente(messaggio, level, scope) {
                         scope.messaggio = {};
                         scope.messaggio.contenuto = messaggio;
