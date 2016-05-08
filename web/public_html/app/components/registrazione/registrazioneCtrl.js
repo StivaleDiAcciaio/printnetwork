@@ -2,9 +2,9 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('registrazioneCtrl',
-            ['$scope','$state' ,'$http', 'serviziRest', 'CONST',
-                function ($scope, $state,$http, serviziRest, COSTANTI) {
-                    
+            ['$scope', '$state', '$http', 'serviziRest', 'CONST',
+                function ($scope, $state, $http, serviziRest, COSTANTI) {
+
                     $scope.outRestCall = "";
                     $scope.outRestCallPOST = "";
 
@@ -12,10 +12,14 @@
                         serviziRest.stampa2D({stampa: "stampa2d"}).then(function (response) {
                             $scope.outRestCallPOST = response.data;
                         }, function (err) {
-                            alert(err.data.messaggio);
-                            if (err.status == '401') {
-                                $scope.vaiAllaPagina(COSTANTI.PAGINA.LOGIN);
+                            var msgErrore = "Errore imprevisto:("+err.status+")";
+                            if (err.data) {
+                                msgErrore =msgErrore+err.data.messaggio 
+                                if (err.status == '401') {
+                                    msgErrore= msgErrore+":effettua Login!";
+                                }
                             }
+                            $scope.mostraMessaggioError(msgErrore);
                         });
                     };
                     $scope.cliccaRegistrazione = function (formRegistrazione) {

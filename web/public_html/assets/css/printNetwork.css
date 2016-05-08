@@ -2,7 +2,7 @@
     Created on : 24-apr-2016, 20.34.22
     Author     : stivale
 */
-@import url("fontcss.css");
+@import url("fontsGstaticRobotoV15.css");
 
 .margineContainer{
     margin-top: 80px;
@@ -10,16 +10,16 @@
 
 .bodyHome{
     text-align: center;
-    font-family: 'Roboto', sans-serif;
-    font-weight:100;
+    font-family: 'Roboto';
+    font-weight:400;
 }
 
 .bodyMain {
     padding-top: 90px;
     background:#F7F7F7;
     color:#666666;
-    font-family: 'Roboto', sans-serif;
-    font-weight:100;
+    font-family: 'Roboto';
+    font-weight:400;
 }
 
 .bodyMain{
