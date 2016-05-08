@@ -28,6 +28,14 @@
                                 }
                             }
                         })
+                        .state('autenticazione', {
+                            url: '/autenticazione',
+                            views: {'content@': {
+                                    templateUrl: 'app/components/autenticazione/autenticazione.html',
+                                    controller: 'autenticazioneCtrl'
+                                }
+                            }
+                        })
                         .state('pannelloControllo', {
                             url: '/pannelloControllo',
                             views: {'content@': {
