@@ -4,16 +4,23 @@
     angular.module('printNetworkApp').controller('autenticazioneCtrl',
             ['$scope', 'serviziRest', 'CONST',
                 function ($scope, serviziRest, COSTANTI) {
-                    $scope.utente={};
+                    $scope.formLoginData = {};
+                    $scope.formRegistrazioneData = {};
                     if ($scope.getRicordami()) {
-                        $scope.utente.email = $scope.getRicordami().email;
-                        $scope.utente.password = $scope.getRicordami().pwd;
+                        $scope.formLoginData.email = $scope.getRicordami().email;
+                        $scope.formLoginData.password = $scope.getRicordami().pwd;
                     }
+                    
+                    $scope.resetFormLogin = function () {
+                        localStorage.removeItem(COSTANTI.RICORDAMI);
+                        $scope.formLoginData =null;
+                    };
+
                     $scope.login = function (formLogin) {
                         if (formLogin.$valid) {
-                            serviziRest.autenticazione({utente: $scope.utente}).then(function (response) {
+                            serviziRest.autenticazione({utente: $scope.formLoginData}).then(function (response) {
                                 if ($scope.ricordami) {
-                                    $scope.setRicordami($scope.utente.email, $scope.utente.password);
+                                    $scope.setRicordami($scope.formLoginData.email, $scope.formLoginData.password);
                                 }
                                 if (response.esito) {
                                     $scope.setToken(response.token);

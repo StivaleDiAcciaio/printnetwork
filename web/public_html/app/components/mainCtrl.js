@@ -2,8 +2,8 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('mainCtrl',
-            ['$rootScope', '$scope', '$state', 'serviziRest', 'CONST',
-                function ($rootScope, $scope, $state, serviziRest, COSTANTI) {
+            ['$scope', '$state', 'serviziRest', 'CONST',
+                function ($scope, $state, serviziRest, COSTANTI) {
                     $scope.paginaCorrente = null;
                     $scope.messaggio = null;
 
@@ -30,7 +30,6 @@
                     $scope.logout = function () {
                         localStorage.removeItem(COSTANTI.LOCAL_STORAGE.TOKEN);
                         localStorage.removeItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO);
-                        localStorage.removeItem(COSTANTI.RICORDAMI);
                     };
                     $scope.checkToken = function () {
                         return localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN) != null;

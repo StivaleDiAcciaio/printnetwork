@@ -9,35 +9,35 @@
                         <form id="idFormLogin" name="formLogin" role="form" style="display: block;">
                             <h2>LOGIN</h2>
                             <div class="form-group">
-                                <input id="inputEmail" ng-model="utente.email" ng-disabled ="checkToken()" type="email" placeholder="Email" class="form-control" tabindex="1" required autofocus>
+                                <input ng-model="formLoginData.email" ng-disabled ="checkToken()" type="email" placeholder="Email" class="form-control" tabindex="1" required autofocus>
                             </div>
                             <div class="form-group">
-                                <input id="inputPassword" ng-model="utente.password" ng-disabled ="checkToken()" type="password" placeholder="Password" class="form-control" tabindex="2" required>
+                                <input ng-model="formLoginData.password" ng-disabled ="checkToken()" type="password" placeholder="Password" class="form-control" tabindex="2" required>
                             </div>
                             <div class="col-xs-4 form-group pull-left checkbox">
-                                <input id="checkbox1" ng-model="ricordami" type="checkbox" ng-disabled ="checkToken()" >
-                                <label for="checkbox1">Ricordami</label>   
+                                <input id="checkbox" ng-model="ricordami" type="checkbox" ng-disabled ="checkToken()" >
+                                <label for="checkbox">Ricordami</label>   
                             </div>
                             <div class="col-xs-4 form-group">     
-                                <button class="btn btn-lg btn-primary btn-block" ng-click="utente = null" ng-disabled ="checkToken()">reset</button>
+                                <button class="btn btn-lg btn-primary btn-block" ng-click="resetFormLogin()" ng-disabled ="checkToken()">reset</button>
                             </div> 
                             <div class="col-xs-4 form-group pull-right">     
                                 <button class="btn btn-lg btn-primary btn-block" ng-click="login(formLogin)" ng-disabled ="checkToken()">Accedi</button>
                             </div>
                         </form>
                         <form id="idFormRegistrazione" name="formRegistrazione" role="form" style="display: none;">
-                            <h2>REGISTER</h2>
+                            <h2>REGISTRAZIONE</h2>
                             <div class="form-group">
-                                <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                <input ng-model="formRegistrazioneData.nick" type="text" class="form-control" placeholder="Nome utente" tabindex="1" required autofocus>
                             </div>
                             <div class="form-group">
-                                <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+                                <input ng-model="formRegistrazioneData.email" type="email" placeholder="Email" class="form-control" tabindex="1" required>
                             </div>
                             <div class="form-group">
-                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                <input ng-model="formRegistrazioneData.password" type="password" placeholder="Password" class="form-control" tabindex="2" required>
                             </div>
                             <div class="form-group">
-                                <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                <input ng-model="formRegistrazioneData.indirizzo" type="text" class="form-control" placeholder="Indirizzo" tabindex="2" required>
                             </div>
                             <div class="form-group">
                                 <div class="row">
