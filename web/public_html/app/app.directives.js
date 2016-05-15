@@ -156,3 +156,23 @@ angular.module('printNetworkApp')
 		}
 	};
 });
+
+angular.module('printNetworkApp')
+        .directive('confermaPassword', function (){
+    return {
+        require: "ngModel",
+        scope: {
+            otherModelValue: "=confermaPassword"
+        },
+        link: function(scope, element, attributes, ngModel) {
+             
+            ngModel.$validators.confronta = function(modelValue) {
+                return modelValue == scope.otherModelValue;
+            };
+ 
+            scope.$watch("otherModelValue", function() {
+                ngModel.$validate();
+            });
+        }
+    };
+});

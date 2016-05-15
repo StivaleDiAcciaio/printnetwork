@@ -9,14 +9,14 @@
                         <form id="idFormLogin" name="formLogin" role="form" style="display: block;">
                             <h2>LOGIN</h2>
                             <div class="form-group">
-                                <input ng-model="formLoginData.email" ng-disabled ="checkToken()" type="email" placeholder="Email" class="form-control" tabindex="1" required autofocus>
+                                <input name="emailLogin" ng-model="formLoginData.email" ng-disabled ="checkToken()" type="email" placeholder="Email" class="form-control" tabindex="1" required autofocus>
                             </div>
                             <div class="form-group">
-                                <input ng-model="formLoginData.password" ng-disabled ="checkToken()" type="password" placeholder="Password" class="form-control" tabindex="2" required>
+                                <input name="passwordLogin" ng-model="formLoginData.password" ng-disabled ="checkToken()" type="password" placeholder="Password" class="form-control" tabindex="2" required>
                             </div>
                             <div class="col-xs-4 form-group pull-left checkbox">
-                                <input id="checkbox" ng-model="ricordami" type="checkbox" ng-disabled ="checkToken()" >
-                                <label for="checkbox">Ricordami</label>   
+                                <input id="checkboxRicordami" ng-model="ricordami" type="checkbox" ng-disabled ="checkToken()" >
+                                <label for="checkboxRicordami">Ricordami</label>   
                             </div>
                             <div class="col-xs-4 form-group">     
                                 <button class="btn btn-lg btn-primary btn-block" ng-click="resetFormLogin()" ng-disabled ="checkToken()">reset</button>
@@ -28,13 +28,23 @@
                         <form id="idFormRegistrazione" name="formRegistrazione" role="form" style="display: none;">
                             <h2>REGISTRAZIONE</h2>
                             <div class="form-group">
-                                <input ng-model="formRegistrazioneData.nick" type="text" class="form-control" placeholder="Nome utente" tabindex="1" required autofocus>
+                                <input name="nickRegistrazione" ng-model="formRegistrazioneData.nick" type="text" class="form-control" placeholder="Nome utente" tabindex="1" required autofocus>
                             </div>
                             <div class="form-group">
-                                <input ng-model="formRegistrazioneData.email" type="email" placeholder="Email" class="form-control" tabindex="1" required>
+                                <input name="emailRegistrazione" ng-model="formRegistrazioneData.email" type="email" placeholder="Email" class="form-control" tabindex="1" required>
                             </div>
                             <div class="form-group">
-                                <input ng-model="formRegistrazioneData.password" type="password" placeholder="Password" class="form-control" tabindex="2" required>
+                                <input name="passwordRegistrazione" ng-model="formRegistrazioneData.password" type="password" placeholder="Password" class="form-control" tabindex="2" required>
+                            </div>
+                            <div class="form-group">
+                                <input name="confermaPasswordRegistrazione" ng-model="confermaPasswordRegistrazione" 
+                                       ng-show="formRegistrazione.confermaPasswordRegistrazione.$error.confronta"
+                                       type="password" placeholder="Conferma Password" 
+                                       conferma-password="formRegistrazioneData.password" 
+                                       class="form-control" tabindex="2" required>
+                                <span class="label label-danger" ng-show="formRegistrazione.confermaPasswordRegistrazione.$error.confronta">
+                                    conferma la password
+                                </span> 
                             </div>
                             <div class="form-group">
                                 <input ng-model="formRegistrazioneData.indirizzo" type="text" class="form-control" placeholder="Indirizzo" tabindex="2" required>
