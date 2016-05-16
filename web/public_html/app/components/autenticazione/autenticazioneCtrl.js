@@ -6,6 +6,7 @@
                 function ($scope, serviziRest, COSTANTI) {
                     $scope.formLoginData = {};
                     $scope.formRegistrazioneData = {};
+                    
                     if ($scope.getRicordami()) {
                         $scope.formLoginData.email = $scope.getRicordami().email;
                         $scope.formLoginData.password = $scope.getRicordami().pwd;

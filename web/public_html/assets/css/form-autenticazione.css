@@ -185,3 +185,9 @@ label {
   color: #fff;
   background-color: #2D3B55;
 }
+.infoNearField {
+  font-weight: 400;
+  display: inline-block;
+  position: relative;
+  font-style: italic;
+}
