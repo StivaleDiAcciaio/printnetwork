@@ -70,7 +70,7 @@
                                     <input id="chkBoxStampa2D" ng-model="chkBoxStampa2D" type="checkbox">
                                     <label for="chkBoxStampa2D">Stampante 2D</label>   
                                 </div>
-                                <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.tipologiaStampa.stampa2D.colore = 'C'">
+                                <div class="col-xs-12 form-group" ng-show="chkBoxStampa2D" ng-init="formRegistrazioneData.tipologiaStampa.stampa2D.colore = 'C'">
                                     <input id="stampa2Dc" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
                                            value="C" ng-checked="true">
                                     <label for="stampa2Dc">a colori</label>

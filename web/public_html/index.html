@@ -76,7 +76,7 @@
         </nav>	
         <div class="container margineContainer">
             <div ui-view="content"></div>
-            <div ng-show="messaggio" style="text-align: center">
+            <div id="messaggiUtente" ng-show="messaggio" style="text-align: center">
                 <h3><span ng-class="messaggio.level == 'INFO' ? 'label label-info' :
                                         messaggio.level == 'WARNING' ? 'label label-warning' :
                                         'label label-danger'">

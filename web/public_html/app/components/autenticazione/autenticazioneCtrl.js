@@ -6,15 +6,15 @@
                 function ($scope, serviziRest, COSTANTI) {
                     $scope.formLoginData = {};
                     $scope.formRegistrazioneData = {};
-                    
+
                     if ($scope.getRicordami()) {
                         $scope.formLoginData.email = $scope.getRicordami().email;
                         $scope.formLoginData.password = $scope.getRicordami().pwd;
                     }
-                    
+
                     $scope.resetFormLogin = function () {
                         localStorage.removeItem(COSTANTI.RICORDAMI);
-                        $scope.formLoginData =null;
+                        $scope.formLoginData = null;
                     };
 
                     $scope.login = function (formLogin) {
@@ -29,6 +29,12 @@
                                     $scope.vaiAllaPagina(COSTANTI.PAGINA.PANNELLO_CONTROLLO);
                                 } else {
                                     $scope.mostraMessaggioError(response.messaggio);
+                                }
+                            }, function (err) {
+                                if (err.data) {
+                                    $scope.mostraMessaggioError(err.data.messaggio);
+                                } else {
+                                    $scope.mostraMessaggioError("Errore imprevisto!");
                                 }
                             });
                         }
@@ -62,7 +68,11 @@
                                     $scope.mostraMessaggioError(response.messaggio);
                                 }
                             }, function (err) {
-                                $scope.mostraMessaggioError(err.data.messaggio);
+                                if (err.data) {
+                                    $scope.mostraMessaggioError(err.data.messaggio);
+                                } else {
+                                    $scope.mostraMessaggioError("Errore imprevisto!");
+                                }
                             });
                         }
                     };
