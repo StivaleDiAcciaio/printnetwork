@@ -2,8 +2,8 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('mainCtrl',
-            ['$scope', '$state', 'serviziRest', 'CONST',
-                function ($scope, $state, serviziRest, COSTANTI) {
+            ['$scope', '$state', '$location', '$anchorScroll', 'serviziRest', 'CONST',
+                function ($scope, $state, $location, $anchorScroll, serviziRest, COSTANTI) {
                     $scope.paginaCorrente = null;
                     $scope.messaggio = null;
                     $scope.dominioFormati2D = [];
@@ -12,6 +12,7 @@
                     $scope.dominioFormati2D[2] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A2;
                     $scope.dominioFormati2D[3] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A1;
                     $scope.dominioFormati2D[4] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_TUTTI;
+
                     $scope.setPaginaCorrente = function (pagina) {
                         $scope.paginaCorrente = {};
                         $scope.paginaCorrente.nome = pagina;
@@ -68,6 +69,7 @@
                         scope.messaggio = {};
                         scope.messaggio.contenuto = messaggio;
                         scope.messaggio.level = level;
+                        scope.scrollTo('messaggiUtente');
                     }
                     $scope.vaiPannelloControllo = function () {
                         if ($scope.checkToken()) {
@@ -76,7 +78,10 @@
                             $scope.vaiAllaPagina(COSTANTI.PAGINA.LOGIN);
                         }
                     };
-
+                    $scope.scrollTo = function (idElemento) {
+                        $location.hash(idElemento);
+                        $anchorScroll();
+                    };
                     /*Eventi del Routing */
                     $scope.$on('$viewContentLoaded', function (event, viewConfig) {
                         $scope.resetMessaggioUtente();

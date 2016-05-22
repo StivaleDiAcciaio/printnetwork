@@ -30,19 +30,19 @@
         "DOMINIO_FORMATO_STAMPA_2D": {
             "FORMATO_A4": {
                 value: "A4",
-                label: "Formato A4"
+                label: "Form. A4"
             },
             "FORMATO_A3": {
                 value: "A3",
-                label: "Formato A3"
+                label: "Form. A3"
             },
             "FORMATO_A2": {
                 value: "A2",
-                label: "Formato A2"
+                label: "Form. A2"
             },
             "FORMATO_A1":{
                 value: "A1",
-                label: "Formato A1"
+                label: "Form. A1"
             },
             "FORMATO_TUTTI":{
                 value:"TF",

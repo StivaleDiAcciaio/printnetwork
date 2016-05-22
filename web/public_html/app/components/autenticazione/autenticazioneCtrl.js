@@ -6,7 +6,8 @@
                 function ($scope, serviziRest, COSTANTI) {
                     $scope.formLoginData = {};
                     $scope.formRegistrazioneData = {};
-
+                    $scope.formatiStampa2DScelti = [];
+                    $scope.formatoStampa2DSelezionato=null;
                     if ($scope.getRicordami()) {
                         $scope.formLoginData.email = $scope.getRicordami().email;
                         $scope.formLoginData.password = $scope.getRicordami().pwd;
@@ -38,6 +39,10 @@
                                 }
                             });
                         }
+                    };
+                    $scope.aggiungiFormato = function(){
+                        $scope.formatiStampa2DScelti.push($scope.formatoStampa2DSelezionato);
+                        $scope.formRegistrazioneData.tipologiaStampa.stampa2D.formato = $scope.formatiStampa2DScelti;
                     };
                     $scope.registrazione = function (formRegistrazione) {
                         var utenteReq = {};
