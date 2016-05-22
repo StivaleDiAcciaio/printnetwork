@@ -66,18 +66,36 @@
                                            class="form-control"  title="puoi fornire un indirizzo approssimativo se vuoi"
                                            placeholder="indirizzo (es:via ester cuttica 200,Legnano)" tabindex="2" required>
                                 </div>
+                                <!--STAMPANTE 2D-->
                                 <div class="col-xs-12 form-group pull-left checkbox">
                                     <input id="chkBoxStampa2D" ng-model="chkBoxStampa2D" type="checkbox">
                                     <label for="chkBoxStampa2D">Stampante 2D</label>   
                                 </div>
-                                <div class="col-xs-12 form-group" ng-show="chkBoxStampa2D" ng-init="formRegistrazioneData.tipologiaStampa.stampa2D.colore = 'C'">
-                                    <input id="stampa2Dc" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
-                                           value="C" ng-checked="true">
-                                    <label for="stampa2Dc">a colori</label>
-                                    <input id="stampa2Db" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
-                                           value="B">
-                                    <label for="stampa2Db">bianco e nero</label>
+                                <div ng-show="chkBoxStampa2D">
+                                    <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.tipologiaStampa.stampa2D.colore = 'C'">
+                                        <input id="stampa2Dc" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
+                                               value="C" ng-checked="true">
+                                        <label for="stampa2Dc">a colori</label>
+                                        <input id="stampa2Db" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
+                                               value="B">
+                                        <label for="stampa2Db">bianco e nero</label>
+                                    </div>
+                                    <div class="col-xs-12 form-group">
+                                        <div class="col-xs-6">
+                                            <label for="formatoStampa2D">Formato stampa</label>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <select id="formatoStampa2D"
+                                                    class="form-control" 
+                                                    required
+                                                    ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.formato"
+                                                    ng-options="formato.value as formato.label for formato in dominioFormati2D"
+                                                    ng-selected="dominioFormati2D[0]">
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
+                                <!--/STAMPANTE 2D-->
                             </div>
                             <div class="form-group">
                                 <div class="row">

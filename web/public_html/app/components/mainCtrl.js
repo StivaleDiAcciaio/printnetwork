@@ -6,7 +6,12 @@
                 function ($scope, $state, serviziRest, COSTANTI) {
                     $scope.paginaCorrente = null;
                     $scope.messaggio = null;
-
+                    $scope.dominioFormati2D = [];
+                    $scope.dominioFormati2D[0] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A4;
+                    $scope.dominioFormati2D[1] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A3;
+                    $scope.dominioFormati2D[2] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A2;
+                    $scope.dominioFormati2D[3] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A1;
+                    $scope.dominioFormati2D[4] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_TUTTI;
                     $scope.setPaginaCorrente = function (pagina) {
                         $scope.paginaCorrente = {};
                         $scope.paginaCorrente.nome = pagina;
@@ -46,19 +51,19 @@
                     $scope.setToken = function (token) {
                         localStorage.setItem(COSTANTI.LOCAL_STORAGE.TOKEN, token);
                     };
-                    $scope.setRicordami = function (email,pwd) {
-                        var ricordaAccesso={};
-                        ricordaAccesso.email=email;
-                        ricordaAccesso.pwd=pwd;
+                    $scope.setRicordami = function (email, pwd) {
+                        var ricordaAccesso = {};
+                        ricordaAccesso.email = email;
+                        ricordaAccesso.pwd = pwd;
                         localStorage.setItem(COSTANTI.RICORDAMI, JSON.stringify(ricordaAccesso));
-                    };                    
+                    };
                     $scope.getRicordami = function () {
-                        if (localStorage.getItem(COSTANTI.RICORDAMI)){
+                        if (localStorage.getItem(COSTANTI.RICORDAMI)) {
                             return JSON.parse(localStorage.getItem(COSTANTI.RICORDAMI));
                         }
                         return null;
-                    };                    
-                    
+                    };
+
                     function mostraMessaggioUtente(messaggio, level, scope) {
                         scope.messaggio = {};
                         scope.messaggio.contenuto = messaggio;
