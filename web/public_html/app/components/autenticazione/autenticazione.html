@@ -82,16 +82,17 @@
                                     </div>
                                     <div class="col-xs-12 form-group">
                                         <div class="col-xs-6">
-                                            <label for="formatoStampa2D">Formato stampa</label>
+                                            <label for="idFormatoStampa2D">Formato stampa</label>
                                         </div>
                                         <div class="col-xs-6">
-                                            <select id="formatoStampa2D"
+                                            <select id="idFormatoStampa2D"
+                                                    name="formatoStampa2D"
                                                     class="form-control" 
                                                     required
                                                     ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.formato"
-                                                    ng-options="formato.value as formato.label for formato in dominioFormati2D"
-                                                    ng-selected="dominioFormati2D[0]">
+                                                    ng-options="formato.value as formato.label for formato in dominioFormati2D">
                                             </select>
+                                            <span ng-show="formRegistrazione.formatoStampa2D.$error.required">Seleziona formato</span>
                                         </div>
                                     </div>
                                 </div>
