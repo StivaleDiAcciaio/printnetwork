@@ -79,28 +79,34 @@
                                         <input id="stampa2Db" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
                                                value="B">
                                         <label for="stampa2Db">bianco e nero</label>
-                                        <button ng-disabled="!formatoStampa2DSelezionato" class="btn btn-secondary btn-block" ng-click="aggiungiFormato()">aggiungi formato</button>
                                     </div>
                                     <div class="col-xs-12 form-group">
-                                        <div class="col-md-8 col-xs-3">
-                                            <label for="idFormatoStampa2D">Formato stampa</label>
+                                        <div class="col-md-6 col-xs-3">
+                                            <button class="btn btn-secondary btn-block" ng-click="aggiungiFormato()">aggiungi formato</button>
                                         </div>
-                                        <div class="col-md-4 col-xs-9">
-                                            <select required 
-                                                    id="idFormatoStampa2D"                 
-                                                    class="form-control" 
+                                        <div class="col-md-6 col-xs-9">
+                                            <select id="idFormatoStampa2D"                 
+                                                    name="formatoStampa2D"
+                                                    class="form-control"
                                                     ng-model="formatoStampa2DSelezionato"
-                                                    ng-options="formato.value as formato.label for formato in dominioFormati2D">
+                                                    ng-options="formato.value as formato.label for formato in dominioFormati2D| filtraFormatiScelti : formatiStampa2DScelti">
                                                 <option></option>
                                             </select>
+                                            
+                                           <!-- <span class="label label-danger" ng-show="formRegistrazione.formatoStampa2D.$error.checkFrmt2d">
+                                                inserisci un formato
+                                            </span>--> 
                                         </div>
                                     </div>
                                     <div class="col-xs-12 form-group" ng-repeat="formato in formatiStampa2DScelti">
-                                        <div class="col-md-8 col-xs-4">
+                                        <div class="col-md-6 col-xs-4">
                                             <label>Formato stampa</label>
                                         </div>
-                                        <div class="col-md-4 col-xs-8">
+                                        <div class="col-md-3 col-xs-2">
                                             <p>{{formato}}</p>
+                                        </div>
+                                        <div class="col-md-3 col-xs-6">
+                                            <button class="btn btn-secondary btn-block" ng-click="rimuoviFormato(formato)">rimuovi</button>
                                         </div>
                                     </div>
                                 </div>

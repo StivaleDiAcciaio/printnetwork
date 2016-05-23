@@ -176,3 +176,23 @@ angular.module('printNetworkApp')
         }
     };
 });
+
+angular.module('printNetworkApp')
+        .directive('checkFormato2d', function (){
+    return {
+        require: "ngModel",
+        scope: {
+            formatiScelti: "=checkFormato2d"
+        },
+        link: function(scope, element, attributes, ngModel) {
+             
+            ngModel.$validators.checkFrmt2d = function(modelValue) {
+                return (scope.formatiScelti && scope.formatiScelti.length>0);
+            };
+ 
+            scope.$watch("formatiScelti", function() {
+                ngModel.$validate();
+            });
+        }
+    };
+});
