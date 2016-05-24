@@ -92,10 +92,7 @@
                                                     ng-options="formato.value as formato.label for formato in dominioFormati2D| filtraFormatiScelti : formatiStampa2DScelti">
                                                 <option></option>
                                             </select>
-                                            
-                                           <!-- <span class="label label-danger" ng-show="formRegistrazione.formatoStampa2D.$error.checkFrmt2d">
-                                                inserisci un formato
-                                            </span>--> 
+                                            <button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 form-group" ng-repeat="formato in formatiStampa2DScelti">

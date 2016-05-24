@@ -2,8 +2,8 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('mainCtrl',
-            ['$scope', '$state', '$location', '$anchorScroll', 'serviziRest', 'CONST',
-                function ($scope, $state, $location, $anchorScroll, serviziRest, COSTANTI) {
+            ['$scope', '$state', '$location', '$anchorScroll', '$uibModal','serviziRest', 'CONST',
+                function ($scope, $state, $location, $anchorScroll, $uibModal,serviziRest, COSTANTI) {
                     $scope.paginaCorrente = null;
                     $scope.messaggio = null;
                     $scope.dominioFormati2D = [];
@@ -89,5 +89,49 @@
                             $scope.setPaginaCorrente(viewConfig.context.name);
                         }
                     });
+                    $scope.items = ['item1', 'item2', 'item3'];
+
+                    $scope.animationsEnabled = true;
+
+                    $scope.open = function (size) {
+
+                        var modalInstance = $uibModal.open({
+                            animation: $scope.animationsEnabled,
+                            templateUrl: 'app/components/commonModal/dominiFormatiStp2D.html',
+                            controller: 'ModalInstanceCtrl',
+                            size: size,
+                            resolve: {
+                                items: function () {
+                                    return $scope.items;
+                                }
+                            }
+                        });
+
+                        modalInstance.result.then(function (selectedItem) {
+                            $scope.selected = selectedItem;
+                        }, function () {
+                            console.log('Modal dismissed at: ' + new Date());
+                        });
+                    };
+
+                    $scope.toggleAnimation = function () {
+                        $scope.animationsEnabled = !$scope.animationsEnabled;
+                    };
+
                 }]);
+    angular.module('printNetworkApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+
+        $scope.items = items;
+        $scope.selected = {
+            item: $scope.items[0]
+        };
+
+        $scope.ok = function () {
+            $uibModalInstance.close($scope.selected.item);
+        };
+
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+    });
 }());

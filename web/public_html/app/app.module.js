@@ -2,7 +2,7 @@
 ;
 (function () {
     'use strict';
-    angular.module('printNetworkApp', ['ngSanitize', 'ui.bootstrap', 'ui.router', 'nya.bootstrap.select'])
+    angular.module('printNetworkApp', ['ngSanitize', 'ui.bootstrap', 'ui.router', 'nya.bootstrap.select','ngAnimate'])
             .config([function () {
                     //// provider-injector
                     // This is an example of config block.
