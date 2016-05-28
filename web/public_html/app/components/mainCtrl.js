@@ -93,12 +93,12 @@
 
                     $scope.animationsEnabled = true;
 
-                    $scope.open = function (size) {
+                    $scope.mainAnagFormati2Dmodal = function (size) {
 
                         var modalInstance = $uibModal.open({
                             animation: $scope.animationsEnabled,
                             templateUrl: 'app/components/commonModal/dominiFormatiStp2D.html',
-                            controller: 'ModalInstanceCtrl',
+                            controller: 'DominiFormatiStp2DCtrl',
                             size: size,
                             resolve: {
                                 items: function () {
@@ -119,19 +119,4 @@
                     };
 
                 }]);
-    angular.module('printNetworkApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
-
-        $scope.items = items;
-        $scope.selected = {
-            item: $scope.items[0]
-        };
-
-        $scope.ok = function () {
-            $uibModalInstance.close($scope.selected.item);
-        };
-
-        $scope.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-    });
 }());
