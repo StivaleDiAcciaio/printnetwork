@@ -83,10 +83,17 @@
                         $anchorScroll();
                     };
                     /*Eventi del Routing */
-                    $scope.$on('$viewContentLoaded', function (event, viewConfig) {
+                    /*OLD
+                     * $scope.$on('$viewContentLoaded', function (event, viewConfig) {
                         $scope.resetMessaggioUtente();
                         if (viewConfig.context) {
                             $scope.setPaginaCorrente(viewConfig.context.name);
+                        }
+                    });*/
+                     $scope.$on('$stateChangeSuccess', function (toSelf,toParams,fromSelf,fromParams) {
+                        $scope.resetMessaggioUtente();
+                        if (toParams) {
+                            $scope.setPaginaCorrente(toParams.name);
                         }
                     });
                     $scope.items = ['item1', 'item2', 'item3'];
