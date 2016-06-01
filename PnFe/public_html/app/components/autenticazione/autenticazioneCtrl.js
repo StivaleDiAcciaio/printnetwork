@@ -3,7 +3,7 @@
     'use strict';
     angular.module('printNetworkApp').controller('autenticazioneCtrl',
             ['$scope', 'serviziRest', 'CONST',
-                function ($scope, $uibModal, serviziRest, COSTANTI) {
+                function ($scope, serviziRest, COSTANTI) {
                     $scope.formLoginData = {};
                     $scope.formRegistrazioneData = {};
                     $scope.formatiStampa2DScelti = [];
