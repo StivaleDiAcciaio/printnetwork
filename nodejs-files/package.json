@@ -2,12 +2,16 @@
   "name": "node-printnetwork-app",
   "main": "pn-server.js",
   "dependencies": {
-    "body-parser": "^1.15.0",
-    "express": "^4.13.4",
-    "js-md5": "^0.4.1",
-    "jsonwebtoken": "^5.7.0",
-    "log4js": "^0.6.33",
-    "mongoose": "^4.4.3",
-    "morgan": "^1.6.1"
-  }
+    "body-parser": "1.15.0",
+    "express": "4.13.4",
+    "js-md5": "0.4.1",
+    "jsonwebtoken": "5.7.0",
+    "log4js": "0.6.33",
+    "mongoose": "4.4.3",
+    "morgan": "1.6.1"
+  },
+    "scripts": {
+        "start": "node pn-server.js"
+    }
+
 }
