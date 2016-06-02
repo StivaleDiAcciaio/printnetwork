@@ -27,7 +27,7 @@ log4js.configure({
     appenders: [
         {type: 'file', filename: 'app/pn-server.log', category: 'pn-server'}
     ],
-    replaceConsole: true
+    replaceConsole: true/* se true il console.log viene disabilitato.*/
 });
 var logger = log4js.getLogger('pn-server');
 logger.setLevel('DEBUG');
@@ -44,9 +44,9 @@ appRouter.post('/login', function (req, res) {
     res.header("Access-Control-Allow-Methods", "POST");
     var esito = null;
     var token = null;
-    // logger.debug("password "+req.body.utente.password);
+    // logger.debug("metodo login (post) : password acquisita="+req.body.utente.password);
     if (req.body.utente) {
-        //logger.debug("email da verificare " + req.body.utente.email);
+        // logger.debug("-->email da verificare " + req.body.utente.email);
         //verifica utente su DB
         moduloDbUtente.cercaUtente(req.body.utente, function (risultato) {
             if (!risultato.esito) {
@@ -99,25 +99,28 @@ appRouter.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST DELETE");
-    //aggiungere IF sul metodo della request
+    //logger.debug("Route middleware per verificare il token");
+    //logger.debug("-->req.method="+req.method);
     if (req.method === 'GET' ||
             req.method === 'PUT' ||
             req.method === 'POST' ||
             req.method === 'DELETE') {
         // controllo header o parametri url o parametri post per il token
         var token = req.headers.token;
-        logger.debug("Token "+token);
+        //logger.debug("Token "+token);
         // decode token
         if (token != "null") {
             // verifica secret e scadenza
             jwt.verify(token, app.get('superSecret'), function (err, decoded) {
                 if (err) {
+                    //     logger.debug("-->Errore verifica token");
                     res.status(401).send({
                         esito: false,
                         messaggio: 'Utente non autenticato!'
                     });
                 } else {
                     // se OK, salvo la richiesta per gli altri routes
+                    //   logger.debug("-->OK!");
                     req.decoded = decoded;
                     next();
                 }
@@ -125,6 +128,7 @@ appRouter.use(function (req, res, next) {
         } else {
             // se non è presente nessun token
             // restituisco un errore
+            // logger.debug("-->non è presente nessun token");
             res.status(401).send({
                 esito: false,
                 messaggio: 'Utente non autenticato!'
@@ -133,6 +137,7 @@ appRouter.use(function (req, res, next) {
     } else {
         //In caso di metodo OPTIONS restituisco 
         //un json vuoto
+        //    logger.debug("-->Risposta di default :STATUS 200");
         res.status(200);
         res.json({});
     }
@@ -148,4 +153,6 @@ appRouter.post('/2D', function (req, res) {
 //Imposto radice /apinode per tutte le chiamate ai rest nodejs (es: /apinode/login )
 app.use('/apinode', appRouter);
 app.listen(porta);
-logger.debug('nodJs server in ascolto sulla porta ' + porta);
+logger.debug('PnBe server in ascolto sulla porta ' + porta);
+logger.debug('connessione al db ' + config.database);
+
