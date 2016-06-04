@@ -5,8 +5,7 @@
             ['$scope', 'serviziRest', 'CONST',
                 function ($scope, serviziRest, COSTANTI) {
                     $scope.formLoginData = {};
-                    $scope.formRegistrazioneData = {};
-                    $scope.formatiStampa2DScelti = [];
+                    $scope.formRegistrazioneData = {};                  
                     $scope.formatoStampa2DSelezionato = null;
                     if ($scope.getRicordami()) {
                         $scope.formLoginData.email = $scope.getRicordami().email;

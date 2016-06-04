@@ -1,17 +1,29 @@
 
 
-angular.module('printNetworkApp').controller('DominiFormatiStp2DCtrl', function ($scope, $uibModalInstance, items) {
+angular.module('printNetworkApp').controller('DominiFormatiStp2DCtrl', function ($scope, $uibModalInstance, dominioFormati2D, formati2dUtente) {
 
-    $scope.items = items;
-    $scope.selected = {
-        item: $scope.items[0]
-    };
-
+    $scope.dominioFormati2D = dominioFormati2D;
+    $scope.formatiStampa2DScelti = [];
+    if (formati2dUtente) {
+        $scope.formatiStampa2DScelti = formati2dUtente;
+    }
     $scope.ok = function () {
-        $uibModalInstance.close($scope.selected.item);
+        $uibModalInstance.close($scope.formatiStampa2DScelti);
     };
 
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
+    };
+
+    $scope.toggleFormatoStampa = function (formatoSelezionato, checked) {
+        if (checked) {
+            $scope.formatiStampa2DScelti.push(formatoSelezionato.value);
+        } else {
+            for (var i = 0; i < $scope.formatiStampa2DScelti.length; i++) {
+                if ($scope.formatiStampa2DScelti[i].value == formatoSelezionato.value) {
+                    $scope.formatiStampa2DScelti.splice(i, 1);
+                }
+            }
+        }
     };
 });

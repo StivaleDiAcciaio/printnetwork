@@ -43,11 +43,7 @@
             "FORMATO_A1":{
                 value: "A1",
                 label: "Form. A1"
-            },
-            "FORMATO_TUTTI":{
-                value:"TF",
-                label:"Tutti i formati"
-            }            
+            }
         }
     });
 }());

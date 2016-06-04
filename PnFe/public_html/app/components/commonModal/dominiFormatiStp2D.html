@@ -4,12 +4,22 @@
         <h3 class="modal-title">Formati stampa 2D</h3>
     </div>
     <div class="modal-body">
-        <ul>
-            <li ng-repeat="item in items">
-                <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item}}</a>
-            </li>
-        </ul>
-        Selected: <b>{{ selected.item}}</b>
+        <div class="table-responsive">
+            <table id="mytable" class="table table-bordred table-striped">
+                <thead>
+                <th><input type="checkbox" id="checkall" /></th>
+                <th>Formato Stampa</th>
+                <th>Descrizione</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="formato in dominioFormati2D">
+                        <td><input type="checkbox" ng-model="chkBoxFrmt2D_$index" ng-click="toggleFormatoStampa(formato,chkBoxFrmt2D_$index)"/></td>
+                        <td>{{formato.value}}</td>
+                        <td>{{formato.label}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" type="button" ng-click="ok()">Fatto</button>
