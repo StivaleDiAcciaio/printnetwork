@@ -17,10 +17,10 @@ angular.module('printNetworkApp').controller('DominiFormatiStp2DCtrl', function 
 
     $scope.toggleFormatoStampa = function (formatoSelezionato, checked) {
         if (checked) {
-            $scope.formatiStampa2DScelti.push(formatoSelezionato.value);
+            $scope.formatiStampa2DScelti.push(formatoSelezionato);
         } else {
             for (var i = 0; i < $scope.formatiStampa2DScelti.length; i++) {
-                if ($scope.formatiStampa2DScelti[i] == formatoSelezionato.value) {
+                if ($scope.formatiStampa2DScelti[i].value == formatoSelezionato.value) {
                     $scope.formatiStampa2DScelti.splice(i, 1);
                 }
             }

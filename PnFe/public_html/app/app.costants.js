@@ -30,19 +30,23 @@
         "DOMINIO_FORMATO_STAMPA_2D": {
             "FORMATO_A4": {
                 value: "A4",
-                label: "Form. A4"
+                label: "216 × 279 mm"
             },
             "FORMATO_A3": {
                 value: "A3",
-                label: "Form. A3"
+                label: "432 × 279 mm"
             },
             "FORMATO_A2": {
                 value: "A2",
-                label: "Form. A2"
+                label: "432 × 559 mm"
             },
             "FORMATO_A1":{
                 value: "A1",
-                label: "Form. A1"
+                label: "559 × 864 mm"
+            },
+            "FORMATO_A0":{
+                value: "A0",
+                label: "864 × 1118 mm"
             }
         }
     });

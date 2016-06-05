@@ -11,6 +11,7 @@
                     $scope.dominioFormati2D[1] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A3;
                     $scope.dominioFormati2D[2] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A2;
                     $scope.dominioFormati2D[3] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A1;
+                    $scope.dominioFormati2D[4] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A0;
                     $scope.formatiStampa2DScelti = [];
                     $scope.setPaginaCorrente = function (pagina) {
                         $scope.paginaCorrente = {};

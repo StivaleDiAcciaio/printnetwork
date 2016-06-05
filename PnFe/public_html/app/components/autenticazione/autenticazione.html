@@ -81,29 +81,19 @@
                                         <label for="stampa2Db">bianco e nero</label>
                                     </div>
                                     <div class="col-xs-12 form-group">
-                                        <div class="col-md-6 col-xs-3">
-                                            <button class="btn btn-secondary btn-block" ng-click="aggiungiFormato()">aggiungi formato</button>
-                                        </div>
-                                        <div class="col-md-6 col-xs-9">
-                                            <select id="idFormatoStampa2D"                 
-                                                    name="formatoStampa2D"
-                                                    class="form-control"
-                                                    ng-model="formatoStampa2DSelezionato"
-                                                    ng-options="formato.value as formato.label for formato in dominioFormati2D| filtraFormatiScelti : formatiStampa2DScelti">
-                                                <option></option>
-                                            </select>
-                                            <button type="button" class="btn btn-default" ng-click="mainAnagFormati2Dmodal('sm')">Formati Stampa</button>
+                                        <div class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
+                                            <button class="btn btn-secondary btn-block" ng-click="mainAnagFormati2Dmodal('sm')">formati disponibli</button>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 form-group" ng-repeat="formato in formatiStampa2DScelti">
-                                        <div class="col-md-6 col-xs-4">
+                                        <div class="col-xs-4">
                                             <label>Formato stampa</label>
                                         </div>
-                                        <div class="col-md-3 col-xs-2">
-                                            <p>{{formato}}</p>
+                                        <div class="col-xs-4">
+                                            <p>{{formato.value}}</p>
                                         </div>
-                                        <div class="col-md-3 col-xs-6">
-                                            <button class="btn btn-secondary btn-block" ng-click="rimuoviFormato(formato)">rimuovi</button>
+                                        <div class="col-xs-4">
+                                            <p>{{formato.label}}</p>
                                         </div>
                                     </div>
                                 </div>

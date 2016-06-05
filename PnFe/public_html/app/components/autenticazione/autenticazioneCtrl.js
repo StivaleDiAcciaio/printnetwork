@@ -39,20 +39,7 @@
                             });
                         }
                     };
-                    $scope.aggiungiFormato = function () {
-                        if ($scope.formatoStampa2DSelezionato) {
-                            $scope.formatiStampa2DScelti.push($scope.formatoStampa2DSelezionato);
-                            $scope.formRegistrazioneData.tipologiaStampa.stampa2D.formato = $scope.formatiStampa2DScelti;
-                        }
-                    };
-                    $scope.rimuoviFormato = function (formato) {
-                        for (var i = 0; i < $scope.formatiStampa2DScelti.length; i++) {
-                            if ($scope.formatiStampa2DScelti[i] == formato) {
-                                $scope.formatiStampa2DScelti.splice(i, 1);
-                            }
-                        }
-                        $scope.formRegistrazioneData.tipologiaStampa.stampa2D.formato = $scope.formatiStampa2DScelti;
-                    };
+                    
                     $scope.registrazione = function (formRegistrazione) {
                         var utenteReq = {};
                         utenteReq.nome = 'Salvatore';
@@ -73,6 +60,9 @@
                         tipologiaStampa.stampa2D = stampa2D;
                         tipologiaStampa.stampa3D = stampa3D;
                         utenteReq.tipologiaStampa = tipologiaStampa;
+                        
+                        $scope.formRegistrazioneData.tipologiaStampa.stampa2D.formato = $scope.formatiStampa2DScelti;
+                        
                         if (formRegistrazione.$valid) {
                             serviziRest.registrazione({utente: $scope.utente}).then(function (response) {
                                 if (response.esito) {
