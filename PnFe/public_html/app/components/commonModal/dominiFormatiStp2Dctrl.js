@@ -4,7 +4,15 @@ angular.module('printNetworkApp').controller('DominiFormatiStp2DCtrl', function 
 
     $scope.dominioFormati2D = dominioFormati2D;
     $scope.formatiStampa2DScelti = [];
-    if (formati2dUtente && formati2dUtente.length>0) {
+    $scope.chkBoxFrmt2D_ALL = true;
+    for (var y = 0; y < $scope.dominioFormati2D.length; y++) {
+        if (!$scope.dominioFormati2D[y].checked) {
+            $scope.chkBoxFrmt2D_ALL = false;
+            break;
+        }
+    }
+
+    if (formati2dUtente && formati2dUtente.length > 0) {
         $scope.formatiStampa2DScelti = formati2dUtente;
     }
     $scope.ok = function () {
@@ -17,13 +25,21 @@ angular.module('printNetworkApp').controller('DominiFormatiStp2DCtrl', function 
 
     $scope.toggleFormatoStampa = function (formatoSelezionato, checked) {
         if (checked) {
-            $scope.formatiStampa2DScelti.push(formatoSelezionato);
+            var objFormatoSelezionato = {};
+            objFormatoSelezionato.value = formatoSelezionato.value;
+            objFormatoSelezionato.label = formatoSelezionato.label;
+            $scope.formatiStampa2DScelti.push(objFormatoSelezionato);
         } else {
             for (var i = 0; i < $scope.formatiStampa2DScelti.length; i++) {
                 if ($scope.formatiStampa2DScelti[i].value == formatoSelezionato.value) {
                     $scope.formatiStampa2DScelti.splice(i, 1);
                 }
             }
+        }
+    };
+    $scope.toggleAllFormatoStampa = function (checkedAll) {
+        for (var i = 0; i < $scope.dominioFormati2D.length; i++) {
+            $scope.toggleFormatoStampa($scope.dominioFormati2D[i], checkedAll);
         }
     };
 });

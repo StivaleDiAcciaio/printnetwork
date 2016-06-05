@@ -7,7 +7,10 @@
         <div class="table-responsive">
             <table id="mytable" class="table table-bordred table-striped">
                 <thead>
-                <th><input type="checkbox" id="checkall" /></th>
+                <th><input type="checkbox" 
+                           id="checkall" 
+                           ng-model="chkBoxFrmt2D_ALL" 
+                           ng-click="toggleAllFormatoStampa(chkBoxFrmt2D_ALL)"/></th>
                 <th>Formato Stampa</th>
                 <th>Descrizione</th>
                 </thead>
