@@ -92,7 +92,11 @@
                                     return $scope.dominioFormati2D;
                                 },
                                 formati2dUtente: function () {
-                                    return formati2dUtente;
+                                    if (formati2dUtente && formati2dUtente.length>0){
+                                        return formati2dUtente;
+                                    }else {
+                                        return $scope.formatiStampa2DScelti;   
+                                    }
                                 }
                             }
                         });
@@ -100,7 +104,7 @@
                         modalInstance.result.then(function (formati2dScelti) {
                             $scope.formatiStampa2DScelti = formati2dScelti;
                         }, function () {
-                            console.log('Modal dismissed at: ' + new Date());
+                            //mainAnagFormati2Dmodal chiusa
                         });
                     };
                     /*Eventi del Routing */

@@ -12,8 +12,12 @@
                 <th>Descrizione</th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="formato in dominioFormati2D">
-                        <td><input type="checkbox" ng-model="chkBoxFrmt2D_$index" ng-click="toggleFormatoStampa(formato,chkBoxFrmt2D_$index)"/></td>
+                    <tr ng-repeat="formato in dominioFormati2D | evidenziaFormatiScelti : formatiStampa2DScelti">
+                        <td><input type="checkbox" 
+                                   ng-model="chkBoxFrmt2D_$index" 
+                                   ng-checked="formato.checked" 
+                                   ng-click="toggleFormatoStampa(formato,chkBoxFrmt2D_$index)"/>
+                        </td>
                         <td>{{formato.value}}</td>
                         <td>{{formato.label}}</td>
                     </tr>

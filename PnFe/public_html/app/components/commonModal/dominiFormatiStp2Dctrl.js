@@ -4,7 +4,7 @@ angular.module('printNetworkApp').controller('DominiFormatiStp2DCtrl', function 
 
     $scope.dominioFormati2D = dominioFormati2D;
     $scope.formatiStampa2DScelti = [];
-    if (formati2dUtente) {
+    if (formati2dUtente && formati2dUtente.length>0) {
         $scope.formatiStampa2DScelti = formati2dUtente;
     }
     $scope.ok = function () {
@@ -20,7 +20,7 @@ angular.module('printNetworkApp').controller('DominiFormatiStp2DCtrl', function 
             $scope.formatiStampa2DScelti.push(formatoSelezionato.value);
         } else {
             for (var i = 0; i < $scope.formatiStampa2DScelti.length; i++) {
-                if ($scope.formatiStampa2DScelti[i].value == formatoSelezionato.value) {
+                if ($scope.formatiStampa2DScelti[i] == formatoSelezionato.value) {
                     $scope.formatiStampa2DScelti.splice(i, 1);
                 }
             }
