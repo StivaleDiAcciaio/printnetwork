@@ -98,6 +98,81 @@
                                     </div>
                                 </div>
                                 <!--/STAMPANTE 2D-->
+                                <!--STAMPANTE 3D-->                                
+                                <div class="col-xs-12 form-group pull-left checkbox">
+                                    <input id="chkBoxStampa3D" ng-model="chkBoxStampa3D" type="checkbox">
+                                    <label for="chkBoxStampa3D">Stampante 3D</label>   
+                                </div>
+                                <div ng-show="chkBoxStampa3D">
+                                    <div class="col-xs-5 form-group">
+                                        <div class="row">
+                                            <div class="col-xs-12 form-group">
+                                                <label for="altezzaStampa3D">altezza {{formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura}}</label>   
+                                                <input id="altezzaStampa3D"
+                                                       name="altezzaStampa3D" 
+                                                       ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.altezza" 
+                                                       type="number" 
+                                                       min="0"
+                                                       max="1000"
+                                                       maxlength="4"
+                                                       class="form-control" 
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 form-group">
+                                                <label for="larghezzaStampa3D">larghezza {{formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura}}</label>   
+                                                <input id="larghezzaStampa3D"
+                                                       name="larghezzaStampa3D" 
+                                                       ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.larghezza" 
+                                                       type="number" 
+                                                       min="0"
+                                                       max="1000"
+                                                       maxlength="4"
+                                                       class="form-control" 
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 form-group">
+                                                <label for="profonditaStampa3D">profondità {{formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura}}</label>   
+                                                <input id="profonditaStampa3D"
+                                                       name="profonditaStampa3D" 
+                                                       ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.profondita" 
+                                                       type="number" 
+                                                       min="0"
+                                                       max="1000"
+                                                       maxlength="4"
+                                                       class="form-control" 
+                                                       required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-offset-3 col-xs-4 form-group" ng-init="formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura = 'cm'">
+                                        <div class="row">
+                                            <div class="col-xs-12 form-group">
+                                                <label for="idUnitaMisuraStampa3D">unità misura</label>   
+                                                <select id="idUnitaMisuraStampa3D"                 
+                                                        name="unitaMisuraStampa3D"
+                                                        class="form-control"
+                                                        ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura"
+                                                        required>
+                                                    <option ng-value="cm">cm</option>
+                                                    <option ng-value="mm">mm</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 form-group">
+                                        <input name="materialeStampa3D" 
+                                               ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.materiale" 
+                                               type="text" 
+                                               placeholder="materiale" 
+                                               class="form-control" 
+                                               required>
+                                    </div>
+                                </div>
+                                <!--/STAMPANTE 3D-->                                
                             </div>
                             <div class="form-group">
                                 <div class="row">

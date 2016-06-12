@@ -40,11 +40,11 @@
                 value: "A2",
                 label: "432 × 559 mm"
             },
-            "FORMATO_A1":{
+            "FORMATO_A1": {
                 value: "A1",
                 label: "559 × 864 mm"
             },
-            "FORMATO_A0":{
+            "FORMATO_A0": {
                 value: "A0",
                 label: "864 × 1118 mm"
             }
