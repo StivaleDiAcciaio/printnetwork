@@ -16,7 +16,7 @@ module.exports = mongoose.model('Utente', new Schema({
     tipologiaStampa: {
         stampa2D: {
             colore: String, /* B: bianco e nero, C: colori */
-            formato: [String] /* A4,A3,A2...TUTTI */
+            formato: [{value:String,label:String}] /* {A4,216 × 279 mm}.. */
         },
         stampa3D:{
             dimensioniMax: String, /* altezza X larghezza X profondita  (cm) */
