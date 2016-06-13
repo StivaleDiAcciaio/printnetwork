@@ -72,6 +72,7 @@
                                     <label for="chkBoxStampa2D">Stampante 2D</label>   
                                 </div>
                                 <div ng-show="chkBoxStampa2D">
+                                    <div class="col-xs-12"><hr></div>
                                     <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.tipologiaStampa.stampa2D.colore = 'C'">
                                         <input id="stampa2Dc" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
                                                value="C" ng-checked="true">
@@ -96,6 +97,7 @@
                                             <p>{{formato.label}}</p>
                                         </div>
                                     </div>
+                                    <div class="col-xs-12"><hr></div>
                                 </div>
                                 <!--/STAMPANTE 2D-->
                                 <!--STAMPANTE 3D-->                                
@@ -104,6 +106,7 @@
                                     <label for="chkBoxStampa3D">Stampante 3D</label>   
                                 </div>
                                 <div ng-show="chkBoxStampa3D">
+                                    <div class="col-xs-12"><hr></div>
                                     <div class="col-xs-5 form-group">
                                         <div class="row">
                                             <div class="col-xs-12 form-group">
@@ -148,7 +151,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-offset-3 col-xs-4 form-group" ng-init="formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura = 'cm'">
+                                    <div class="col-xs-offset-2 col-xs-5 form-group" ng-init="formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura = 'cm'">
                                         <div class="row">
                                             <div class="col-xs-12 form-group">
                                                 <label for="idUnitaMisuraStampa3D">unità misura</label>   
