@@ -49,20 +49,24 @@
                                 </span> 
                             </div>
                             <div class="col-xs-12 form-group pull-left checkbox">
-                                <input id="chkBoxCondividoStampante" ng-model="condividoStampante" type="checkbox">
+                                <input id="chkBoxCondividoStampante" 
+                                       ng-model="condividoStampante" 
+                                       type="checkbox">
                                 <label for="chkBoxCondividoStampante">Condivido Stampante</label>   
                             </div>
                             <!--CONDIVIDO STAMPANTE-->
                             <div ng-show="condividoStampante">
-                                <div class="col-xs-12 form-group" ng-init="tipoIndirizzo = 'approssimato'">
-                                    <input id="indirizzoApprossimato" type="radio" ng-model="tipoIndirizzo" value="approssimato" ng-checked="true">
+                                <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.indirizzo.tipoIndirizzo = 'approssimato'">
+                                    <input id="indirizzoApprossimato" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
+                                           value="approssimato" 
+                                           ng-checked="true">
                                     <label for="indirizzoApprossimato">Indirizzo approssimato</label>
-                                    <input id="indirizzoEsatto" type="radio" ng-model="tipoIndirizzo" value="esatto">
+                                    <input id="indirizzoEsatto" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" value="esatto">
                                     <label for="indirizzoEsatto">Indirizzo esatto</label>
                                 </div>
                                 <div class="form-group">
-                                    <span ng-show="tipoIndirizzo == 'approssimato'" class="infoNearField">nei pressi di:</span>
-                                    <input ng-model="formRegistrazioneData.indirizzo" type="text" 
+                                    <span ng-show="formRegistrazioneData.indirizzo.tipoIndirizzo == 'approssimato'" class="infoNearField">nei pressi di:</span>
+                                    <input ng-model="formRegistrazioneData.indirizzo.descrizione" type="text" 
                                            class="form-control"  title="puoi fornire un indirizzo approssimativo se vuoi"
                                            placeholder="indirizzo (es:via ester cuttica 200,Legnano)" tabindex="2" required>
                                 </div>
