@@ -9,7 +9,10 @@ module.exports = mongoose.model('Utente', new Schema({
     nome: String, 
     cognome: String, 
     email: String, 
-    indirizzo: String,
+    indirizzo: {
+            tipoIndirizzo:String,
+            descrizione: String
+    },
     nick: String, 
     password: String, 
     tipologiaUtente:String,/* P: privato, A: attivita commerciale */
