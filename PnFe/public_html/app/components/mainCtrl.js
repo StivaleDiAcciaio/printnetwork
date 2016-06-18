@@ -84,6 +84,10 @@
                         $location.hash(idElemento);
                         $anchorScroll();
                     };
+                    $scope.mainAggiungiFormato2D = function (formato){
+                        $scope.formatiStampa2DScelti = [];//reset dell'array
+                        $scope.formatiStampa2DScelti.push(formato);
+                    };
                     $scope.mainAnagFormati2Dmodal = function (size,formati2dUtente) {
                         var modalInstance = $uibModal.open({
                             animation: true,

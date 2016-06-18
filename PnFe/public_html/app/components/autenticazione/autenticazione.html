@@ -48,13 +48,13 @@
                                     conferma la password
                                 </span> 
                             </div>
+                            <!--CONDIVIDO STAMPANTE-->
                             <div class="col-xs-12 form-group pull-left checkbox">
                                 <input id="chkBoxCondividoStampante" 
                                        ng-model="condividoStampante" 
                                        type="checkbox">
                                 <label for="chkBoxCondividoStampante">Condivido Stampante</label>   
                             </div>
-                            <!--CONDIVIDO STAMPANTE-->
                             <div ng-show="condividoStampante">
                                 <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.indirizzo.tipoIndirizzo = 'approssimato'">
                                     <input id="indirizzoApprossimato" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
@@ -68,14 +68,14 @@
                                     <span ng-show="formRegistrazioneData.indirizzo.tipoIndirizzo == 'approssimato'" class="infoNearField">nei pressi di:</span>
                                     <input ng-model="formRegistrazioneData.indirizzo.descrizione" type="text" 
                                            class="form-control"  title="puoi fornire un indirizzo approssimativo se vuoi"
-                                           placeholder="indirizzo (es:via ester cuttica 200,Legnano)" tabindex="2" required>
+                                           placeholder="indirizzo (es:via ester cuttica 200,Legnano)" tabindex="2" ng-required="condividoStampante">
                                 </div>
                                 <!--STAMPANTE 2D-->
                                 <div class="col-xs-12 form-group pull-left checkbox">
-                                    <input id="chkBoxStampa2D" ng-model="chkBoxStampa2D" type="checkbox">
+                                    <input id="chkBoxStampa2D" ng-model="chkBoxStampa2D" type="checkbox" ng-required="condividoStampante">
                                     <label for="chkBoxStampa2D">Stampante 2D</label>   
                                 </div>
-                                <div ng-show="chkBoxStampa2D">
+                                <div ng-if="chkBoxStampa2D" ng-init="defaultFormatoStampa2D()">
                                     <div class="col-xs-12"><hr></div>
                                     <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.tipologiaStampa.stampa2D.colore = 'C'">
                                         <input id="stampa2Dc" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
@@ -109,7 +109,7 @@
                                     <input id="chkBoxStampa3D" ng-model="chkBoxStampa3D" type="checkbox">
                                     <label for="chkBoxStampa3D">Stampante 3D</label>   
                                 </div>
-                                <div ng-show="chkBoxStampa3D">
+                                <div ng-if="chkBoxStampa3D">
                                     <div class="col-xs-12"><hr></div>
                                     <div class="col-xs-5 form-group">
                                         <div class="row">
@@ -123,7 +123,7 @@
                                                        max="1000"
                                                        maxlength="4"
                                                        class="form-control" 
-                                                       required>
+                                                       ng-required="chkBoxStampa3D">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -137,7 +137,7 @@
                                                        max="1000"
                                                        maxlength="4"
                                                        class="form-control" 
-                                                       required>
+                                                       ng-required="chkBoxStampa3D">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -151,7 +151,7 @@
                                                        max="1000"
                                                        maxlength="4"
                                                        class="form-control" 
-                                                       required>
+                                                       ng-required="chkBoxStampa3D">
                                             </div>
                                         </div>
                                     </div>
@@ -163,7 +163,7 @@
                                                         name="unitaMisuraStampa3D"
                                                         class="form-control"
                                                         ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura"
-                                                        required>
+                                                        ng-required="chkBoxStampa3D">
                                                     <option ng-value="cm">cm</option>
                                                     <option ng-value="mm">mm</option>
                                                 </select>
@@ -176,15 +176,25 @@
                                                type="text" 
                                                placeholder="materiale" 
                                                class="form-control" 
-                                               required>
+                                               ng-required="chkBoxStampa3D">
                                     </div>
                                 </div>
                                 <!--/STAMPANTE 3D-->                                
                             </div>
-                            <div class="form-group">
+                            <div ng-show="formRegistrazione.$valid" class="form-group" >
+                                <div class="col-xs-12 form-group pull-left checkbox">
+                                    <input id="chkBoxPrivacy" ng-model="chkBoxPrivacy" type="checkbox">
+                                    <label for="chkBoxPrivacy">Ho letto</label>   
+                                    <a style="cursor:pointer" data-toggle="modal" data-target="#myModal">informativa sulla privacy</a>
+                                </div>
+                                <div class="col-xs-12 form-group pull-left checkbox">
+                                    <input id="chkBoxRegolamento" ng-model="chkBoxRegolamento" type="checkbox">
+                                    <label for="chkBoxRegolamento">Ho letto il</label>
+                                    <a style="cursor:pointer" data-toggle="modal" data-target="#myModal">regolamento</a> 
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">
-                                        <button class="btn btn-lg btn-primary btn-block" ng-click="registrazione(formRegistrazione)">Salva</button>
+                                        <button ng-disabled="!chkBoxRegolamento || !chkBoxPrivacy" class="btn btn-lg btn-primary btn-block" ng-click="registrazione(formRegistrazione)">Salva</button>
                                     </div>
                                 </div>
                             </div>
@@ -205,6 +215,28 @@
         </div>
     </div>
 </div>
+
+<!-- Modale Privacy -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 <script type="text/javascript">
     $(function () {
         $('#idFormLoginLink').click(function (e) {
