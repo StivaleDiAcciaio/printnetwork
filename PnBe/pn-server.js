@@ -79,14 +79,19 @@ appRouter.post('/registrazione', function (req, res) {
     //================================
 
     moduloDbUtente.creaUtente(req.body.utente, function (risultato) {
-        if (!risultato.esito) {
+        if (!risultato.esito && risultato.codErr == 500) {
             logger.error('errore durante creazione utente');
             logger.error(risultato.messaggio);
             res.status(500).send({
                 esito: risultato.esito,
                 messaggio: 'errore durante creazione utente'
             });
-        } else {
+        } else if (!risultato.esito && risultato.codErr != 500) {
+            res.status(500).send({
+                esito: risultato.esito,
+                messaggio: risultato.messaggio
+            });
+        } else if (risultato.esito) {
             res.json({esito: risultato.esito,
                 messaggio: risultato.messaggio});
         }
