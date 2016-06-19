@@ -39,6 +39,10 @@
                                 <input name="passwordRegistrazione" ng-model="formRegistrazioneData.password" type="password" placeholder="Password" class="form-control" tabindex="2" required>
                             </div>
                             <div class="form-group">
+                                <!--
+                                    tramite la direttiva conferma-password
+                                    capiamo se è stata correttamente confermata la password
+                                -->
                                 <input name="confermaPasswordRegistrazione" ng-model="confermaPasswordRegistrazione" 
                                        ng-show="formRegistrazione.confermaPasswordRegistrazione.$error.confronta"
                                        type="password" placeholder="Conferma Password" 
@@ -72,7 +76,8 @@
                                 </div>
                                 <!--STAMPANTE 2D-->
                                 <div class="col-xs-12 form-group pull-left checkbox">
-                                    <input id="chkBoxStampa2D" ng-model="chkBoxStampa2D" type="checkbox" ng-required="condividoStampante">
+                                    <!--se condivido stampate ma non ho selezionato nemmeno una stampa3d questo checkBox sara required-->
+                                    <input id="chkBoxStampa2D" ng-model="chkBoxStampa2D" type="checkbox" ng-required="condividoStampante &&!chkBoxStampa3D">
                                     <label for="chkBoxStampa2D">Stampante 2D</label>   
                                 </div>
                                 <div ng-if="chkBoxStampa2D" ng-init="defaultFormatoStampa2D()">
@@ -90,6 +95,21 @@
                                             <button class="btn btn-secondary btn-block" ng-click="mainAnagFormati2Dmodal('sm')">formati disponibli</button>
                                         </div>
                                     </div>
+                                    <!--
+                                        tramite la direttiva formati-2d-min
+                                        capiamo se è stato scelto almeno un formato stampa2d.
+                                    -->
+                                    <div class="col-xs-12 form-group">
+                                        <label name="fs2dScelti"
+                                               ng-model="formatiStampa2DScelti.length" 
+                                               formati-2d-min="formatiStampa2DScelti">formati stampa 2d scelti: {{formatiStampa2DScelti.length}}</label>
+                                        <div>
+                                            <span class="label label-danger" ng-show="formRegistrazione.fs2dScelti.$error.checkFrmt2d">
+                                                seleziona almeno un formato 2d
+                                            </span> 
+                                        </div>
+                                    </div>
+
                                     <div class="col-xs-12 form-group" ng-repeat="formato in formatiStampa2DScelti">
                                         <div class="col-xs-4">
                                             <label>Formato stampa</label>
@@ -106,7 +126,8 @@
                                 <!--/STAMPANTE 2D-->
                                 <!--STAMPANTE 3D-->                                
                                 <div class="col-xs-12 form-group pull-left checkbox">
-                                    <input id="chkBoxStampa3D" ng-model="chkBoxStampa3D" type="checkbox">
+                                    <!--se condivido stampate ma non ho selezionato nemmeno una stampa2d questo checkBox sara required-->
+                                    <input id="chkBoxStampa3D" ng-model="chkBoxStampa3D" type="checkbox" ng-required="condividoStampante &&!chkBoxStampa2D">
                                     <label for="chkBoxStampa3D">Stampante 3D</label>   
                                 </div>
                                 <div ng-if="chkBoxStampa3D">
@@ -217,25 +238,25 @@
 </div>
 
 <!-- Modale Privacy -->
-  <div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
         </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
+
     </div>
-  </div>
+</div>
 
 <script type="text/javascript">
     $(function () {

@@ -12,9 +12,9 @@
                     $scope.dominioFormati2D[2] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A2;
                     $scope.dominioFormati2D[3] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A1;
                     $scope.dominioFormati2D[4] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A0;
-                    
+
                     $scope.formatiStampa2DScelti = [];
-                   
+
                     $scope.setPaginaCorrente = function (pagina) {
                         $scope.paginaCorrente = {};
                         $scope.paginaCorrente.nome = pagina;
@@ -84,11 +84,20 @@
                         $location.hash(idElemento);
                         $anchorScroll();
                     };
-                    $scope.mainAggiungiFormato2D = function (formato){
-                        $scope.formatiStampa2DScelti = [];//reset dell'array
-                        $scope.formatiStampa2DScelti.push(formato);
+                    $scope.mainAggiungiFormato2D = function (formato) {
+                        //prima di aggiungere il formato verifico che non sia già presente
+                        var esiste = false;
+                        for (var i = 0; i < $scope.formatiStampa2DScelti.length; i++) {
+                            if ($scope.formatiStampa2DScelti[i].value == formato.value) {
+                                esiste = true;
+                                break;
+                            }
+                        }
+                        if (!esiste) {
+                            $scope.formatiStampa2DScelti.push(formato);
+                        }
                     };
-                    $scope.mainAnagFormati2Dmodal = function (size,formati2dUtente) {
+                    $scope.mainAnagFormati2Dmodal = function (size, formati2dUtente) {
                         var modalInstance = $uibModal.open({
                             animation: true,
                             templateUrl: 'app/components/commonModal/dominiFormatiStp2D.html',
@@ -99,10 +108,10 @@
                                     return $scope.dominioFormati2D;
                                 },
                                 formati2dUtente: function () {
-                                    if (formati2dUtente && formati2dUtente.length>0){
+                                    if (formati2dUtente && formati2dUtente.length > 0) {
                                         return formati2dUtente;
-                                    }else {
-                                        return $scope.formatiStampa2DScelti;   
+                                    } else {
+                                        return $scope.formatiStampa2DScelti;
                                     }
                                 }
                             }

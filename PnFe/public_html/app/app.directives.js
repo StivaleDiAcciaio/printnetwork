@@ -178,11 +178,11 @@ angular.module('printNetworkApp')
 });
 
 angular.module('printNetworkApp')
-        .directive('checkFormato2d', function (){
+        .directive('formati2dMin', function (){
     return {
         require: "ngModel",
         scope: {
-            formatiScelti: "=checkFormato2d"
+            formatiScelti: "=formati2dMin"
         },
         link: function(scope, element, attributes, ngModel) {
              

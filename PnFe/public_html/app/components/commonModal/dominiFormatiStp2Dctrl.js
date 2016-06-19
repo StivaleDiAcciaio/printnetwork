@@ -44,7 +44,7 @@ angular.module('printNetworkApp').controller('DominiFormatiStp2DCtrl', function 
                 $scope.formatiStampa2DScelti.push(objFormatoSelezionato);
             }
         } else {
-            //se il formato stampa è stato deselezionato..
+            //se il formato stampa è stato deselezionato..lo rimuovo
             for (var i = 0; i < $scope.formatiStampa2DScelti.length; i++) {
                 if ($scope.formatiStampa2DScelti[i].value == formatoSelezionato.value) {
                     $scope.formatiStampa2DScelti.splice(i, 1);
