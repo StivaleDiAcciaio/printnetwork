@@ -81,7 +81,7 @@
         <div class="container margineContainer">
             <div ui-view="content"></div>
             <div id="messaggiUtente" ng-show="messaggio" style="text-align: center">
-                <h3><span ng-class="messaggio.level == 'INFO' ? 'label label-info' :
+                <h3><span ng-class="messaggio.level == 'INFO' ? 'label label-success' :
                                         messaggio.level == 'WARNING' ? 'label label-warning' :
                                         'label label-danger'">
                         {{messaggio.contenuto}}</span></h3>

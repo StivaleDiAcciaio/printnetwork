@@ -190,4 +190,5 @@ label {
   display: inline-block;
   position: relative;
   font-style: italic;
+  padding-right: 10px;
 }

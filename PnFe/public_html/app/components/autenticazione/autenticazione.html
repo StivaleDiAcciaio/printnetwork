@@ -60,15 +60,25 @@
                                 <label for="chkBoxCondividoStampante">Condivido Stampante</label>   
                             </div>
                             <div ng-show="condividoStampante">
+                                <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.tipologiaUtente = 'P'">
+                                    <span class="infoNearField">sei un </span>
+                                    <input id="utentePrivato" type="radio" ng-model="formRegistrazioneData.tipologiaUtente" 
+                                           value="P" 
+                                           ng-checked="true">
+                                    <label for="utentePrivato">privato</label>
+                                    <input id="attivitaCommerciale" type="radio" ng-model="formRegistrazioneData.tipologiaUtente" value="A">
+                                    <label for="attivitaCommerciale">attivita commerciale</label>
+                                </div>
                                 <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.indirizzo.tipoIndirizzo = 'approssimato'">
+                                    <span class="infoNearField">fornisco un indirizzo </span>
                                     <input id="indirizzoApprossimato" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
                                            value="approssimato" 
                                            ng-checked="true">
-                                    <label for="indirizzoApprossimato">Indirizzo approssimato</label>
+                                    <label for="indirizzoApprossimato">approssimato</label>
                                     <input id="indirizzoEsatto" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" value="esatto">
-                                    <label for="indirizzoEsatto">Indirizzo esatto</label>
+                                    <label for="indirizzoEsatto">esatto</label>
                                 </div>
-                                <div class="form-group">
+                                <div class="col-xs-12 form-group">
                                     <span ng-show="formRegistrazioneData.indirizzo.tipoIndirizzo == 'approssimato'" class="infoNearField">nei pressi di:</span>
                                     <input ng-model="formRegistrazioneData.indirizzo.descrizione" type="text" 
                                            class="form-control"  title="puoi fornire un indirizzo approssimativo se vuoi"
@@ -78,7 +88,7 @@
                                 <div class="col-xs-12 form-group pull-left checkbox">
                                     <!--se condivido stampate ma non ho selezionato nemmeno una stampa3d questo checkBox sara required-->
                                     <input id="chkBoxStampa2D" ng-model="chkBoxStampa2D" type="checkbox" ng-required="condividoStampante &&!chkBoxStampa3D">
-                                    <label for="chkBoxStampa2D">Stampante 2D</label>   
+                                    <label for="chkBoxStampa2D">Ho una Stampante 2D</label>   
                                 </div>
                                 <div ng-if="chkBoxStampa2D" ng-init="defaultFormatoStampa2D()">
                                     <div class="col-xs-12"><hr></div>
@@ -128,7 +138,7 @@
                                 <div class="col-xs-12 form-group pull-left checkbox">
                                     <!--se condivido stampate ma non ho selezionato nemmeno una stampa2d questo checkBox sara required-->
                                     <input id="chkBoxStampa3D" ng-model="chkBoxStampa3D" type="checkbox" ng-required="condividoStampante &&!chkBoxStampa2D">
-                                    <label for="chkBoxStampa3D">Stampante 3D</label>   
+                                    <label for="chkBoxStampa3D">Ho una Stampante 3D</label>   
                                 </div>
                                 <div ng-if="chkBoxStampa3D">
                                     <div class="col-xs-12"><hr></div>
