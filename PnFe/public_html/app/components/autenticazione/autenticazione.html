@@ -59,15 +59,16 @@
                             <div class="col-xs-12 form-group pull-left checkbox">
                                 <input id="chkBoxCondividoStampante" 
                                        ng-model="condividoStampante" 
+                                       ng-click="boxCondividoStampante(condividoStampante)"
                                        type="checkbox">
                                 <label for="chkBoxCondividoStampante">Condivido Stampante</label>   
                             </div>
-                            <div ng-show="condividoStampante">
+                            <div ng-if="condividoStampante">
                                 <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.tipologiaUtente = 'P'">
                                     <span class="infoNearField">sei un </span>
                                     <input id="utentePrivato" type="radio" ng-model="formRegistrazioneData.tipologiaUtente" 
                                            value="P" 
-                                           ng-checked="true">
+                                           ng-checked="condividoStampante">
                                     <label for="utentePrivato">privato</label>
                                     <input id="attivitaCommerciale" type="radio" ng-model="formRegistrazioneData.tipologiaUtente" value="A">
                                     <label for="attivitaCommerciale">attivita commerciale</label>
@@ -76,7 +77,7 @@
                                     <span class="infoNearField">fornisco un indirizzo </span>
                                     <input id="indirizzoApprossimato" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
                                            value="A" 
-                                           ng-checked="true">
+                                           ng-checked="condividoStampante">
                                     <label for="indirizzoApprossimato">approssimato</label>
                                     <input id="indirizzoEsatto" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
                                            value="E">
@@ -95,14 +96,19 @@
                                 <!--STAMPANTE 2D-->
                                 <div class="col-xs-12 form-group pull-left checkbox">
                                     <!--se condivido stampate ma non ho selezionato nemmeno una stampa3d questo checkBox sara required-->
-                                    <input id="chkBoxStampa2D" ng-model="chkBoxStampa2D" type="checkbox" ng-required="condividoStampante &&!chkBoxStampa3D">
+                                    <input id="chkBoxStampa2D" 
+                                           ng-model="chkBoxStampa2D" 
+                                           ng-click="boxCondividoST2D(chkBoxStampa2D)"
+                                           type="checkbox" 
+                                           ng-required="condividoStampante &&!chkBoxStampa3D">
                                     <label for="chkBoxStampa2D">Ho una Stampante 2D</label>   
                                 </div>
                                 <div ng-if="chkBoxStampa2D" ng-init="defaultFormatoStampa2D()">
                                     <div class="col-xs-12"><hr></div>
                                     <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.tipologiaStampa.stampa2D.colore = 'C'">
                                         <input id="stampa2Dc" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
-                                               value="C" ng-checked="true">
+                                               value="C" 
+                                               ng-checked="chkBoxStampa2D">
                                         <label for="stampa2Dc">a colori</label>
                                         <input id="stampa2Db" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
                                                value="B">
@@ -145,7 +151,11 @@
                                 <!--STAMPANTE 3D-->                                
                                 <div class="col-xs-12 form-group pull-left checkbox">
                                     <!--se condivido stampate ma non ho selezionato nemmeno una stampa2d questo checkBox sara required-->
-                                    <input id="chkBoxStampa3D" ng-model="chkBoxStampa3D" type="checkbox" ng-required="condividoStampante &&!chkBoxStampa2D">
+                                    <input id="chkBoxStampa3D" 
+                                           ng-model="chkBoxStampa3D" 
+                                           ng-click="boxCondividoST3D(chkBoxStampa3D)"
+                                           type="checkbox" 
+                                           ng-required="condividoStampante &&!chkBoxStampa2D">
                                     <label for="chkBoxStampa3D">Ho una Stampante 3D</label>   
                                 </div>
                                 <div ng-if="chkBoxStampa3D">
@@ -248,7 +258,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">
-                                        <button ng-disabled="!chkBoxRegolamento || !chkBoxPrivacy" class="btn btn-lg btn-primary btn-block" ng-click="registrazione(formRegistrazione)">Salva</button>
+                                        <button ng-disabled="!chkBoxRegolamento || !chkBoxPrivacy" 
+                                                class="btn btn-lg btn-primary btn-block" 
+                                                ng-click="registrazione(formRegistrazione)">Salva</button>
+                                        <button type="reset" value="Reset" ng-click="resetRegistrazione()">Reset</button>
                                     </div>
                                 </div>
                             </div>

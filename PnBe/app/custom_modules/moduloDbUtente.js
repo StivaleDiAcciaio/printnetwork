@@ -113,7 +113,7 @@ validaInputCreaUtente = function (utente) {
     //Se ha scelto di condividere stampante..
     if (utente.tipologiaUtente && utente.tipologiaUtente.length > 1) {
         return false;
-    } else if(utente.tipologiaUtente && utente.tipologiaUtente.length==1){
+    } else if (utente.tipologiaUtente && utente.tipologiaUtente.length == 1) {
         //verifico i campi necessari..
         if (!utente.tipologiaStampa) {
             return false;
@@ -132,39 +132,51 @@ validaInputCreaUtente = function (utente) {
 
 checkIndirizzoCompilato = function (indirizzo) {
     var valido = true;
-    if (!indirizzo || !indirizzo.tipoIndirizzo || !indirizzo.descrizione) {
-        valido = false;
-    } else if (indirizzo.tipoIndirizzo.length > 1 || indirizzo.descrizione.length > LUNGHEZZA_MAX_GENERICA) {
+    try {
+        if (!indirizzo || !indirizzo.tipoIndirizzo || !indirizzo.descrizione) {
+            valido = false;
+        } else if (indirizzo.tipoIndirizzo.length > 1 || indirizzo.descrizione.length > LUNGHEZZA_MAX_GENERICA) {
+            valido = false;
+        }
+    } catch (err) {
         valido = false;
     }
     return valido;
 };
 checkStampa2DCompilata = function (stampa2d) {
     var valido = true;
-    if (!stampa2d || !stampa2d.colore || !stampa2d.formato) {
-        valido = false;
-    } else if (stampa2d.colore.length > 1 || stampa2d.formato.length > 5) {//5 elementi al massimo
-        valido = false;
-    } else {
-        for (var i = 0; i < stampa2d.formato.length; i++) {
-            if (!stampa2d.formato[i].value || stampa2d.formato[i].value.length > 2 ||
-                    !stampa2d.formato[i].label || stampa2d.formato[i].label.value.length > 15
-                    ) {
-                valido = false;
-                break;
+    try {
+        if (!stampa2d || !stampa2d.colore || !stampa2d.formato) {
+            valido = false;
+        } else if (stampa2d.colore.length > 1 || stampa2d.formato.length > 5) {//5 elementi al massimo
+            valido = false;
+        } else {
+            for (var i = 0; i < stampa2d.formato.length; i++) {
+                if (!stampa2d.formato[i].value || stampa2d.formato[i].value.length > 2 ||
+                        !stampa2d.formato[i].label || stampa2d.formato[i].label.length > 15
+                        ) {
+                    valido = false;
+                    break;
+                }
             }
         }
+    } catch (err) {
+        valido = false;
     }
     return valido;
 };
 checkStampa3DCompilata = function (stampa3d) {
     var valido = true;
-    if (!stampa3d || !stampa3d.altezza || !stampa3d.larghezza || !stampa3d.profondita || !stampa3d.unitaDimisura ||
-            !stampa3d.materiale) {
-        valido = false;
-    } else if (stampa3d.altezza.length > 4 || stampa3d.larghezza.length > 4 || stampa3d.profondita.length > 4) {
-        valido = false;
-    } else if (stampa3d.unitaDimisura.length > 2 || stampa3d.materiale.length > 20) {
+    try{
+        if (!stampa3d || !stampa3d.altezza || !stampa3d.larghezza || !stampa3d.profondita || !stampa3d.unitaDimisura ||
+                !stampa3d.materiale) {
+            valido = false;
+        } else if (stampa3d.altezza.length > 4 || stampa3d.larghezza.length > 4 || stampa3d.profondita.length > 4) {
+            valido = false;
+        } else if (stampa3d.unitaDimisura.length > 2 || stampa3d.materiale.length > 20) {
+            valido = false;
+        }
+    }catch(err){
         valido = false;
     }
     return valido;
