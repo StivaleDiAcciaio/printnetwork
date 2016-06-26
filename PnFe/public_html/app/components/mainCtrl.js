@@ -97,6 +97,9 @@
                             $scope.formatiStampa2DScelti.push(formato);
                         }
                     };
+                    $scope.mainResetFormati2D = function (){
+                         $scope.formatiStampa2DScelti = [];
+                    };
                     $scope.mainAnagFormati2Dmodal = function (size, formati2dUtente) {
                         var modalInstance = $uibModal.open({
                             animation: true,

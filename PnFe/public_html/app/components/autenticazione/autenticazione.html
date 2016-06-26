@@ -257,12 +257,15 @@
                                     <a style="cursor:pointer" data-toggle="modal" data-target="#regolamentoModal">regolamento</a> 
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">
+                                    <div class="col-sm-6">
                                         <button ng-disabled="!chkBoxRegolamento || !chkBoxPrivacy" 
                                                 class="btn btn-lg btn-primary btn-block" 
                                                 ng-click="registrazione(formRegistrazione)">Salva</button>
-                                        <button type="reset" value="Reset" ng-click="resetRegistrazione()">Reset</button>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <button type="reset" value="Reset" ng-click="resetRegistrazione()"
+                                                class="btn btn-lg btn-primary btn-block">reset</button>
+                                    </div>               
                                 </div>
                             </div>
                         </form>

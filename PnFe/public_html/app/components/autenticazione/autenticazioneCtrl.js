@@ -13,6 +13,7 @@
                     }
 
                     $scope.defaultFormatoStampa2D = function () {
+                        $scope.mainResetFormati2D();
                         $scope.mainAggiungiFormato2D(COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A4);
                     };
                     $scope.resetFormLogin = function () {
@@ -68,19 +69,19 @@
                     };
 
                     $scope.boxCondividoST3D = function (checkBox3D) {
-                        if (!checkBox3D) {
+                        if (!checkBox3D && $scope.formRegistrazioneData && $scope.formRegistrazioneData.tipologiaStampa) {
                             //non condivido stampante 3D
                             $scope.formRegistrazioneData.tipologiaStampa.stampa3D = null;
                         }
                     };
                     $scope.boxCondividoST2D = function (checkBox2D) {
-                        if (!checkBox2D) {
+                        if (!checkBox2D && $scope.formRegistrazioneData && $scope.formRegistrazioneData.tipologiaStampa) {
                             //non condivido stampante 2D
                             $scope.formRegistrazioneData.tipologiaStampa.stampa2D = null;
                         }
                     };
                     $scope.boxCondividoStampante = function (checkCondividoStampante) {
-                        if (!checkCondividoStampante) {
+                        if (!checkCondividoStampante && $scope.formRegistrazioneData) {
                             //non condivido nessuna stampante
                             $scope.formRegistrazioneData.tipologiaStampa = null;
                             $scope.formRegistrazioneData.tipologiaUtente = null;
@@ -90,7 +91,11 @@
                     $scope.resetRegistrazione = function () {
                         //resetto anche il model
                         $scope.condividoStampante = false;
+                        $scope.chkBoxRegolamento= false;
+                        $scope.chkBoxPrivacy = false;
                         $scope.formRegistrazioneData = null;
+                        $scope.resetMessaggioUtente();
+                        
                     };
                 }]);
 }());
