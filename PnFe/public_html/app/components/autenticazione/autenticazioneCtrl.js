@@ -46,11 +46,12 @@
                     $scope.registrazione = function (formRegistrazione) {
                         if (formRegistrazione.$valid) {
                             if ($scope.condividoStampante){
-                                if ($scope.formatiStampa2DScelti) {
+                                if ($scope.formatiStampa2DScelti && $scope.formatiStampa2DScelti.length>0) {
                                     $scope.formRegistrazioneData.tipologiaStampa.stampa2D.formato = $scope.formatiStampa2DScelti;
                                 }
-                            }else{
+                            }else{//non condivido stampante
                                 $scope.formRegistrazioneData.tipologiaStampa = null;
+                                $scope.formRegistrazioneData.tipologiaUtente = null;
                                 $scope.formRegistrazioneData.indirizzo = null;
                             }
                             serviziRest.registrazione({utente: $scope.formRegistrazioneData}).then(function (response) {

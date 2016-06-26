@@ -30,13 +30,16 @@
                         <form id="idFormRegistrazione" name="formRegistrazione" role="form" style="display: none;">
                             <h2>REGISTRAZIONE</h2>
                             <div class="form-group">
-                                <input name="nickRegistrazione" ng-model="formRegistrazioneData.nick" type="text" class="form-control" placeholder="Nome utente" tabindex="1" required autofocus>
+                                <input name="nickRegistrazione" ng-model="formRegistrazioneData.nick" type="text" class="form-control" placeholder="Nome utente" tabindex="1" required autofocus maxlength="50">
                             </div>
                             <div class="form-group">
-                                <input name="emailRegistrazione" ng-model="formRegistrazioneData.email" type="email" placeholder="Email" class="form-control" tabindex="1" required>
+                                <input name="emailRegistrazione" ng-model="formRegistrazioneData.email" type="email" placeholder="Email" class="form-control" tabindex="1" required maxlength="50">
+                                <span class="label label-danger" ng-show="formRegistrazione.emailRegistrazione.$error.email">
+                                    email non valida.
+                                </span> 
                             </div>
                             <div class="form-group">
-                                <input name="passwordRegistrazione" ng-model="formRegistrazioneData.password" type="password" placeholder="Password" class="form-control" tabindex="2" required>
+                                <input name="passwordRegistrazione" ng-model="formRegistrazioneData.password" type="password" placeholder="Password" class="form-control" tabindex="2" required maxlength="50">
                             </div>
                             <div class="form-group">
                                 <!--
@@ -69,20 +72,25 @@
                                     <input id="attivitaCommerciale" type="radio" ng-model="formRegistrazioneData.tipologiaUtente" value="A">
                                     <label for="attivitaCommerciale">attivita commerciale</label>
                                 </div>
-                                <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.indirizzo.tipoIndirizzo = 'approssimato'">
+                                <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.indirizzo.tipoIndirizzo = 'A'">
                                     <span class="infoNearField">fornisco un indirizzo </span>
                                     <input id="indirizzoApprossimato" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
-                                           value="approssimato" 
+                                           value="A" 
                                            ng-checked="true">
                                     <label for="indirizzoApprossimato">approssimato</label>
-                                    <input id="indirizzoEsatto" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" value="esatto">
+                                    <input id="indirizzoEsatto" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
+                                           value="E">
                                     <label for="indirizzoEsatto">esatto</label>
                                 </div>
                                 <div class="col-xs-12 form-group">
                                     <span ng-show="formRegistrazioneData.indirizzo.tipoIndirizzo == 'approssimato'" class="infoNearField">nei pressi di:</span>
-                                    <input ng-model="formRegistrazioneData.indirizzo.descrizione" type="text" 
-                                           class="form-control"  title="puoi fornire un indirizzo approssimativo se vuoi"
+                                    <input name="indirizzo" 
+                                           ng-model="formRegistrazioneData.indirizzo.descrizione" type="text" 
+                                           class="form-control"  title="puoi fornire un indirizzo approssimativo se vuoi" maxlength="50"
                                            placeholder="indirizzo (es:via ester cuttica 200,Legnano)" tabindex="2" ng-required="condividoStampante">
+                                    <span class="label label-danger" ng-show="formRegistrazione.indirizzo.$error.required">
+                                        inserisci indirizzo
+                                    </span> 
                                 </div>
                                 <!--STAMPANTE 2D-->
                                 <div class="col-xs-12 form-group pull-left checkbox">
@@ -154,7 +162,11 @@
                                                        max="1000"
                                                        maxlength="4"
                                                        class="form-control" 
+                                                       ng-class="formRegistrazione.altezzaStampa3D.$error.required? 'borderRed' :''"
                                                        ng-required="chkBoxStampa3D">
+                                                <span class="label label-danger" ng-show="formRegistrazione.altezzaStampa3D.$error.max">
+                                                    valore max 1000.
+                                                </span>                                                 
                                             </div>
                                         </div>
                                         <div class="row">
@@ -168,7 +180,11 @@
                                                        max="1000"
                                                        maxlength="4"
                                                        class="form-control" 
+                                                       ng-class="formRegistrazione.larghezzaStampa3D.$error.required? 'borderRed' :''"
                                                        ng-required="chkBoxStampa3D">
+                                                <span class="label label-danger" ng-show="formRegistrazione.larghezzaStampa3D.$error.max">
+                                                    valore max 1000.
+                                                </span> 
                                             </div>
                                         </div>
                                         <div class="row">
@@ -182,7 +198,11 @@
                                                        max="1000"
                                                        maxlength="4"
                                                        class="form-control" 
+                                                       ng-class="formRegistrazione.profonditaStampa3D.$error.required? 'borderRed' :''"
                                                        ng-required="chkBoxStampa3D">
+                                                <span class="label label-danger" ng-show="formRegistrazione.profonditaStampa3D.$error.max">
+                                                    valore max 1000.
+                                                </span> 
                                             </div>
                                         </div>
                                     </div>
@@ -206,8 +226,11 @@
                                                ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.materiale" 
                                                type="text" 
                                                placeholder="materiale" 
-                                               class="form-control" 
+                                               class="form-control" maxlength="20"
                                                ng-required="chkBoxStampa3D">
+                                        <span class="label label-danger" ng-show="formRegistrazione.materialeStampa3D.$error.required">
+                                            inserisci materiale
+                                        </span> 
                                     </div>
                                 </div>
                                 <!--/STAMPANTE 3D-->                                

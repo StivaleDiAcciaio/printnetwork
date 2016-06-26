@@ -192,3 +192,6 @@ label {
   font-style: italic;
   padding-right: 10px;
 }
+.borderRed{
+  border: 3px solid red;
+}
