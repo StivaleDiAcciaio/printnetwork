@@ -30,7 +30,32 @@
     -webkit-animation: HeroBG 20s ease infinite;
     animation: HeroBG 20s ease infinite;
 }
-
+/* css per boxerare immagini */
+.box > .icon { 
+    text-align: 
+        center; 
+    position: 
+        relative; 
+}
+.box > .icon > .image { 
+    position: relative; 
+    z-index: 2; 
+    margin: auto; 
+    width: 88px; 
+    height: 88px; 
+    border: 8px solid white; 
+    line-height: 88px; 
+    border-radius: 50%; 
+    background: #428bca; 
+    vertical-align: middle; 
+}
+.box > .icon > .image > i { 
+    font-size: 36px !important; 
+    color: #fff !important; 
+}
+.box > .icon:hover > .image > i { 
+    color: white !important; 
+}
 @-webkit-keyframes HeroBG {
     0% {
         background-position: 0 0;

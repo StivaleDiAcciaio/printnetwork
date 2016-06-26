@@ -46,8 +46,6 @@
         <script src="app/app.filters.js"></script>
         <script src="app/components/mainCtrl.js"></script>
         <script src="app/components/home/homeCtrl.js"></script>
-        <script src="app/components/registrazione/registrazioneCtrl.js"></script>
-        <script src="app/components/login/loginCtrl.js"></script>
         <script src="app/components/autenticazione/autenticazioneCtrl.js"></script>
         <script src="app/components/pannelloControllo/pannelloControlloCtrl.js"></script>
         <script src="app/components/commonModal/dominiFormatiStp2Dctrl.js"></script>
@@ -71,9 +69,9 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#registrazione">Registrazione</a></li>
-                        <li><a href="#login">Login</a></li>
                         <li><a href="#autenticazione">Autenticazione</a></li>
+                        <li><a style="cursor:pointer" data-toggle="modal" data-target="#regolamentoModal">Regolamento</a></li>
+                        <li><a style="cursor:pointer" data-toggle="modal" data-target="#contattiModal">Contatti</a> </li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
@@ -91,6 +89,8 @@
     <ng-include src="'app/components/commonModal/regolamentoSito.html'"></ng-include>
     <!--MODALE PRIVACY -->
     <ng-include src="'app/components/commonModal/infoPrivacy.html'"></ng-include>
+    <!--MODALE CONTATTI -->
+    <ng-include src="'app/components/commonModal/contatti.html'"></ng-include>
     </body>
 </html>
 

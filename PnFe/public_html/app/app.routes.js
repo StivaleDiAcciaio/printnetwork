@@ -12,22 +12,6 @@
                                 }
                             }
                         })
-                        .state('registrazione', {
-                            url: '/registrazione',
-                            views: {'content@': {
-                                    templateUrl: 'app/components/registrazione/registrazione.html',
-                                    controller: 'registrazioneCtrl'
-                                }
-                            }
-                        })
-                        .state('login', {
-                            url: '/login',
-                            views: {'content@': {
-                                    templateUrl: 'app/components/login/login.html',
-                                    controller: 'loginCtrl'
-                                }
-                            }
-                        })
                         .state('autenticazione', {
                             url: '/autenticazione',
                             views: {'content@': {
