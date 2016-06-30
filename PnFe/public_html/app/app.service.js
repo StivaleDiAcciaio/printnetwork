@@ -9,13 +9,13 @@
                             return 'http://' + $location.host() + ':' + $location.port() + "/";
                         };
                         this.autenticazione = function (utente) {
-                            return this.post(COSTANTI.ENDPOINT.LOGIN, utente);
+                            return this.post(this.getHostAddressAndPort()+COSTANTI.ENDPOINT.LOGIN, utente);
                         };
                         this.registrazione = function (utente) {
-                            return this.post(COSTANTI.ENDPOINT.REGISTRAZIONE, utente);
+                            return this.post(this.getHostAddressAndPort()+COSTANTI.ENDPOINT.REGISTRAZIONE, utente);
                         };
                         this.stampa2D = function (data) {
-                            return this.post(COSTANTI.ENDPOINT.STAMPA_2D, data);
+                            return this.post(this.getHostAddressAndPort()+COSTANTI.ENDPOINT.STAMPA_2D, data);
                         };
                         this.post = function (url, data, config) {
                             $http.defaults.headers.common.token = localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN);
