@@ -4,7 +4,7 @@
     //var contextRoot = 'http://www.printnetwork.it/';
     //var contextRoot = 'http://localhost/printnetwork/';
     angular.module('printNetworkApp').constant('CONST', {
-        "CONTEXT_ROOT": contextRoot,
+        //"CONTEXT_ROOT": contextRoot,
         "RICORDAMI": "ricordami",
         "LOCAL_STORAGE": {
             TOKEN: "token",
