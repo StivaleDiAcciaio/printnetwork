@@ -18,9 +18,9 @@
         },
         "ENDPOINT":
                 {
-                    "REGISTRAZIONE": "apinode/registrazione",
-                    "LOGIN": "apinode/login",
-                    "STAMPA_2D": "apinode/2d"
+                    "REGISTRAZIONE": "printnetwork/apinode/registrazione",
+                    "LOGIN": "printnetwork/apinode/login",
+                    "STAMPA_2D": "printnetwork/apinode/2d"
                 },
         "MESSAGE_LEVEL": {
             "INFO": "INFO",
