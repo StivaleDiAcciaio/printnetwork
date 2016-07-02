@@ -16,7 +16,6 @@ var log4js = require('log4js');
 // Configurazione ============
 // =======================
 var porta = 3000;
-mongoose.connect(config.database); // connect to database
 // parola segreta per generazione token
 app.set('superSecret', config.secret);
 // uso body parser per ottenere info da POST e/o URL parameters
@@ -31,6 +30,10 @@ log4js.configure({
 });
 var logger = log4js.getLogger('pn-server');
 logger.setLevel('DEBUG');
+logger.debug('connessione a MongoDb in corso..');
+mongoose.connect(config.database); // connect to database
+logger.debug('connesso.');
+ 
 // 
 // =======================
 // ============
