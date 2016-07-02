@@ -26,7 +26,7 @@ log4js.configure({
     appenders: [
         {type: 'file', filename: 'app/pn-server.log', category: 'pn-server'}
     ],
-    replaceConsole: true/* se true il console.log viene disabilitato.*/
+    replaceConsole: false/* se true il console.log viene disabilitato.*/
 });
 var logger = log4js.getLogger('pn-server');
 logger.setLevel('DEBUG');
