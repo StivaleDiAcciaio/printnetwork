@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 log4js.configure({
     appenders: [
-        {type: 'file', filename: 'app/pn-server.log', category: 'pn-server'}
+        {type: 'file', filename: './app/pn-server.log', category: 'pn-server'}
     ],
     replaceConsole: false/* se true il console.log viene disabilitato.*/
 });
