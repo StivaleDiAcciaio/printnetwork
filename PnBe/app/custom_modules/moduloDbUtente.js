@@ -16,9 +16,9 @@ module.exports = {
                 } else if (utente) {
                     data.esito = false;
                     data.codErr = 1;
-                    if (utente.nick=== utenteReq.nick) {
+                    if (utente.nick.toUpperCase()=== utenteReq.nick.toUpperCase()) {
                         data.messaggio = "indirizzo nick gia' utilizzato";
-                    } else if (utente.email=== utenteReq.email) {
+                    } else if (utente.email.toUpperCase()=== utenteReq.email.toUpperCase()) {
                         data.messaggio = "indirizzo email gia' utilizzato";
                     }
                     callback(data);
