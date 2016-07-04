@@ -17,7 +17,10 @@ module.exports = {
                     data.esito = false;
                     data.codErr = 1;
                     console.log("utente.nick.toUpperCase() "+utente.nick.toUpperCase());
-                    console.log("utenteReq.nick.toUpperCase() "+utenteReq.nick.toUpperCase());
+                    console.log("confronto con utenteReq.nick.toUpperCase() "+utenteReq.nick.toUpperCase());
+                    console.log("utente.email.toUpperCase() "+utente.email.toUpperCase());
+                    console.log("confronto con utenteReq.email.toUpperCase() "+utenteReq.email.toUpperCase());
+
                     if (utente.nick.toUpperCase() === utenteReq.nick.toUpperCase()) {
                         data.messaggio = "indirizzo nick gia' utilizzato";
                     } else if (utente.email.toUpperCase() === utenteReq.email.toUpperCase()) {
