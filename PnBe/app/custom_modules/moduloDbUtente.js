@@ -6,7 +6,7 @@ module.exports = {
         if (validaInputCreaUtente(utenteReq)) {
             //Verifico che non esista già un utente 
             //con la stessa Email..o con lo stesso Nick
-            Utente.findOne({$or: [{email: utenteReq.email}, {nick: utenteReq.nick}]
+            Utente.findOne({$or: [{email: utenteReq.email.toUpperCase() }, {nick: utenteReq.nick.toUpperCase() }]
             }, function (err, utente) {
                 var data = {};
                 if (err) {
@@ -16,14 +16,9 @@ module.exports = {
                 } else if (utente) {
                     data.esito = false;
                     data.codErr = 1;
-                    console.log("utente.nick.toUpperCase() "+utente.nick.toUpperCase());
-                    console.log("confronto con utenteReq.nick.toUpperCase() "+utenteReq.nick.toUpperCase());
-                    console.log("utente.email.toUpperCase() "+utente.email.toUpperCase());
-                    console.log("confronto con utenteReq.email.toUpperCase() "+utenteReq.email.toUpperCase());
-
-                    if (utente.nick.toUpperCase() === utenteReq.nick.toUpperCase()) {
+                    if (utente.nick=== utenteReq.nick) {
                         data.messaggio = "indirizzo nick gia' utilizzato";
-                    } else if (utente.email.toUpperCase() === utenteReq.email.toUpperCase()) {
+                    } else if (utente.email=== utenteReq.email) {
                         data.messaggio = "indirizzo email gia' utilizzato";
                     }
                     callback(data);
@@ -37,13 +32,11 @@ module.exports = {
                     var pwdCriptata = hash.hex();
 
                     var nuovoUtente = new Utente({
-                        nome: utenteReq.nome,
-                        cognome: utenteReq.cognome,
-                        email: utenteReq.email,
-                        indirizzo: utenteReq.indirizzo,
-                        nick: utenteReq.nick,
+                        nick: utenteReq.nick.toUpperCase(),
+                        email: utenteReq.email.toUpperCase(),
                         password: pwdCriptata,
                         tipologiaUtente: utenteReq.tipologiaUtente,
+                        indirizzo: utenteReq.indirizzo,
                         tipologiaStampa: utenteReq.tipologiaStampa
                     });
                     // salva Utente nel DB
