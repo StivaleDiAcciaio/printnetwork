@@ -30,10 +30,7 @@ log4js.configure({
 });
 var logger = log4js.getLogger('pn-server');
 logger.setLevel('DEBUG');
-logger.debug('connessione a MongoDb in corso..');
 mongoose.connect(config.database); // connect to database
-logger.debug('connesso.');
- 
 // 
 // =======================
 // ============
