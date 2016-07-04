@@ -76,21 +76,25 @@
                 </div><!--/.nav-collapse -->
             </div>
         </nav>	
-        <div class="container margineContainer">
-            <div ui-view="content"></div>
-            <div id="messaggiUtente" ng-show="messaggio" style="text-align: center">
+        <div class="col-xs-12" style="position: fixed; z-index: 1000;">
+            <div id="messaggiUtente" ng-show="messaggio" style="margin-bottom: 20px;text-align: center;">
                 <h3><span ng-class="messaggio.level == 'INFO' ? 'label label-success' :
                                         messaggio.level == 'WARNING' ? 'label label-warning' :
                                         'label label-danger'">
                         {{messaggio.contenuto}}</span></h3>
             </div>
         </div>
-    <!--MODALE REGOLAMENTO SITO -->
+        <div class="container margineContainer">
+            <div ui-view="content"></div>
+        </div>
+
+
+        <!--MODALE REGOLAMENTO SITO -->
     <ng-include src="'app/components/commonModal/regolamentoSito.html'"></ng-include>
     <!--MODALE PRIVACY -->
     <ng-include src="'app/components/commonModal/infoPrivacy.html'"></ng-include>
     <!--MODALE CONTATTI -->
     <ng-include src="'app/components/commonModal/contatti.html'"></ng-include>
-    </body>
+</body>
 </html>
 
