@@ -76,8 +76,8 @@
                 </div><!--/.nav-collapse -->
             </div>
         </nav>	
-        <div class="col-xs-12" style="position: fixed; z-index: 1000;">
-            <div id="messaggiUtente" ng-show="messaggio" style="margin-bottom: 20px;text-align: center;">
+        <div class="col-xs-12 barraFissaMessaggiUtente">
+            <div id="messaggiUtente" ng-show="messaggio" class="allineaMessaggiUtente">
                 <h3><span ng-class="messaggio.level == 'INFO' ? 'label label-success' :
                                         messaggio.level == 'WARNING' ? 'label label-warning' :
                                         'label label-danger'">

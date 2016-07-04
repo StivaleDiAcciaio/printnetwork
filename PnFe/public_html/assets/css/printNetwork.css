@@ -56,6 +56,14 @@
 .box > .icon:hover > .image > i { 
     color: white !important; 
 }
+.barraFissaMessaggiUtente{
+    position: fixed; 
+    z-index: 1000;
+}
+.allineaMessaggiUtente{
+    margin-top: 20px;
+    text-align: center;
+}
 @-webkit-keyframes HeroBG {
     0% {
         background-position: 0 0;

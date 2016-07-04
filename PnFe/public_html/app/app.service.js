@@ -3,10 +3,12 @@
     angular.module('printNetworkApp').factory('serviziRest',
             ['CONST', '$http', '$location', '$q',
                 function (COSTANTI, $http, $location, $q) {
+                    var portaDefault='80';
                     var ServiziRest = function () {
-
+                        
                         this.getHostAddressAndPort = function () {
-                            return 'http://' + $location.host() + ':' + $location.port() + "/";
+                            //return 'http://' + $location.host() + ':' + $location.port() + "/";
+                            return 'http://' + $location.host() + ':' + portaDefault + "/";
                         };
                         this.autenticazione = function (utente) {
                             return this.post(this.getHostAddressAndPort()+COSTANTI.ENDPOINT.LOGIN, utente);
