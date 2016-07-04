@@ -16,9 +16,11 @@ module.exports = {
                 } else if (utente) {
                     data.esito = false;
                     data.codErr = 1;
-                    if (utente.nick.toUpperCase() == utenteReq.nick.toUpperCase()) {
+                    console.log("utente.nick.toUpperCase() "+utente.nick.toUpperCase());
+                    console.log("utenteReq.nick.toUpperCase() "+utenteReq.nick.toUpperCase());
+                    if (utente.nick.toUpperCase() === utenteReq.nick.toUpperCase()) {
                         data.messaggio = "indirizzo nick gia' utilizzato";
-                    } else if (utente.email.toUpperCase() == utenteReq.email.toUpperCase()) {
+                    } else if (utente.email.toUpperCase() === utenteReq.email.toUpperCase()) {
                         data.messaggio = "indirizzo email gia' utilizzato";
                     }
                     callback(data);
