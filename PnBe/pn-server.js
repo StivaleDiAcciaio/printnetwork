@@ -159,5 +159,5 @@ appRouter.post('/2D', function (req, res) {
 app.use('/apinode', appRouter);
 app.listen(porta);
 logger.debug('PnBe server in ascolto sulla porta ' + porta);
-logger.debug('connessione al db ' + config.database);
+
 
