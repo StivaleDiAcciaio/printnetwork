@@ -65,7 +65,7 @@ module.exports = {
     cercaUtente: function (utenteReq, callback) {
         // ricerca Utente
         Utente.findOne({
-            email: utenteReq.email
+            email: utenteReq.email.toUpperCase()
         }, function (err, utente) {
             var data = {};
             if (err) {
