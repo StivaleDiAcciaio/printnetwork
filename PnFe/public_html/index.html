@@ -76,11 +76,11 @@
                 </div><!--/.nav-collapse -->
             </div>
         </nav>	
-        <div class="col-xs-12 barraFissaMessaggiUtente">
-            <div id="messaggiUtente" ng-show="messaggio" class="allineaMessaggiUtente">
-                <h3><span ng-class="messaggio.level == 'INFO' ? 'label label-success' :
-                                        messaggio.level == 'WARNING' ? 'label label-warning' :
-                                        'label label-danger'">
+        <div ng-show="messaggio" class="col-xs-12 barraFissaMessaggiUtente">
+            <div id="messaggiUtente" class="allineaMessaggiUtente">
+                <h3><span ng-class="messaggio.level == 'INFO' ? 'alert alert-success' :
+                                        messaggio.level == 'WARNING' ? 'alert alert-warning' :
+                                        'alert alert-danger'">
                         {{messaggio.contenuto}}</span></h3>
             </div>
         </div>
