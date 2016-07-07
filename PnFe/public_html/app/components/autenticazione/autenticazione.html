@@ -65,7 +65,7 @@
                             </div>
                             <div ng-if="condividoStampante">
                                 <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.tipologiaUtente = 'P'">
-                                    <span class="infoNearField">sei un </span>
+                                    <span class="infoNearField">sono un </span>
                                     <input id="utentePrivato" type="radio" ng-model="formRegistrazioneData.tipologiaUtente" 
                                            value="P" 
                                            ng-checked="condividoStampante">
@@ -78,7 +78,7 @@
                                     <input id="indirizzoApprossimato" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
                                            value="A" 
                                            ng-checked="condividoStampante">
-                                    <label for="indirizzoApprossimato">approssimato</label>
+                                    <label for="indirizzoApprossimato">approssimativo</label>
                                     <input id="indirizzoEsatto" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
                                            value="E">
                                     <label for="indirizzoEsatto">esatto</label>
