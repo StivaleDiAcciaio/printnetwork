@@ -245,7 +245,14 @@
                                 </div>
                                 <!--/STAMPANTE 3D-->                                
                             </div>
-                            <div ng-show="formRegistrazione.$valid" class="form-group" >
+                            <!--CAPTCHA-->
+                            <div ng-show="formRegistrazione.$valid" class="row">
+                                <div class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
+                                    <div class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
+                                </div>
+                            </div>
+                            <!--/CAPTCHA-->
+                            <div ng-show="formRegistrazione.$valid && tokenCaptcha()" class="form-group" >
                                 <div class="col-xs-12 form-group pull-left checkbox">
                                     <input id="chkBoxPrivacy" ng-model="chkBoxPrivacy" type="checkbox">
                                     <label for="chkBoxPrivacy">Ho letto</label>   
@@ -267,13 +274,9 @@
                                                 class="btn btn-lg btn-primary btn-block">reset</button>
                                     </div>               
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
-                                        <div id="widgetNoRobot" class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
-                                    </div>
-                                </div>
+
                             </div>
-                        </form>
+                        </form> <!--FINE FORM REGiSTRAZIONE -->
                     </div>
                 </div>
             </div>

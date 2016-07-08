@@ -43,7 +43,13 @@
                             });
                         }
                     };
-
+                    $scope.tokenCaptcha = function () {
+                        var noToken=false;
+                        if (grecaptcha && !angular.equals({}, grecaptcha)) {
+                            var token = grecaptcha.getResponse();
+                            return token == "" ? noToken : token;
+                        }else return noToken;
+                    };
                     $scope.registrazione = function (formRegistrazione) {
                         if (formRegistrazione.$valid) {
                             if ($scope.condividoStampante &&
@@ -51,7 +57,7 @@
                                     $scope.formatiStampa2DScelti.length > 0) {
                                 $scope.formRegistrazioneData.tipologiaStampa.stampa2D.formato = $scope.formatiStampa2DScelti;
                             }
-                            serviziRest.registrazione({utente: $scope.formRegistrazioneData}).then(function (response) {
+                            serviziRest.registrazione({utente: $scope.formRegistrazioneData, tokenCaptcha: $scope.tokenCaptcha()}).then(function (response) {
                                 if (response.esito) {
                                     $scope.mostraMessaggioInfo(response.messaggio);
                                     $scope.outRegistrazione = response.data;
@@ -91,11 +97,11 @@
                     $scope.resetRegistrazione = function () {
                         //resetto anche il model
                         $scope.condividoStampante = false;
-                        $scope.chkBoxRegolamento= false;
+                        $scope.chkBoxRegolamento = false;
                         $scope.chkBoxPrivacy = false;
                         $scope.formRegistrazioneData = null;
                         $scope.resetMessaggioUtente();
-                        
+
                     };
                 }]);
 }());

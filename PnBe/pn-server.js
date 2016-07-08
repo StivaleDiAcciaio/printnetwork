@@ -1,6 +1,8 @@
 // =======================
 // Packages, Moduli e Oggetti di cui abbiamo bisogno ============
 // =======================
+var https = require('https');
+var querystring = require('querystring');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -77,26 +79,75 @@ appRouter.post('/registrazione', function (req, res) {
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
     //================================
-
-    moduloDbUtente.creaUtente(req.body.utente, function (risultato) {
-        if (!risultato.esito && risultato.codErr == 500) {
-            logger.error('errore durante creazione utente');
-            logger.error(risultato.messaggio);
-            res.status(500).send({
-                esito: risultato.esito,
-                messaggio: 'errore durante creazione utente'
+    checkTokenCaptcha(req.body.tokenCaptcha, req.connection.remoteAddress, function (success) {
+        if (success) {
+            moduloDbUtente.creaUtente(req.body.utente, function (risultato) {
+                if (!risultato.esito && risultato.codErr == 500) {
+                    logger.error('errore durante creazione utente');
+                    logger.error(risultato.messaggio);
+                    res.status(500).send({
+                        esito: risultato.esito,
+                        messaggio: 'errore durante creazione utente'
+                    });
+                } else if (!risultato.esito && risultato.codErr != 500) {
+                    res.status(500).send({
+                        esito: risultato.esito,
+                        messaggio: risultato.messaggio
+                    });
+                } else if (risultato.esito) {
+                    res.json({esito: risultato.esito,
+                        messaggio: risultato.messaggio});
+                }
             });
-        } else if (!risultato.esito && risultato.codErr != 500) {
+        } else {
             res.status(500).send({
-                esito: risultato.esito,
-                messaggio: risultato.messaggio
+                esito: false,
+                messaggio: 'verifica No robot fallita!'
             });
-        } else if (risultato.esito) {
-            res.json({esito: risultato.esito,
-                messaggio: risultato.messaggio});
         }
     });
 });
+function checkTokenCaptcha(tokenUtenteCaptcha, ipClient, callback) {
+    logger.debug("start checkTokenCaptcha");
+    logger.debug('tokenCaptcha ' + tokenUtenteCaptcha);
+    logger.debug('secretKeyCaptcha ' + config.captchaSecretKey);
+    logger.debug('ipClient ' + ipClient);
+    if (!tokenUtenteCaptcha || !ipClient) {
+        callback(false);
+    } else {
+        var verificationUrl = config.googleVerifyCaptcha + 
+                "?secret=" + config.captchaSecretKey + 
+                "&response=" + tokenUtenteCaptcha + 
+                "&remoteip=" + ipClient;
+        logger.debug ("url invocato "+verificationUrl);
+        var req = https.get(verificationUrl, function (res) {
+            logger.debug(res.statusCode);
+            logger.debug(JSON.stringify(res.headers));
+            var data = "";
+            res.on('data', function (chunk) {
+                data += chunk.toString();
+                logger.debug(">>risultato check = " + data);
+            });
+            res.on('end', function () {
+                try {
+                    logger.debug("data "+data);
+                    callback(data.success);
+                } catch (e) {
+                    logger.debug(e);
+                    callback(false);
+                }
+            });
+        });
+        req.on('error', function (err) {
+            logger.debug(">>errore richiesta  = " + err);
+        });
+
+        req.end();
+    }
+
+    logger.debug("end checkTokenCaptcha");
+}
+;
 /* Route middleware per verificare il token
  * Viene posto prima dei metodii che richiedono autenticazione
  */
@@ -110,39 +161,39 @@ appRouter.use(function (req, res, next) {
             req.method === 'PUT' ||
             req.method === 'POST' ||
             req.method === 'DELETE') {
-        // controllo header o parametri url o parametri post per il token
+// controllo header o parametri url o parametri post per il token
         var token = req.headers.token;
         //logger.debug("Token "+token);
         // decode token
         if (token != "null") {
-            // verifica secret e scadenza
+// verifica secret e scadenza
             jwt.verify(token, app.get('superSecret'), function (err, decoded) {
                 if (err) {
-                    //     logger.debug("-->Errore verifica token");
+//     logger.debug("-->Errore verifica token");
                     res.status(401).send({
                         esito: false,
                         messaggio: 'Utente non autenticato!'
                     });
                 } else {
-                    // se OK, salvo la richiesta per gli altri routes
-                    //   logger.debug("-->OK!");
+// se OK, salvo la richiesta per gli altri routes
+//   logger.debug("-->OK!");
                     req.decoded = decoded;
                     next();
                 }
             });
         } else {
-            // se non è presente nessun token
-            // restituisco un errore
-            // logger.debug("-->non è presente nessun token");
+// se non è presente nessun token
+// restituisco un errore
+// logger.debug("-->non è presente nessun token");
             res.status(401).send({
                 esito: false,
                 messaggio: 'Utente non autenticato!'
             });
         }
     } else {
-        //In caso di metodo OPTIONS restituisco 
-        //un json vuoto
-        //    logger.debug("-->Risposta di default :STATUS 200");
+//In caso di metodo OPTIONS restituisco 
+//un json vuoto
+//    logger.debug("-->Risposta di default :STATUS 200");
         res.status(200);
         res.json({});
     }
