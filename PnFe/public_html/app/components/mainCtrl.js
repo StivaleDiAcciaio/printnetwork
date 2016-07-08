@@ -5,6 +5,7 @@
             ['$scope', '$state', '$location', '$anchorScroll', '$uibModal', 'serviziRest', 'CONST',
                 function ($scope, $state, $location, $anchorScroll, $uibModal, serviziRest, COSTANTI) {
                     $scope.paginaCorrente = null;
+                    $scope.showLoading = false;
                     $scope.messaggio = null;
                     $scope.dominioFormati2D = [];
                     $scope.dominioFormati2D[0] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A4;
@@ -14,7 +15,9 @@
                     $scope.dominioFormati2D[4] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A0;
 
                     $scope.formatiStampa2DScelti = [];
-
+                    $scope.togglePageLoading = function(){
+                        $scope.showLoading=!$scope.showLoading;
+                    };
                     $scope.setPaginaCorrente = function (pagina) {
                         $scope.paginaCorrente = {};
                         $scope.paginaCorrente.nome = pagina;

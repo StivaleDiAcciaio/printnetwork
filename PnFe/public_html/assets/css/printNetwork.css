@@ -64,6 +64,13 @@
     margin-top: 20px;
     text-align: center;
 }
+.iconaCursoreWait{
+    cursor: wait;
+}
+
+.iconaCursoreMano{
+    cursor: pointer;
+}
 @-webkit-keyframes HeroBG {
     0% {
         background-position: 0 0;

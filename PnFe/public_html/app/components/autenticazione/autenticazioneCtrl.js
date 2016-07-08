@@ -57,6 +57,7 @@
                                     $scope.formatiStampa2DScelti.length > 0) {
                                 $scope.formRegistrazioneData.tipologiaStampa.stampa2D.formato = $scope.formatiStampa2DScelti;
                             }
+                            $scope.togglePageLoading();
                             serviziRest.registrazione({utente: $scope.formRegistrazioneData, tokenCaptcha: $scope.tokenCaptcha()}).then(function (response) {
                                 if (response.esito) {
                                     $scope.mostraMessaggioInfo(response.messaggio);
@@ -64,11 +65,14 @@
                                 } else {
                                     $scope.mostraMessaggioError(response.messaggio);
                                 }
+                                $scope.togglePageLoading();
                             }, function (err) {
                                 if (err.data) {
                                     $scope.mostraMessaggioError(err.data.messaggio);
+                                    $scope.togglePageLoading();
                                 } else {
                                     $scope.mostraMessaggioError("Errore imprevisto!");
+                                    $scope.togglePageLoading();
                                 }
                             });
                         }

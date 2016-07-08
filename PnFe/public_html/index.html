@@ -54,7 +54,7 @@
     <body id="ng-app" ng-app="printNetworkApp" ng-controller="mainCtrl"
           ng-class="paginaCorrente.nome != 'home' ? 'bodyMain' : 'bodyHome'">
         <nav class="navbar navbar-inverse navbar-fixed-top">
-            <a href="#" class="navbar-brand"><img style="float:left;" src="assets/img/logo_80x80.gif"></a>
+            <a href="#" ng-class="showLoading?'btn btn-link disabled navbar-brand':'navbar-brand'"><img style="float:left;" src="assets/img/logo_80x80.gif"></a>
             <a ng-if="checkToken()" href="#autenticazione" class="navbar-brand" style="float:right;" ng-click="logout()">Esci</a>
             <div class="container">
                 <div class="navbar-header">
@@ -64,18 +64,24 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Print Network</a>
+                    <a ng-class="showLoading?'btn btn-link disabled navbar-brand':'navbar-brand'" href="#">Print Network</a>
                 </div>
-                <div id="navbar" class="collapse navbar-collapse">
+                <div id="navbar" class="collapse navbar-collapse" >
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#autenticazione">Autenticazione</a></li>
-                        <li><a style="cursor:pointer" data-toggle="modal" data-target="#regolamentoModal">Regolamento</a></li>
-                        <li><a style="cursor:pointer" data-toggle="modal" data-target="#contattiModal">Contatti</a> </li>
+                        <li><a href="#" ng-class="showLoading?'btn btn-link disabled':'btn btn-link'">Home</a></li>
+                        <li><a href="#autenticazione" role="button" ng-class="showLoading?'btn btn-link disabled':'btn btn-link'">Autenticazione</a></li>
+                        <li><a ng-class="showLoading?'btn btn-link disabled':'btn btn-link'" data-toggle="modal" data-target="#regolamentoModal">Regolamento</a></li>
+                        <li><a ng-class="showLoading?'btn btn-link disabled':'btn btn-link'" data-toggle="modal" data-target="#contattiModal">Contatti</a> </li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>	
+        <div ng-show="showLoading" class="col-xs-12 barraFissaMessaggiUtente">
+            <!--Caricamento -->
+            <div style="height:1000px;" id="overlay" class="allineaMessaggiUtente">
+                <img id="caricamento" src="assets/img/loading.gif">
+            </div>
+        </div>
         <div ng-show="messaggio" class="col-xs-12 barraFissaMessaggiUtente">
             <div id="messaggiUtente" class="allineaMessaggiUtente">
                 <h3><span ng-class="messaggio.level == 'INFO' ? 'alert alert-success' :
@@ -87,8 +93,6 @@
         <div class="container margineContainer">
             <div ui-view="content"></div>
         </div>
-
-
         <!--MODALE REGOLAMENTO SITO -->
     <ng-include src="'app/components/commonModal/regolamentoSito.html'"></ng-include>
     <!--MODALE PRIVACY -->
