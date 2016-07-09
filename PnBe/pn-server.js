@@ -124,14 +124,14 @@ function checkTokenCaptcha(tokenUtenteCaptcha, ipClient, callback) {
             logger.debug(res.statusCode);
             logger.debug(JSON.stringify(res.headers));
             var data = "";
-            res.on('data', function (chunk) {
-                data += chunk.toString();
-                logger.debug(">>risultato check = " + data);
+            res.on('data', function (checkToken) {
+                data += checkToken.toString();
+                logger.debug(">>risultato check = " + checkToken.success);
             });
             res.on('end', function () {
                 try {
-                    logger.debug("data "+data);
-                    callback(data.success);
+                    var parsedData = JSON.parse(data);
+                    callback(parsedData.success);
                 } catch (e) {
                     logger.debug(e);
                     callback(false);
