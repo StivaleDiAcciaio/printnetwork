@@ -46,7 +46,7 @@ appRouter.post('/login', function (req, res) {
     res.header("Access-Control-Allow-Methods", "POST");
     var esito = null;
     var token = null;
-    // logger.debug("metodo login (post) : password acquisita="+req.body.utente.password);
+    //logger.debug("metodo login (post) : ip client="+req.ip);
     if (req.body.utente) {
         // logger.debug("-->email da verificare " + req.body.utente.email);
         //verifica utente su DB
@@ -79,7 +79,7 @@ appRouter.post('/registrazione', function (req, res) {
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
     //================================
-    checkTokenCaptcha(req.body.tokenCaptcha, req.connection.remoteAddress, function (success) {
+    checkTokenCaptcha(req.body.tokenCaptcha, req.ip, function (success) {
         if (success) {
             moduloDbUtente.creaUtente(req.body.utente, function (risultato) {
                 if (!risultato.esito && risultato.codErr == 500) {
