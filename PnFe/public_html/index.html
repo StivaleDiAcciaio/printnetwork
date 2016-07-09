@@ -68,7 +68,7 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse" >
                     <ul class="nav navbar-nav">
-                        <li><a href="#" ng-class="showLoading?'btn btn-link disabled':'btn btn-link'">Home</a></li>
+                        <li class="active"><a href="#" ng-class="showLoading?'btn btn-link disabled':'btn btn-link'">Home</a></li>
                         <li><a href="#autenticazione" role="button" ng-class="showLoading?'btn btn-link disabled':'btn btn-link'">Autenticazione</a></li>
                         <li><a ng-class="showLoading?'btn btn-link disabled':'btn btn-link'" data-toggle="modal" data-target="#regolamentoModal">Regolamento</a></li>
                         <li><a ng-class="showLoading?'btn btn-link disabled':'btn btn-link'" data-toggle="modal" data-target="#contattiModal">Contatti</a> </li>
@@ -78,7 +78,7 @@
         </nav>	
         <div ng-show="showLoading" class="col-xs-12 barraFissaMessaggiUtente">
             <!--Caricamento -->
-            <div style="height:1000px;" id="overlay" class="allineaMessaggiUtente">
+            <div style="height:1000px; z-index: 2000" id="overlay" class="allineaMessaggiUtente">
                 <img id="caricamento" src="assets/img/loading.gif">
             </div>
         </div>

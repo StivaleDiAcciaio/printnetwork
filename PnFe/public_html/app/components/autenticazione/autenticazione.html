@@ -245,24 +245,28 @@
                                 </div>
                                 <!--/STAMPANTE 3D-->                                
                             </div>
-                            <!--CAPTCHA-->
-                            <div ng-show="formRegistrazione.$valid" class="row">
-                                <div class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
-                                    <div class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
-                                </div>
-                            </div>
-                            <!--/CAPTCHA-->
                             <div ng-show="formRegistrazione.$valid" class="form-group" >
-                                <div class="col-xs-12 form-group pull-left checkbox">
-                                    <input id="chkBoxPrivacy" ng-model="chkBoxPrivacy" type="checkbox">
-                                    <label for="chkBoxPrivacy">Ho letto</label>   
-                                    <a style="cursor:pointer" data-toggle="modal" data-target="#privacyModal">informativa sulla privacy</a>
+                                <div class="row">
+                                    <div class="col-xs-12 form-group pull-left checkbox">
+                                        <input id="chkBoxPrivacy" ng-model="chkBoxPrivacy" type="checkbox">
+                                        <label for="chkBoxPrivacy">Ho letto</label>   
+                                        <a style="cursor:pointer" data-toggle="modal" data-target="#privacyModal">informativa sulla privacy</a>
+                                    </div>
                                 </div>
-                                <div class="col-xs-12 form-group pull-left checkbox">
-                                    <input id="chkBoxRegolamento" ng-model="chkBoxRegolamento" type="checkbox">
-                                    <label for="chkBoxRegolamento">Ho letto il</label>
-                                    <a style="cursor:pointer" data-toggle="modal" data-target="#regolamentoModal">regolamento</a> 
+                                <div class="row">
+                                    <div class="col-xs-12 form-group pull-left checkbox">
+                                        <input id="chkBoxRegolamento" ng-model="chkBoxRegolamento" type="checkbox">
+                                        <label for="chkBoxRegolamento">Ho letto il</label>
+                                        <a style="cursor:pointer" data-toggle="modal" data-target="#regolamentoModal">regolamento</a> 
+                                    </div>
                                 </div>
+                                <!--CAPTCHA-->
+                                <div class="row">
+                                    <div class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
+                                        <div class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
+                                    </div>
+                                </div>
+                                <!--/CAPTCHA-->
                                 <div class="row">
                                     <div class="col-sm-6 col-xs-12">
                                         <button ng-disabled="!chkBoxRegolamento || !chkBoxPrivacy" 

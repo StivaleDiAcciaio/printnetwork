@@ -45,9 +45,9 @@
                     };
                     $scope.tokenCaptcha = function () {
                         var noToken=false;
-                        if (grecaptcha && !angular.equals({}, grecaptcha)) {
+                        if (grecaptcha) {
                             var token = grecaptcha.getResponse();
-                            return token == "" ? noToken : token;
+                            return token == "" ||token == null ? noToken : token;
                         }else return noToken;
                     };
                     $scope.registrazione = function (formRegistrazione) {
