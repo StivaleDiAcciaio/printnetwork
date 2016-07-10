@@ -2,11 +2,11 @@ var Utente = require('../models/utente'); // mongoose model
 var md5 = require('js-md5');
 var LUNGHEZZA_MAX_GENERICA = 50;
 module.exports = {
-    creaUtente: function (utenteReq, callback) {
+    precheckCreazioneUtente: function (utenteReq, callback) {
         if (validaInputCreaUtente(utenteReq)) {
             //Verifico che non esista già un utente 
             //con la stessa Email..o con lo stesso Nick
-            Utente.findOne({$or: [{email: utenteReq.email.toUpperCase() }, {nick: utenteReq.nick.toUpperCase() }]
+            Utente.findOne({$or: [{email: utenteReq.email.toUpperCase()}, {nick: utenteReq.nick.toUpperCase()}]
             }, function (err, utente) {
                 var data = {};
                 if (err) {
@@ -16,42 +16,19 @@ module.exports = {
                 } else if (utente) {
                     data.esito = false;
                     data.codErr = 1;
-                    if (utente.nick.toUpperCase()=== utenteReq.nick.toUpperCase()) {
+                    if (utente.nick.toUpperCase() === utenteReq.nick.toUpperCase()) {
                         data.messaggio = "indirizzo nick gia' utilizzato";
-                    } else if (utente.email.toUpperCase()=== utenteReq.email.toUpperCase()) {
+                    } else if (utente.email.toUpperCase() === utenteReq.email.toUpperCase()) {
                         data.messaggio = "indirizzo email gia' utilizzato";
                     }
                     callback(data);
                 } else if (!utente) {
                     //indirizzo email/nick non utilizzati..
-                    // creo un Modello Utente definito nello schema di mongoDB 
-                    //cifro password prima di salvarla
-                    md5(utenteReq.password);
-                    var hash = md5.create();
-                    hash.update(utenteReq.password);
-                    var pwdCriptata = hash.hex();
-
-                    var nuovoUtente = new Utente({
-                        nick: utenteReq.nick.toUpperCase(),
-                        email: utenteReq.email.toUpperCase(),
-                        password: pwdCriptata,
-                        tipologiaUtente: utenteReq.tipologiaUtente,
-                        indirizzo: utenteReq.indirizzo,
-                        tipologiaStampa: utenteReq.tipologiaStampa
-                    });
-                    // salva Utente nel DB
-                    nuovoUtente.save(function (err) {
-                        var data = {};
-                        if (err) {
-                            data.esito = false;
-                            data.codErr = 500;
-                            data.messaggio = err;
-                        } else {
-                            data.esito = true;
-                            data.messaggio = 'salvataggio effettuato con successo';
-                        }
-                        callback(data);
-                    });
+                    var data = {};
+                    data.esito = true;
+                    data.codErr = 0;
+                    data.messaggio = 'precheck creazione utente ok';
+                    callback(data);
                 }
             });
         } else {//Input non valido
@@ -62,6 +39,37 @@ module.exports = {
             callback(data);
         }
     },
+    creaUtente: function (utenteReq, callback) {
+        // creo un Modello Utente definito nello schema di mongoDB 
+        //cifro password prima di salvarla
+        md5(utenteReq.password);
+        var hash = md5.create();
+        hash.update(utenteReq.password);
+        var pwdCriptata = hash.hex();
+
+        var nuovoUtente = new Utente({
+            nick: utenteReq.nick.toUpperCase(),
+            email: utenteReq.email.toUpperCase(),
+            password: pwdCriptata,
+            tipologiaUtente: utenteReq.tipologiaUtente,
+            indirizzo: utenteReq.indirizzo,
+            tipologiaStampa: utenteReq.tipologiaStampa
+        });
+        // salva Utente nel DB
+        nuovoUtente.save(function (err) {
+            var data = {};
+            if (err) {
+                data.esito = false;
+                data.codErr = 500;
+                data.messaggio = err;
+            } else {
+                data.esito = true;
+                data.codErr = 0;
+                data.messaggio = 'salvataggio effettuato con successo';
+            }
+            callback(data);
+        });
+    },
     cercaUtente: function (utenteReq, callback) {
         // ricerca Utente
         Utente.findOne({
@@ -70,9 +78,11 @@ module.exports = {
             var data = {};
             if (err) {
                 data.esito = false;
+                data.codErr = 500;
                 data.messaggio = err;
             } else if (!utente) {
                 data.esito = false;
+                data.codErr = 3;
                 data.messaggio = 'Autenticazione fallita. Utente non trovato.';
             } else if (utente) {
                 //cifro password
@@ -83,9 +93,11 @@ module.exports = {
                 // controllo password
                 if (utente.password !== pwdCriptata) {
                     data.esito = false;
+                    data.codErr = 4;
                     data.messaggio = 'Autenticazione fallita. Email/password errati.';
                 } else {
                     data.esito = true;
+                    data.codErr = 0;
                     data.messaggio = 'Autenticazione riuscita.';
                     data.utente = utente;
                 }
@@ -165,7 +177,7 @@ checkStampa2DCompilata = function (stampa2d) {
 };
 checkStampa3DCompilata = function (stampa3d) {
     var valido = true;
-    try{
+    try {
         if (!stampa3d || !stampa3d.altezza || !stampa3d.larghezza || !stampa3d.profondita || !stampa3d.unitaDimisura ||
                 !stampa3d.materiale) {
             valido = false;
@@ -174,7 +186,7 @@ checkStampa3DCompilata = function (stampa3d) {
         } else if (stampa3d.unitaDimisura.length > 2 || stampa3d.materiale.length > 20) {
             valido = false;
         }
-    }catch(err){
+    } catch (err) {
         valido = false;
     }
     return valido;

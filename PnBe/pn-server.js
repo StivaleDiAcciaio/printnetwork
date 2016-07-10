@@ -46,7 +46,7 @@ appRouter.post('/login', function (req, res) {
     res.header("Access-Control-Allow-Methods", "POST");
     var esito = null;
     var token = null;
-    logger.debug("metodo login (post) : ip client="+req.ip);
+    logger.debug("metodo login (post) : ip client=" + req.ip);
     if (req.body.utente) {
         // logger.debug("-->email da verificare " + req.body.utente.email);
         //verifica utente su DB
@@ -79,30 +79,44 @@ appRouter.post('/registrazione', function (req, res) {
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
     //================================
-    checkTokenCaptcha(req.body.tokenCaptcha, req.headers["x-forwarded-proto"], function (success) {
-        if (success) {
-            moduloDbUtente.creaUtente(req.body.utente, function (risultato) {
-                if (!risultato.esito && risultato.codErr == 500) {
-                    logger.error('errore durante creazione utente');
-                    logger.error(risultato.messaggio);
-                    res.status(500).send({
-                        esito: risultato.esito,
-                        messaggio: 'errore durante creazione utente'
-                    });
-                } else if (!risultato.esito && risultato.codErr != 500) {
-                    res.status(500).send({
-                        esito: risultato.esito,
-                        messaggio: risultato.messaggio
-                    });
-                } else if (risultato.esito) {
-                    res.json({esito: risultato.esito,
-                        messaggio: risultato.messaggio});
-                }
-            });
-        } else {
+    /**
+     * Registra un nuovo utente :
+     * 1 -verifica tramite precheck delle info di base
+     * 2 -verifica tramite api google che il client non sia un robot
+     * (viene effettuato per ultimo perche altrimenti,in caso di precheck falliti, bisogerebbe rieffettuare il reKaptcha nuovamente)
+     * 3 -crea utente sul db.
+     */
+    moduloDbUtente.precheckCreazioneUtente(req.body.utente, function (precheck) {
+        if (!precheck.esito && precheck.codErr == 500) {
+            logger.error('errore durante precheck creazione utente');
+            logger.error(precheck.messaggio);
             res.status(500).send({
-                esito: false,
-                messaggio: 'verifica No robot fallita!'
+                esito: precheck.esito,
+                messaggio: 'errore durante la registrazione'
+            });
+        } else if (!precheck.esito && precheck.codErr != 500) {
+            res.status(500).send({
+                esito: precheck.esito,
+                messaggio: precheck.messaggio
+            });
+        } else if (precheck.esito) {
+            //precheck success, 
+            //effettuo controllo finale checkTokenCaptcha prima di creare utente
+            //-req.body.tokenCaptcha contiene il token generato dal widget di google (Non sono un robot)
+            //-req.headers["x-forwarded-proto"] contiene ip client remoto (inserito da nginx durante il proxy reverse (file /etc/nginx/sites-available/default)
+            checkTokenCaptcha(req.body.tokenCaptcha, req.headers["x-forwarded-proto"], function (success) {
+                if (success) {
+                    //crea utente
+                    moduloDbUtente.creaUtente(req.body.utente, function (risultato) {
+                        res.json({esito: risultato.esito,
+                            messaggio: risultato.messaggio});
+                    });
+                } else {
+                    res.status(500).send({
+                        esito: false,
+                        messaggio: 'verifica No robot fallita!'
+                    });
+                }
             });
         }
     });
@@ -115,11 +129,11 @@ function checkTokenCaptcha(tokenUtenteCaptcha, ipClient, callback) {
     if (!tokenUtenteCaptcha || !ipClient) {
         callback(false);
     } else {
-        var verificationUrl = config.googleVerifyCaptcha + 
-                "?secret=" + config.captchaSecretKey + 
-                "&response=" + tokenUtenteCaptcha + 
+        var verificationUrl = config.googleVerifyCaptcha +
+                "?secret=" + config.captchaSecretKey +
+                "&response=" + tokenUtenteCaptcha +
                 "&remoteip=" + ipClient;
-        logger.debug ("url invocato "+verificationUrl);
+        logger.debug("url invocato " + verificationUrl);
         var req = https.get(verificationUrl, function (res) {
             logger.debug(res.statusCode);
             logger.debug(JSON.stringify(res.headers));
