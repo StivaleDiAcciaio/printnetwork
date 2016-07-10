@@ -15,15 +15,17 @@
                             <div class="form-group">
                                 <input name="passwordLogin" ng-model="formLoginData.password" ng-disabled ="checkToken()" type="password" placeholder="Password" class="form-control" tabindex="2" required>
                             </div>
-                            <div class="col-xs-4 form-group pull-left checkbox">
-                                <input id="checkboxRicordami" ng-model="ricordami" type="checkbox" ng-disabled ="checkToken()" >
-                                <label for="checkboxRicordami">Ricordami</label>   
-                            </div>
-                            <div class="col-xs-4 form-group">     
-                                <button class="btn btn-lg btn-primary btn-block" ng-click="resetFormLogin()" ng-disabled ="checkToken()">reset</button>
-                            </div> 
-                            <div class="col-xs-4 form-group pull-right">     
-                                <button class="btn btn-lg btn-primary btn-block" ng-click="login(formLogin)" ng-disabled ="checkToken()">Accedi</button>
+                            <div class="row">
+                                <div class="col-sm-4 col-xs-12 form-group pull-left checkbox">
+                                    <input id="checkboxRicordami" ng-model="ricordami" type="checkbox" ng-disabled ="checkToken()" >
+                                    <label for="checkboxRicordami">Ricordami</label>   
+                                </div>
+                                <div class="col-sm-4 col-xs-12 form-group">     
+                                    <button class="btn btn-lg btn-primary btn-block" ng-click="resetFormLogin()" ng-disabled ="checkToken()">reset</button>
+                                </div> 
+                                <div class="col-sm-4 col-xs-12 form-group pull-right">     
+                                    <button class="btn btn-lg btn-primary btn-block" ng-click="login(formLogin)" ng-disabled ="checkToken()">Accedi</button>
+                                </div>
                             </div>
                         </form>
                         <!--REGISTRAZIONE-->
@@ -31,15 +33,24 @@
                             <h2>REGISTRAZIONE</h2>
                             <div class="form-group">
                                 <input name="nickRegistrazione" ng-model="formRegistrazioneData.nick" type="text" class="form-control" placeholder="Nome utente" tabindex="1" required autofocus maxlength="50">
+                                <span class="label label-danger" ng-show="formRegistrazione.nickRegistrazione.$error.required">
+                                    inserisci un nick name
+                                </span>
                             </div>
                             <div class="form-group">
                                 <input name="emailRegistrazione" ng-model="formRegistrazioneData.email" type="email" placeholder="Email" class="form-control" tabindex="1" required maxlength="50">
                                 <span class="label label-danger" ng-show="formRegistrazione.emailRegistrazione.$error.email">
                                     email non valida.
                                 </span> 
+                                <span class="label label-danger" ng-show="formRegistrazione.emailRegistrazione.$error.required">
+                                    inserisci indirizzo email
+                                </span>
                             </div>
                             <div class="form-group">
                                 <input name="passwordRegistrazione" ng-model="formRegistrazioneData.password" type="password" placeholder="Password" class="form-control" tabindex="2" required maxlength="50">
+                                <span class="label label-danger" ng-show="formRegistrazione.passwordRegistrazione.$error.required">
+                                    inserisci una password
+                                </span>
                             </div>
                             <div class="form-group">
                                 <!--
@@ -287,36 +298,13 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-6 tabs">
-                        <a href="" class="active" id="idFormLoginLink"><div class="login">LOGIN</div></a>
+                        <a href="" class="active" id="idFormLoginLink" ng-click="clickTabLogin($event)"><div class="login">LOGIN</div></a>
                     </div>
                     <div class="col-xs-6 tabs">
-                        <a href="" id="idFormRegistrazioneLink"><div class="register">REGISTRAZIONE</div></a>
+                        <a href="" id="idFormRegistrazioneLink" ng-click="clickTabRegistrazione($event)"><div class="register">REGISTRAZIONE</div></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    $(function () {
-        $('#idFormLoginLink').click(function (e) {
-            $("#idFormLogin").delay(100).fadeIn(100);
-            $("#idFormRegistrazione").fadeOut(100);
-            $('#idFormRegistrazioneLink').removeClass('active');
-            $(this).addClass('active');
-            e.preventDefault();
-        });
-        $('#idFormRegistrazioneLink').click(function (e) {
-            $("#idFormRegistrazione").delay(100).fadeIn(100);
-            $("#idFormLogin").fadeOut(100);
-            $('#idFormLoginLink').removeClass('active');
-            $(this).addClass('active');
-            e.preventDefault();
-        });
-
-    });
-
-</script>
-
-

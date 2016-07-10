@@ -44,11 +44,14 @@
                         }
                     };
                     $scope.tokenCaptcha = function () {
-                        var noToken=false;
-                        if (grecaptcha) {
+                        var noToken = false;
+                        try {
                             var token = grecaptcha.getResponse();
-                            return token == "" ||token == null ? noToken : token;
-                        }else return noToken;
+                            return token == "" || token == null ? noToken : token;
+                        } catch (err) {
+                            $scope.mostraMessaggioError("box captcha non trovato!");
+                            return noToken;
+                        }
                     };
                     $scope.registrazione = function (formRegistrazione) {
                         if (formRegistrazione.$valid) {
@@ -106,6 +109,23 @@
                         $scope.formRegistrazioneData = null;
                         $scope.resetMessaggioUtente();
 
+                    };
+                    $scope.clickTabRegistrazione = function (e) {
+                        $scope.resetMessaggioUtente();
+                        $("#idFormRegistrazione").delay(100).fadeIn(100);
+                        $("#idFormLogin").fadeOut(100);
+                        $('#idFormLoginLink').removeClass('active');
+                        $(this).addClass('active');
+                        e.preventDefault();
+
+                    };
+                    $scope.clickTabLogin = function (e) {
+                        $scope.resetMessaggioUtente();
+                        $("#idFormLogin").delay(100).fadeIn(100);
+                        $("#idFormRegistrazione").fadeOut(100);
+                        $('#idFormRegistrazioneLink').removeClass('active');
+                        $(this).addClass('active');
+                        e.preventDefault();
                     };
                 }]);
 }());
