@@ -2,6 +2,7 @@
 // Packages, Moduli e Oggetti di cui abbiamo bisogno ============
 // =======================
 var https = require('https');
+var fs = require('fs');
 var querystring = require('querystring');
 var express = require('express');
 var app = express();
@@ -222,7 +223,13 @@ appRouter.post('/2D', function (req, res) {
 });
 //Imposto radice /apinode per tutte le chiamate ai rest nodejs (es: /apinode/login )
 app.use('/apinode', appRouter);
-app.listen(porta);
+//Abilito protocollo HTTPS
+//con certificato self-signed
+ https.createServer({
+      key: fs.readFileSync(config.keyPermLocal),
+      cert: fs.readFileSync(config.certPermLocal),
+      passphrase: config.passphraseCert
+    }, app).listen(porta);
 logger.debug('PnBe server in ascolto sulla porta ' + porta);
 
 
