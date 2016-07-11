@@ -226,8 +226,8 @@ app.use('/apinode', appRouter);
 //Abilito protocollo HTTPS
 //con certificato self-signed
  https.createServer({
-      key: fs.readFileSync(config.keyPermLocal),
-      cert: fs.readFileSync(config.certPermLocal),
+      key: fs.readFileSync(config.keyPermPublic),
+      cert: fs.readFileSync(config.certPermPublic),
       passphrase: config.passphraseCert
     }, app).listen(porta);
 logger.debug('PnBe server in ascolto sulla porta ' + porta);
