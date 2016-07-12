@@ -8,7 +8,8 @@
                         
                         this.getHostAddressAndPort = function () {
                             //return 'http://' + $location.host() + ':' + $location.port() + "/";
-                            return 'https://' + $location.host() + ':' + portaDefault + "/";
+                            //return 'https://' + $location.host() + ':' + portaDefault + "/";
+                            return 'https://' + $location.host() +  "/";
                         };
                         this.autenticazione = function (utente) {
                             return this.post(this.getHostAddressAndPort()+COSTANTI.ENDPOINT.LOGIN, utente);
