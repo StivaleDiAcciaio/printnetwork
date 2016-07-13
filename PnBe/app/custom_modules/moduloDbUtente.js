@@ -15,10 +15,11 @@ module.exports = {
                     data.messaggio = err;
                 } else if (utente) {
                     data.esito = false;
-                    data.codErr = 1;
                     if (utente.nick.toUpperCase() === utenteReq.nick.toUpperCase()) {
+                        data.codErr = 10;
                         data.messaggio = "indirizzo nick gia' utilizzato";
                     } else if (utente.email.toUpperCase() === utenteReq.email.toUpperCase()) {
+                        data.codErr = 20;
                         data.messaggio = "indirizzo email gia' utilizzato";
                     }
                     callback(data);
@@ -83,7 +84,7 @@ module.exports = {
             } else if (!utente) {
                 data.esito = false;
                 data.codErr = 3;
-                data.messaggio = 'Autenticazione fallita. Utente non trovato.';
+                data.messaggio = 'Utente non trovato.';
             } else if (utente) {
                 //cifro password
                 md5(utenteReq.password);
@@ -94,7 +95,7 @@ module.exports = {
                 if (utente.password !== pwdCriptata) {
                     data.esito = false;
                     data.codErr = 4;
-                    data.messaggio = 'Autenticazione fallita. Email/password errati.';
+                    data.messaggio = 'Email/password errati.';
                 } else {
                     data.esito = true;
                     data.codErr = 0;

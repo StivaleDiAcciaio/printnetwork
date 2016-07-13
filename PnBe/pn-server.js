@@ -56,6 +56,7 @@ appRouter.post('/login', function (req, res) {
                 logger.error(risultato.messaggio);
                 res.json({
                     esito: risultato.esito,
+                    codErr: risultato.codErr,
                     messaggio: risultato.messaggio
                 });
             } else {
@@ -66,6 +67,7 @@ appRouter.post('/login', function (req, res) {
                 res.json({
                     esito: risultato.esito,
                     messaggio: risultato.messaggio,
+                    codErr: risultato.codErr,
                     token: token,
                     utenteLoggato: utenteLoggato
                 });
@@ -93,11 +95,13 @@ appRouter.post('/registrazione', function (req, res) {
             logger.error(precheck.messaggio);
             res.status(500).send({
                 esito: precheck.esito,
+                codErr: precheck.codErr,
                 messaggio: 'errore durante la registrazione'
             });
         } else if (!precheck.esito && precheck.codErr != 500) {
             res.status(500).send({
                 esito: precheck.esito,
+                codErr: precheck.codErr,
                 messaggio: precheck.messaggio
             });
         } else if (precheck.esito) {
@@ -110,11 +114,13 @@ appRouter.post('/registrazione', function (req, res) {
                     //crea utente
                     moduloDbUtente.creaUtente(req.body.utente, function (risultato) {
                         res.json({esito: risultato.esito,
+                            codErr: risultato.codErr,
                             messaggio: risultato.messaggio});
                     });
                 } else {
                     res.status(500).send({
                         esito: false,
+                        codErr: 99,
                         messaggio: 'verifica No robot fallita!'
                     });
                 }
@@ -187,6 +193,7 @@ appRouter.use(function (req, res, next) {
 //     logger.debug("-->Errore verifica token");
                     res.status(401).send({
                         esito: false,
+                        codErr: 98,
                         messaggio: 'Utente non autenticato!'
                     });
                 } else {
@@ -202,6 +209,7 @@ appRouter.use(function (req, res, next) {
 // logger.debug("-->non è presente nessun token");
             res.status(401).send({
                 esito: false,
+                codErr: 98,
                 messaggio: 'Utente non autenticato!'
             });
         }
