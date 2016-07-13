@@ -2,8 +2,8 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('mainCtrl',
-            ['$scope', '$state', '$location', '$anchorScroll', '$uibModal', 'serviziRest', 'CONST',
-                function ($scope, $state, $location, $anchorScroll, $uibModal, serviziRest, COSTANTI) {
+            ['$scope', '$state', '$location', '$anchorScroll', '$uibModal', 'serviziRest', 'CONST','$translate',
+                function ($scope, $state, $location, $anchorScroll, $uibModal, serviziRest, COSTANTI,$translate) {
                     $scope.paginaCorrente = null;
                     $scope.showLoading = false;
                     $scope.messaggio = null;
@@ -25,15 +25,15 @@
                     $scope.vaiAllaPagina = function (pagina) {
                         $state.go(pagina);
                     };
-                    $scope.mostraMessaggioInfo = function (messaggio) {
-                        mostraMessaggioUtente(messaggio, COSTANTI.MESSAGE_LEVEL.INFO, $scope);
+                    $scope.mostraMessaggioInfo = function (codice) {
+                        mostraMessaggioUtente(codice, COSTANTI.MESSAGE_LEVEL.INFO, $scope);
                     };
-                    $scope.mostraMessaggioWarning = function (messaggio) {
-                        mostraMessaggioUtente(messaggio, COSTANTI.MESSAGE_LEVEL.WARNING, $scope);
+                    $scope.mostraMessaggioWarning = function (codice) {
+                        mostraMessaggioUtente(codice, COSTANTI.MESSAGE_LEVEL.WARNING, $scope);
                     };
 
-                    $scope.mostraMessaggioError = function (messaggio) {
-                        mostraMessaggioUtente(messaggio, COSTANTI.MESSAGE_LEVEL.ERROR, $scope);
+                    $scope.mostraMessaggioError = function (codice) {
+                        mostraMessaggioUtente(codice, COSTANTI.MESSAGE_LEVEL.ERROR, $scope);
                     };
                     $scope.resetMessaggioUtente = function () {
                         $scope.messaggio = null;
@@ -70,9 +70,9 @@
                         return null;
                     };
 
-                    function mostraMessaggioUtente(messaggio, level, scope) {
+                    function mostraMessaggioUtente(codice, level, scope) {
                         scope.messaggio = {};
-                        scope.messaggio.contenuto = messaggio;
+                        scope.messaggio.contenuto = $translate.instant("SERVER_COD_"+codice);
                         scope.messaggio.level = level;
                         scope.scrollTo('messaggiUtente');
                     }

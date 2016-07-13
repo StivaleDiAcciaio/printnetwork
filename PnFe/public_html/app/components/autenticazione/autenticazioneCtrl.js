@@ -2,8 +2,8 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('autenticazioneCtrl',
-            ['$scope', 'serviziRest', 'CONST',
-                function ($scope, serviziRest, COSTANTI) {
+            ['$scope', 'serviziRest', 'CONST','$translate',
+                function ($scope, serviziRest, COSTANTI,$translate) {
                     $scope.formLoginData = {};
                     $scope.formRegistrazioneData = {};
                     $scope.formatoStampa2DSelezionato = null;
@@ -32,13 +32,13 @@
                                     $scope.setUtenteLoggato(response.utenteLoggato);
                                     $scope.vaiAllaPagina(COSTANTI.PAGINA.PANNELLO_CONTROLLO);
                                 } else {
-                                    $scope.mostraMessaggioError(response.messaggio);
+                                    $scope.mostraMessaggioError(response.codErr);
                                 }
                             }, function (err) {
                                 if (err.data) {
-                                    $scope.mostraMessaggioError(err.data.messaggio);
+                                    $scope.mostraMessaggioError(err.data.codErr);
                                 } else {
-                                    $scope.mostraMessaggioError("Errore imprevisto!");
+                                    $scope.mostraMessaggioError($translate.instant("ERR_GENERICO_MSG"));
                                 }
                             });
                         }
@@ -49,7 +49,7 @@
                             var token = grecaptcha.getResponse();
                             return token == "" || token == null ? noToken : token;
                         } catch (err) {
-                            $scope.mostraMessaggioError("box captcha non trovato!");
+                            $scope.mostraMessaggioError($translate.instant("BOX_CAPTCHA_NON_TROVATO"));
                             return noToken;
                         }
                     };
@@ -63,15 +63,15 @@
                             $scope.togglePageLoading();
                             serviziRest.registrazione({utente: $scope.formRegistrazioneData, tokenCaptcha: $scope.tokenCaptcha()}).then(function (response) {
                                 if (response.esito) {
-                                    $scope.mostraMessaggioInfo(response.messaggio);
+                                    $scope.mostraMessaggioInfo(response.codErr);
                                     $scope.outRegistrazione = response.data;
                                 } else {
-                                    $scope.mostraMessaggioError(response.messaggio);
+                                    $scope.mostraMessaggioError(response.codErr);
                                 }
                                 $scope.togglePageLoading();
                             }, function (err) {
                                 if (err.data) {
-                                    $scope.mostraMessaggioError(err.data.messaggio);
+                                    $scope.mostraMessaggioError(err.data.codErr);
                                     $scope.togglePageLoading();
                                 } else {
                                     $scope.mostraMessaggioError("Errore imprevisto!");
