@@ -19,6 +19,7 @@
                     $scope.resetFormLogin = function () {
                         localStorage.removeItem(COSTANTI.RICORDAMI);
                         $scope.formLoginData = null;
+                        $scope.resetMessaggioUtente();
                     };
 
                     $scope.login = function (formLogin) {
