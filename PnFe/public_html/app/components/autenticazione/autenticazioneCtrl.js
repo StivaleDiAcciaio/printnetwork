@@ -2,8 +2,8 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('autenticazioneCtrl',
-            ['$scope', 'serviziRest', 'CONST','$translate',
-                function ($scope, serviziRest, COSTANTI,$translate) {
+            ['$scope', 'serviziRest', 'CONST', '$translate',
+                function ($scope, serviziRest, COSTANTI, $translate) {
                     $scope.formLoginData = {};
                     $scope.formRegistrazioneData = {};
                     $scope.formatoStampa2DSelezionato = null;
@@ -109,6 +109,11 @@
                         $scope.chkBoxPrivacy = false;
                         $scope.formRegistrazioneData = null;
                         $scope.resetMessaggioUtente();
+                        try {
+                             grecaptcha.reset();
+                        } catch (err) {
+                            console.log("errore reset captcha "+err);
+                        }
 
                     };
                     $scope.clickTabRegistrazione = function (e) {
