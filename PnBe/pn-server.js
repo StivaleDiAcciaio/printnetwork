@@ -143,11 +143,11 @@ function checkTokenCaptcha(tokenUtenteCaptcha, ipClient, callback) {
         logger.debug("url invocato " + verificationUrl);
         var req = https.get(verificationUrl, function (res) {
             logger.debug(res.statusCode);
-            logger.debug(JSON.stringify(res.headers));
+            //logger.debug(JSON.stringify(res.headers));
             var data = "";
             res.on('data', function (checkToken) {
                 data += checkToken.toString();
-                logger.debug(">>risultato check = " + checkToken.success);
+                logger.debug(">>risultato check = " + data);
             });
             res.on('end', function () {
                 try {
