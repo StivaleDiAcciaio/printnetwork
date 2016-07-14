@@ -8,48 +8,48 @@
                     <div class="col-lg-12">
                         <!--LOGIN-->
                         <form id="idFormLogin" name="formLogin" role="form" style="display: block;">
-                            <h2>{{"PAGINA_LOGIN_TITOLO" | translate}}</h2>
+                            <h2>{{"PAGINA_LOGIN_TITOLO"| translate}}</h2>
                             <div class="form-group">
-                                <input name="emailLogin" ng-model="formLoginData.email" ng-disabled ="checkToken()" type="email" placeholder="{{'EMAIL_LABEL' | translate}}" class="form-control" tabindex="1" required autofocus>
+                                <input name="emailLogin" ng-model="formLoginData.email" ng-disabled ="checkToken()" type="email" placeholder="{{'EMAIL_LABEL'| translate}}" class="form-control" tabindex="1" required autofocus>
                             </div>
                             <div class="form-group">
-                                <input name="passwordLogin" ng-model="formLoginData.password" ng-disabled ="checkToken()" type="password" placeholder="{{'PASSWORD_LABEL' | translate}}" class="form-control" tabindex="2" required>
+                                <input name="passwordLogin" ng-model="formLoginData.password" ng-disabled ="checkToken()" type="password" placeholder="{{'PASSWORD_LABEL'| translate}}" class="form-control" tabindex="2" required>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 col-xs-12 form-group pull-left checkbox">
                                     <input id="checkboxRicordami" ng-model="ricordami" type="checkbox" ng-disabled ="checkToken()" >
-                                    <label for="checkboxRicordami">{{"CHECK_BOX_RICORDAMI" | translate}}</label>   
+                                    <label for="checkboxRicordami">{{"CHECK_BOX_RICORDAMI"| translate}}</label>   
                                 </div>
                                 <div class="col-sm-4 col-xs-12 form-group">     
-                                    <button class="btn btn-lg btn-primary btn-block" ng-click="resetFormLogin()" ng-disabled ="checkToken()">{{"BTN_RESET" | translate}}</button>
+                                    <button class="btn btn-lg btn-primary btn-block" ng-click="resetFormLogin()" ng-disabled ="checkToken()">{{"BTN_RESET"| translate}}</button>
                                 </div> 
                                 <div class="col-sm-4 col-xs-12 form-group pull-right">     
-                                    <button class="btn btn-lg btn-primary btn-block" ng-click="login(formLogin)" ng-disabled ="checkToken()">{{"BTN_ACCEDI" | translate}}</button>
+                                    <button class="btn btn-lg btn-primary btn-block" ng-click="login(formLogin)" ng-disabled ="checkToken()">{{"BTN_ACCEDI"| translate}}</button>
                                 </div>
                             </div>
                         </form>
                         <!--REGISTRAZIONE-->
                         <form id="idFormRegistrazione" name="formRegistrazione" role="form" style="display: none;">
-                            <h2>{{"PAGINA_REGISTRAZIONE_TITOLO" | translate}}</h2>
+                            <h2>{{"PAGINA_REGISTRAZIONE_TITOLO"| translate}}</h2>
                             <div class="form-group">
-                                <input name="nickRegistrazione" ng-model="formRegistrazioneData.nick" type="text" class="form-control" placeholder="{{'NICK_LABEL' |translate}}" tabindex="1" required autofocus maxlength="50">
+                                <input name="nickRegistrazione" ng-model="formRegistrazioneData.nick" type="text" class="form-control" placeholder="{{'NICK_LABEL'|translate}}" tabindex="1" required autofocus maxlength="50">
                                 <span class="label label-danger" ng-show="formRegistrazione.nickRegistrazione.$error.required">
-                                    {{"NICK_OBBL" |translate}}
+                                    {{"NICK_OBBL"|translate}}
                                 </span>
                             </div>
                             <div class="form-group">
-                                <input name="emailRegistrazione" ng-model="formRegistrazioneData.email" type="email" placeholder="{{'EMAIL_LABEL' | translate}}" class="form-control" tabindex="1" required maxlength="50">
+                                <input name="emailRegistrazione" ng-model="formRegistrazioneData.email" type="email" placeholder="{{'EMAIL_LABEL'| translate}}" class="form-control" tabindex="1" required maxlength="50">
                                 <span class="label label-danger" ng-show="formRegistrazione.emailRegistrazione.$error.email">
-                                    {{"EMAIL_ERR" | translate}}
+                                    {{"EMAIL_ERR"| translate}}
                                 </span> 
                                 <span class="label label-danger" ng-show="formRegistrazione.emailRegistrazione.$error.required">
-                                    {{"EMAIL_OBBL" | translate}}
+                                    {{"EMAIL_OBBL"| translate}}
                                 </span>
                             </div>
                             <div class="form-group">
-                                <input name="passwordRegistrazione" ng-model="formRegistrazioneData.password" type="password" placeholder="{{'PASSWORD_LABEL' | translate}}" class="form-control" tabindex="2" required maxlength="50">
+                                <input name="passwordRegistrazione" ng-model="formRegistrazioneData.password" type="password" placeholder="{{'PASSWORD_LABEL'| translate}}" class="form-control" tabindex="2" required maxlength="50">
                                 <span class="label label-danger" ng-show="formRegistrazione.passwordRegistrazione.$error.required">
-                                    {{"PASSWORD_OBBL" | translate}}
+                                    {{"PASSWORD_OBBL"| translate}}
                                 </span>
                             </div>
                             <div class="form-group">
@@ -59,11 +59,11 @@
                                 -->
                                 <input name="confermaPasswordRegistrazione" ng-model="confermaPasswordRegistrazione" 
                                        ng-show="formRegistrazione.confermaPasswordRegistrazione.$error.confronta"
-                                       type="password" placeholder="{{'CONF_PASSWORD_LABEL' | translate}}" 
+                                       type="password" placeholder="{{'CONF_PASSWORD_LABEL'| translate}}" 
                                        conferma-password="formRegistrazioneData.password" 
                                        class="form-control" tabindex="2">
                                 <span class="label label-danger" ng-show="formRegistrazione.confermaPasswordRegistrazione.$error.confronta">
-                                    {{"CONF_PASSWORD_OBBL" | translate}}
+                                    {{"CONF_PASSWORD_OBBL"| translate}}
                                 </span> 
                             </div>
                             <!--CONDIVIDO STAMPANTE-->
@@ -72,36 +72,36 @@
                                        ng-model="condividoStampante" 
                                        ng-click="boxCondividoStampante(condividoStampante)"
                                        type="checkbox">
-                                <label for="chkBoxCondividoStampante">{{"CHECK_BOX_CONDIVIDO_STAMPANTE" | translate}}</label>   
+                                <label for="chkBoxCondividoStampante">{{"CHECK_BOX_CONDIVIDO_STAMPANTE"| translate}}</label>   
                             </div>
                             <div ng-if="condividoStampante">
                                 <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.tipologiaUtente = 'P'">
-                                    <span class="infoNearField">{{"SONO_LABEL" | translate}}</span>
+                                    <span class="infoNearField">{{"SONO_LABEL"| translate}}</span>
                                     <input id="utentePrivato" type="radio" ng-model="formRegistrazioneData.tipologiaUtente" 
                                            value="P" 
                                            ng-checked="condividoStampante">
-                                    <label for="utentePrivato">{{"PRIVATO_LABEL" | translate}}</label>
+                                    <label for="utentePrivato">{{"PRIVATO_LABEL"| translate}}</label>
                                     <input id="attivitaCommerciale" type="radio" ng-model="formRegistrazioneData.tipologiaUtente" value="A">
-                                    <label for="attivitaCommerciale">{{"ATTIVITA_LABEL" | translate}}</label>
+                                    <label for="attivitaCommerciale">{{"ATTIVITA_LABEL"| translate}}</label>
                                 </div>
                                 <div class="col-xs-12 form-group" ng-init="formRegistrazioneData.indirizzo.tipoIndirizzo = 'A'">
-                                    <span class="infoNearField">{{"FORNISCO_INDIRIZZO_LABEL" | translate}}</span>
+                                    <span class="infoNearField">{{"FORNISCO_INDIRIZZO_LABEL"| translate}}</span>
                                     <input id="indirizzoApprossimato" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
                                            value="A" 
                                            ng-checked="condividoStampante">
-                                    <label for="indirizzoApprossimato">{{"INDIRIZZO_APPROSSIMATIVO" | translate}}</label>
+                                    <label for="indirizzoApprossimato">{{"INDIRIZZO_APPROSSIMATIVO"| translate}}</label>
                                     <input id="indirizzoEsatto" type="radio" ng-model="formRegistrazioneData.indirizzo.tipoIndirizzo" 
                                            value="E">
-                                    <label for="indirizzoEsatto">{{"INDIRIZZO_ESATTO" | translate}}</label>
+                                    <label for="indirizzoEsatto">{{"INDIRIZZO_ESATTO"| translate}}</label>
                                 </div>
                                 <div class="col-xs-12 form-group">
-                                    <span ng-show="formRegistrazioneData.indirizzo.tipoIndirizzo == 'approssimato'" class="infoNearField">{{"NEI_PRESSI_LABEL" | translate}}</span>
+                                    <span ng-show="formRegistrazioneData.indirizzo.tipoIndirizzo == 'approssimato'" class="infoNearField">{{"NEI_PRESSI_LABEL"| translate}}</span>
                                     <input name="indirizzo" 
                                            ng-model="formRegistrazioneData.indirizzo.descrizione" type="text" 
-                                           class="form-control"  title="{{'INDIRIZZO_TOOLTIP' | translate }}" maxlength="50"
-                                           placeholder="{{'ESEMPIO_INDIRIZZO_LABEL' | translate}}" tabindex="2" ng-required="condividoStampante">
+                                           class="form-control"  title="{{'INDIRIZZO_TOOLTIP'| translate }}" maxlength="50"
+                                           placeholder="{{'ESEMPIO_INDIRIZZO_LABEL'| translate}}" tabindex="2" ng-required="condividoStampante">
                                     <span class="label label-danger" ng-show="formRegistrazione.indirizzo.$error.required">
-                                        {{"INDIRIZZO_OBBL" | translate}}
+                                        {{"INDIRIZZO_OBBL"| translate}}
                                     </span> 
                                 </div>
                                 <!--STAMPANTE 2D-->
@@ -112,7 +112,7 @@
                                            ng-click="boxCondividoST2D(chkBoxStampa2D)"
                                            type="checkbox" 
                                            ng-required="condividoStampante &&!chkBoxStampa3D">
-                                    <label for="chkBoxStampa2D">{{"HO_STAMPANTE_2D_LABEL" | translate}}</label>   
+                                    <label for="chkBoxStampa2D">{{"HO_STAMPANTE_2D_LABEL"| translate}}</label>   
                                 </div>
                                 <div ng-if="chkBoxStampa2D" ng-init="defaultFormatoStampa2D()">
                                     <div class="col-xs-12"><hr></div>
@@ -120,14 +120,14 @@
                                         <input id="stampa2Dc" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
                                                value="C" 
                                                ng-checked="chkBoxStampa2D">
-                                        <label for="stampa2Dc">{{"STAMPANTE_2D_COLORI_LABEL" | translate}}</label>
+                                        <label for="stampa2Dc">{{"STAMPANTE_2D_COLORI_LABEL"| translate}}</label>
                                         <input id="stampa2Db" type="radio" ng-model="formRegistrazioneData.tipologiaStampa.stampa2D.colore" 
                                                value="B">
-                                        <label for="stampa2Db">{{"STAMPANTE_2D_BIANCONERO_LABEL" | translate}}</label>
+                                        <label for="stampa2Db">{{"STAMPANTE_2D_BIANCONERO_LABEL"| translate}}</label>
                                     </div>
                                     <div class="col-xs-12 form-group">
                                         <div class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
-                                            <button class="btn btn-secondary btn-block" ng-click="mainAnagFormati2Dmodal('sm')">{{"STAMPANTE_2D_FORMATI_DISP_LABEL" | translate}}</button>
+                                            <button class="btn btn-secondary btn-block" ng-click="mainAnagFormati2Dmodal('sm')">{{"STAMPANTE_2D_FORMATI_DISP_LABEL"| translate}}</button>
                                         </div>
                                     </div>
                                     <!--
@@ -137,17 +137,17 @@
                                     <div class="col-xs-12 form-group">
                                         <label name="fs2dScelti"
                                                ng-model="formatiStampa2DScelti.length" 
-                                               formati-2d-min="formatiStampa2DScelti">{{"FORMATI_STAMPA_2D_SCELTI_LABEL" | translate}} {{formatiStampa2DScelti.length}}</label>
+                                               formati-2d-min="formatiStampa2DScelti">{{"FORMATI_STAMPA_2D_SCELTI_LABEL"| translate}} {{formatiStampa2DScelti.length}}</label>
                                         <div>
                                             <span class="label label-danger" ng-show="formRegistrazione.fs2dScelti.$error.checkFrmt2d">
-                                                {{"STAMPANTE_2D_FORMATO_OBBL" | translate}}
+                                                {{"STAMPANTE_2D_FORMATO_OBBL"| translate}}
                                             </span> 
                                         </div>
                                     </div>
 
                                     <div class="col-xs-12 form-group" ng-repeat="formato in formatiStampa2DScelti">
                                         <div class="col-xs-4">
-                                            <label>{{"STAMPANTE_2D_FORMATO_LABEL" | translate}}</label>
+                                            <label>{{"STAMPANTE_2D_FORMATO_LABEL"| translate}}</label>
                                         </div>
                                         <div class="col-xs-4">
                                             <p>{{formato.value}}</p>
@@ -167,14 +167,14 @@
                                            ng-click="boxCondividoST3D(chkBoxStampa3D)"
                                            type="checkbox" 
                                            ng-required="condividoStampante &&!chkBoxStampa2D">
-                                    <label for="chkBoxStampa3D">{{"HO_STAMPANTE_3D_LABEL" | translate}}</label>   
+                                    <label for="chkBoxStampa3D">{{"HO_STAMPANTE_3D_LABEL"| translate}}</label>   
                                 </div>
                                 <div ng-if="chkBoxStampa3D">
                                     <div class="col-xs-12"><hr></div>
                                     <div class="col-xs-5 form-group">
                                         <div class="row">
                                             <div class="col-xs-12 form-group">
-                                                <label for="altezzaStampa3D">{{"STAMPANTE_3D_ALTEZZA_LABEL" | translate}} {{formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura}}</label>   
+                                                <label for="altezzaStampa3D">{{"STAMPANTE_3D_ALTEZZA_LABEL"| translate}} {{formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura}}</label>   
                                                 <input id="altezzaStampa3D"
                                                        name="altezzaStampa3D" 
                                                        ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.altezza" 
@@ -186,13 +186,13 @@
                                                        ng-class="formRegistrazione.altezzaStampa3D.$error.required ? 'borderRed' : ''"
                                                        ng-required="chkBoxStampa3D">
                                                 <span class="label label-danger" ng-show="formRegistrazione.altezzaStampa3D.$error.max">
-                                                    {{"STAMPANTE_3D_VALORE_MAX_LABEL" | translate}}
+                                                    {{"STAMPANTE_3D_VALORE_MAX_LABEL"| translate}}
                                                 </span>                                                 
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-12 form-group">
-                                                <label for="larghezzaStampa3D">{{"STAMPANTE_3D_LARGHEZZA_LABEL" | translate}} {{formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura}}</label>   
+                                                <label for="larghezzaStampa3D">{{"STAMPANTE_3D_LARGHEZZA_LABEL"| translate}} {{formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura}}</label>   
                                                 <input id="larghezzaStampa3D"
                                                        name="larghezzaStampa3D" 
                                                        ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.larghezza" 
@@ -204,13 +204,13 @@
                                                        ng-class="formRegistrazione.larghezzaStampa3D.$error.required ? 'borderRed' : ''"
                                                        ng-required="chkBoxStampa3D">
                                                 <span class="label label-danger" ng-show="formRegistrazione.larghezzaStampa3D.$error.max">
-                                                    {{"STAMPANTE_3D_VALORE_MAX_LABEL" | translate}}
+                                                    {{"STAMPANTE_3D_VALORE_MAX_LABEL"| translate}}
                                                 </span> 
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-12 form-group">
-                                                <label for="profonditaStampa3D">{{"STAMPANTE_3D_PROFONDITA_LABEL" | translate}}{{formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura}}</label>   
+                                                <label for="profonditaStampa3D">{{"STAMPANTE_3D_PROFONDITA_LABEL"| translate}}{{formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura}}</label>   
                                                 <input id="profonditaStampa3D"
                                                        name="profonditaStampa3D" 
                                                        ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.profondita" 
@@ -222,7 +222,7 @@
                                                        ng-class="formRegistrazione.profonditaStampa3D.$error.required ? 'borderRed' : ''"
                                                        ng-required="chkBoxStampa3D">
                                                 <span class="label label-danger" ng-show="formRegistrazione.profonditaStampa3D.$error.max">
-                                                    {{"STAMPANTE_3D_VALORE_MAX_LABEL" | translate}}
+                                                    {{"STAMPANTE_3D_VALORE_MAX_LABEL"| translate}}
                                                 </span> 
                                             </div>
                                         </div>
@@ -230,14 +230,14 @@
                                     <div class="col-xs-offset-2 col-xs-5 form-group" ng-init="formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura = 'cm'">
                                         <div class="row">
                                             <div class="col-xs-12 form-group">
-                                                <label for="idUnitaMisuraStampa3D">{{"STAMPANTE_3D_UNITA_MISURA_LABEL" | translate}}</label>   
+                                                <label for="idUnitaMisuraStampa3D">{{"STAMPANTE_3D_UNITA_MISURA_LABEL"| translate}}</label>   
                                                 <select id="idUnitaMisuraStampa3D"                 
                                                         name="unitaMisuraStampa3D"
                                                         class="form-control"
                                                         ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.unitaDimisura"
                                                         ng-required="chkBoxStampa3D">
-                                                    <option ng-value="cm">{{"STAMPANTE_3D_CM_LABEL" | translate}}</option>
-                                                    <option ng-value="mm">{{"STAMPANTE_3D_MM_LABEL" | translate}}</option>
+                                                    <option ng-value="cm">{{"STAMPANTE_3D_CM_LABEL"| translate}}</option>
+                                                    <option ng-value="mm">{{"STAMPANTE_3D_MM_LABEL"| translate}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -246,11 +246,11 @@
                                         <input name="materialeStampa3D" 
                                                ng-model="formRegistrazioneData.tipologiaStampa.stampa3D.materiale" 
                                                type="text" 
-                                               placeholder="{{'STAMPANTE_3D_MATERIALE_LABEL' | translate}}" 
+                                               placeholder="{{'STAMPANTE_3D_MATERIALE_LABEL'| translate}}" 
                                                class="form-control" maxlength="20"
                                                ng-required="chkBoxStampa3D">
                                         <span class="label label-danger" ng-show="formRegistrazione.materialeStampa3D.$error.required">
-                                            {{"STAMPANTE_3D_MATERIALE_OBBL" | translate}}
+                                            {{"STAMPANTE_3D_MATERIALE_OBBL"| translate}}
                                         </span> 
                                     </div>
                                 </div>
@@ -260,26 +260,26 @@
                                 <div class="row">
                                     <div class="col-xs-12 form-group pull-left checkbox">
                                         <input id="chkBoxPrivacy" ng-model="chkBoxPrivacy" type="checkbox">
-                                        <label for="chkBoxPrivacy">{{"HO_LETTO_LABEL" | translate}}</label>   
-                                        <a style="cursor:pointer" data-toggle="modal" data-target="#privacyModal">{{"INFORMATIVA_PRIVACY_LABEL" | translate}}</a>
+                                        <label for="chkBoxPrivacy">{{"HO_LETTO_LABEL"| translate}}</label>   
+                                        <a style="cursor:pointer" data-toggle="modal" data-target="#privacyModal">{{"INFORMATIVA_PRIVACY_LABEL"| translate}}</a>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12 form-group pull-left checkbox">
                                         <input id="chkBoxRegolamento" ng-model="chkBoxRegolamento" type="checkbox">
-                                        <label for="chkBoxRegolamento">{{"HO_LETTO_IL_LABEL" | translate}}</label>
-                                        <a style="cursor:pointer" data-toggle="modal" data-target="#regolamentoModal">{{"REGOLAMENTO_LABEL" | translate}}</a> 
+                                        <label for="chkBoxRegolamento">{{"HO_LETTO_IL_LABEL"| translate}}</label>
+                                        <a style="cursor:pointer" data-toggle="modal" data-target="#regolamentoModal">{{"REGOLAMENTO_LABEL"| translate}}</a> 
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-xs-12">
                                         <button ng-disabled="!chkBoxRegolamento || !chkBoxPrivacy" 
                                                 class="btn btn-lg btn-primary btn-block" 
-                                                ng-click="registrazione(formRegistrazione)">{{"BTN_SALVA" | translate}}</button>
+                                                ng-click="registrazione(formRegistrazione)">{{"BTN_SALVA"| translate}}</button>
                                     </div>
                                     <div class="col-sm-6 col-xs-12">
                                         <button type="reset" value="Reset" ng-click="resetRegistrazione()"
-                                                class="btn btn-lg btn-primary btn-block">{{"BTN_RESET" | translate}}</button>
+                                                class="btn btn-lg btn-primary btn-block">{{"BTN_RESET"| translate}}</button>
                                     </div>               
                                 </div>
 
@@ -291,13 +291,20 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-6 tabs">
-                        <a href="" class="active" id="idFormLoginLink" ng-click="clickTabLogin($event)"><div class="login">{{"TAB_LOGIN_LABEL" | translate}}</div></a>
+                        <a href="" class="active" id="idFormLoginLink" ng-click="clickTabLogin($event)"><div class="login">{{"TAB_LOGIN_LABEL"| translate}}</div></a>
                     </div>
                     <div class="col-xs-6 tabs">
-                        <a href="" id="idFormRegistrazioneLink" ng-click="clickTabRegistrazione($event)"><div class="register">{{"TAB_REGISTRAZIONE_LABEL" | translate}}</div></a>
+                        <a href="" id="idFormRegistrazioneLink" ng-click="clickTabRegistrazione($event)"><div class="register">{{"TAB_REGISTRAZIONE_LABEL"| translate}}</div></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--CAPTCHA-->
+<div ng-show="captcha" class="row">
+    <div class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
+        <div class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
+    </div>
+</div>
+<!--/CAPTCHA-->
