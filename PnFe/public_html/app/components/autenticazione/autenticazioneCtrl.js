@@ -123,8 +123,6 @@
                         $('#idFormLoginLink').removeClass('active');
                         $(this).addClass('active');
                         e.preventDefault();
-                        $scope.mostraCaptcha(true);
-
                     };
                     $scope.clickTabLogin = function (e) {
                         $scope.resetMessaggioUtente();
@@ -133,7 +131,6 @@
                         $('#idFormRegistrazioneLink').removeClass('active');
                         $(this).addClass('active');
                         e.preventDefault();
-                        $scope.mostraCaptcha(false);
                     };
                 }]);
 }());
