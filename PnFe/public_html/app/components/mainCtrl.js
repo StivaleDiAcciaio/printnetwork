@@ -7,6 +7,7 @@
                     $scope.paginaCorrente = null;
                     $scope.showLoading = false;
                     $scope.messaggio = null;
+                    $scope.captcha = false;
                     $scope.dominioFormati2D = [];
                     $scope.dominioFormati2D[0] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A4;
                     $scope.dominioFormati2D[1] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A3;
@@ -15,6 +16,12 @@
                     $scope.dominioFormati2D[4] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A0;
 
                     $scope.formatiStampa2DScelti = [];
+                    $scope.mostraCaptcha = function(stato){
+                      $scope.captcha = stato;  
+                    };
+                    $scope.getCaptchaStato = function(){
+                      return $scope.captcha;
+                    };
                     
                     $scope.togglePageLoading = function(){
                         $scope.showLoading=!$scope.showLoading;
@@ -140,6 +147,7 @@
                      });*/
                     $scope.$on('$stateChangeSuccess', function (toSelf, toParams, fromSelf, fromParams) {
                         $scope.resetMessaggioUtente();
+                        $scope.mostraCaptcha(false);
                         if (toParams) {
                             $scope.setPaginaCorrente(toParams.name);
                         }

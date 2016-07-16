@@ -282,13 +282,6 @@
                                                 class="btn btn-lg btn-primary btn-block">{{"BTN_RESET"| translate}}</button>
                                     </div>               
                                 </div>
-                                <!--CAPTCHA-->
-                                <div class="row">
-                                    <div class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
-                                        <div id="Idcaptcha" class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
-                                    </div>
-                                </div>
-                                <!--/CAPTCHA-->
                             </div>
                         </form> <!--FINE FORM REGiSTRAZIONE -->
                     </div>
@@ -307,3 +300,11 @@
         </div>
     </div>
 </div>
+<!--CAPTCHA-->
+<div ng-show="getCaptchaStato()" class="row">
+    <div class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
+        <div id="Idcaptcha" class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
+    </div>
+</div>
+<!--/CAPTCHA-->
+
