@@ -1,5 +1,6 @@
 <!--PAGINA DI AUTENTICAZIONE -->
-<!--LOGIN E REGISTRAZIONE -->
+<!--LOGIN E REGISTRAZIONE --> 
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-custom">
@@ -282,6 +283,13 @@
                                                 class="btn btn-lg btn-primary btn-block">{{"BTN_RESET"| translate}}</button>
                                     </div>               
                                 </div>
+                                <!--CAPTCHA-->
+                                <div  class="row">
+                                    <div class="col-xs-offset-4 col-xs-4 col-xs-offset-4">
+                                        <div id="Idcaptcha" class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
+                                    </div>
+                                </div>
+                                <!--/CAPTCHA-->
                             </div>
                         </form> <!--FINE FORM REGiSTRAZIONE -->
                     </div>
