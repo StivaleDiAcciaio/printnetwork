@@ -6,6 +6,11 @@
 
 .margineContainer{
     margin-top: 80px;
+    position:relative;
+}
+.margineContainer > .boxCaptcha{
+    position:absolute; 
+    right: 47%;
 }
 
 .bodyHome{

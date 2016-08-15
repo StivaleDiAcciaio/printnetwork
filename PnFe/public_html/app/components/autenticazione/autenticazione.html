@@ -1,6 +1,6 @@
 <!--PAGINA DI AUTENTICAZIONE -->
 <!--LOGIN E REGISTRAZIONE --> 
-<script src='https://www.google.com/recaptcha/api.js'></script>
+
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-custom">
@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <!--LOGIN-->
-                       <form id="idFormLogin" name="formLogin" role="form" ng-show="mostraFormLogin">
+                        <form id="idFormLogin" name="formLogin" role="form" ng-show="mostraFormLogin">
                             <h2>{{"PAGINA_LOGIN_TITOLO"| translate}}</h2>
                             <div class="form-group">
                                 <input name="emailLogin" ng-model="formLoginData.email" ng-disabled ="checkToken()" type="email" placeholder="{{'EMAIL_LABEL'| translate}}" class="form-control" tabindex="1" required autofocus>
@@ -283,14 +283,7 @@
                                                 class="btn btn-lg btn-primary btn-block">{{"BTN_RESET"| translate}}</button>
                                     </div>               
                                 </div>
-                                <!--CAPTCHA-->
-                                <br>
-                                <div  class="row">
-                                    <div class="col-xs-12">
-                                        <div id="Idcaptcha" class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
-                                    </div>
-                                </div>
-                                <!--/CAPTCHA-->
+
                             </div>
                         </form> <!--FINE FORM REGiSTRAZIONE -->
                     </div>
@@ -299,10 +292,10 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-6 tabs">
-                        <a href="" ng-class="mostraFormLogin?'active':''" id="idFormLoginLink" ng-click="clickTabLogin()"><div class="login">{{"TAB_LOGIN_LABEL"| translate}}</div></a>
+                        <a href="" ng-class="mostraFormLogin ? 'active' : ''" id="idFormLoginLink" ng-click="clickTabLogin()"><div class="login">{{"TAB_LOGIN_LABEL"| translate}}</div></a>
                     </div>
                     <div class="col-xs-6 tabs">
-                        <a href="" ng-class="mostraFormRegistrazione?'active':''" id="idFormRegistrazioneLink" ng-click="clickTabRegistrazione()"><div class="register">{{"TAB_REGISTRAZIONE_LABEL"| translate}}</div></a>
+                        <a href="" ng-class="mostraFormRegistrazione ? 'active' : ''" id="idFormRegistrazioneLink" ng-click="clickTabRegistrazione()"><div class="register">{{"TAB_REGISTRAZIONE_LABEL"| translate}}</div></a>
                     </div>
                 </div>
             </div>
