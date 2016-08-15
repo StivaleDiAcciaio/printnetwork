@@ -100,3 +100,15 @@
         background-position: 0 0;
     }
 }
+
+.modalHeaderStyle{
+    position:relative;
+}
+.modalHeaderStyle > h4{
+    text-align: center;
+}
+.modalHeaderStyle > .close{
+    position:absolute;
+    right: 10px; 
+    top:0px;
+}

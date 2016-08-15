@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <!--LOGIN-->
-                        <form id="idFormLogin" name="formLogin" role="form" style="display: block;">
+                       <form id="idFormLogin" name="formLogin" role="form" ng-show="mostraFormLogin">
                             <h2>{{"PAGINA_LOGIN_TITOLO"| translate}}</h2>
                             <div class="form-group">
                                 <input name="emailLogin" ng-model="formLoginData.email" ng-disabled ="checkToken()" type="email" placeholder="{{'EMAIL_LABEL'| translate}}" class="form-control" tabindex="1" required autofocus>
@@ -30,7 +30,7 @@
                             </div>
                         </form>
                         <!--REGISTRAZIONE-->
-                        <form id="idFormRegistrazione" name="formRegistrazione" role="form" style="display: none;">
+                        <form id="idFormRegistrazione" name="formRegistrazione" role="form" ng-show="mostraFormRegistrazione">
                             <h2>{{"PAGINA_REGISTRAZIONE_TITOLO"| translate}}</h2>
                             <div class="form-group">
                                 <input name="nickRegistrazione" ng-model="formRegistrazioneData.nick" type="text" class="form-control" placeholder="{{'NICK_LABEL'|translate}}" tabindex="1" required autofocus maxlength="50">
@@ -138,7 +138,7 @@
                                     <div class="col-xs-12 form-group">
                                         <label name="fs2dScelti"
                                                ng-model="formatiStampa2DScelti.length" 
-                                               formati-2d-min="formatiStampa2DScelti">{{"FORMATI_STAMPA_2D_SCELTI_LABEL"| translate}} {{formatiStampa2DScelti.length}}</label>
+                                               formati-2d-min="formatiStampa2DScelti">{{"STAMPANTE_2D_FORMATI_SCELTI_LABEL"| translate}} {{formatiStampa2DScelti.length}}</label>
                                         <div>
                                             <span class="label label-danger" ng-show="formRegistrazione.fs2dScelti.$error.checkFrmt2d">
                                                 {{"STAMPANTE_2D_FORMATO_OBBL"| translate}}
@@ -262,14 +262,14 @@
                                     <div class="col-xs-12 form-group pull-left checkbox">
                                         <input id="chkBoxPrivacy" ng-model="chkBoxPrivacy" type="checkbox">
                                         <label for="chkBoxPrivacy">{{"HO_LETTO_LABEL"| translate}}</label>   
-                                        <a style="cursor:pointer" data-toggle="modal" data-target="#privacyModal">{{"INFORMATIVA_PRIVACY_LABEL"| translate}}</a>
+                                        <a style="cursor:pointer" ng-click="mainOpenPrivacyModal('md')">{{"INFORMATIVA_PRIVACY_LABEL"| translate}}</a>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12 form-group pull-left checkbox">
                                         <input id="chkBoxRegolamento" ng-model="chkBoxRegolamento" type="checkbox">
                                         <label for="chkBoxRegolamento">{{"HO_LETTO_IL_LABEL"| translate}}</label>
-                                        <a style="cursor:pointer" data-toggle="modal" data-target="#regolamentoModal">{{"REGOLAMENTO_LABEL"| translate}}</a> 
+                                        <a style="cursor:pointer" ng-click="mainOpenRegolamentoModal('md')">{{"REGOLAMENTO_LABEL"| translate}}</a> 
                                     </div>
                                 </div>
                                 <div class="row">
@@ -299,10 +299,10 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-6 tabs">
-                        <a href="" class="active" id="idFormLoginLink" ng-click="clickTabLogin($event)"><div class="login">{{"TAB_LOGIN_LABEL"| translate}}</div></a>
+                        <a href="" ng-class="mostraFormLogin?'active':''" id="idFormLoginLink" ng-click="clickTabLogin()"><div class="login">{{"TAB_LOGIN_LABEL"| translate}}</div></a>
                     </div>
                     <div class="col-xs-6 tabs">
-                        <a href="" id="idFormRegistrazioneLink" ng-click="clickTabRegistrazione($event)"><div class="register">{{"TAB_REGISTRAZIONE_LABEL"| translate}}</div></a>
+                        <a href="" ng-class="mostraFormRegistrazione?'active':''" id="idFormRegistrazioneLink" ng-click="clickTabRegistrazione()"><div class="register">{{"TAB_REGISTRAZIONE_LABEL"| translate}}</div></a>
                     </div>
                 </div>
             </div>

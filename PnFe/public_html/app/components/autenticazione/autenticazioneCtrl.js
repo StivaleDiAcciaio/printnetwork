@@ -7,6 +7,9 @@
                     $scope.formLoginData = {};
                     $scope.formRegistrazioneData = {};
                     $scope.formatoStampa2DSelezionato = null;
+                    $scope.mostraFormRegistrazione=false;
+                    $scope.mostraFormLogin=true;
+                    
                     if ($scope.getRicordami()) {
                         $scope.formLoginData.email = $scope.getRicordami().email;
                         $scope.formLoginData.password = $scope.getRicordami().pwd;
@@ -118,21 +121,15 @@
                     };
                     $scope.clickTabRegistrazione = function (e) {
                         $scope.resetMessaggioUtente();
-                        $("#idFormRegistrazione").delay(100).fadeIn(100);
-                        $("#idFormLogin").fadeOut(100);
-                        $('#idFormLoginLink').removeClass('active');
-                        $(this).addClass('active');
-                        e.preventDefault();
+                        $scope.mostraFormRegistrazione = true;
+                        $scope.mostraFormLogin = false;
                         
 
                     };
                     $scope.clickTabLogin = function (e) {
                         $scope.resetMessaggioUtente();
-                        $("#idFormLogin").delay(100).fadeIn(100);
-                        $("#idFormRegistrazione").fadeOut(100);
-                        $('#idFormRegistrazioneLink').removeClass('active');
-                        $(this).addClass('active');
-                        e.preventDefault();
+                        $scope.mostraFormRegistrazione = false;
+                        $scope.mostraFormLogin = true;
                         
                     };
                 }]);

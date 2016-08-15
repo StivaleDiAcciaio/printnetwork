@@ -2,8 +2,8 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('mainCtrl',
-            ['$scope', '$state', '$location', '$anchorScroll', '$uibModal', 'serviziRest', 'CONST','$translate',
-                function ($scope, $state, $location, $anchorScroll, $uibModal, serviziRest, COSTANTI,$translate) {
+            ['$scope', '$state', '$location', '$anchorScroll', '$uibModal', 'serviziRest', 'CONST', '$translate',
+                function ($scope, $state, $location, $anchorScroll, $uibModal, serviziRest, COSTANTI, $translate) {
                     $scope.paginaCorrente = null;
                     $scope.showLoading = false;
                     $scope.messaggio = null;
@@ -13,11 +13,9 @@
                     $scope.dominioFormati2D[2] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A2;
                     $scope.dominioFormati2D[3] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A1;
                     $scope.dominioFormati2D[4] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A0;
-
                     $scope.formatiStampa2DScelti = [];
-                    
-                    $scope.togglePageLoading = function(){
-                        $scope.showLoading=!$scope.showLoading;
+                    $scope.togglePageLoading = function () {
+                        $scope.showLoading = !$scope.showLoading;
                     };
                     $scope.setPaginaCorrente = function (pagina) {
                         $scope.paginaCorrente = {};
@@ -32,7 +30,6 @@
                     $scope.mostraMessaggioWarning = function (codice) {
                         mostraMessaggioUtente(codice, COSTANTI.MESSAGE_LEVEL.WARNING, $scope);
                     };
-
                     $scope.mostraMessaggioError = function (codice) {
                         mostraMessaggioUtente(codice, COSTANTI.MESSAGE_LEVEL.ERROR, $scope);
                     };
@@ -70,10 +67,9 @@
                         }
                         return null;
                     };
-
                     function mostraMessaggioUtente(codice, level, scope) {
                         scope.messaggio = {};
-                        scope.messaggio.contenuto = $translate.instant("SERVER_COD_"+codice);
+                        scope.messaggio.contenuto = $translate.instant("SERVER_COD_" + codice);
                         scope.messaggio.level = level;
                         scope.scrollTo('messaggiUtente');
                     }
@@ -101,8 +97,8 @@
                             $scope.formatiStampa2DScelti.push(formato);
                         }
                     };
-                    $scope.mainResetFormati2D = function (){
-                         $scope.formatiStampa2DScelti = [];
+                    $scope.mainResetFormati2D = function () {
+                        $scope.formatiStampa2DScelti = [];
                     };
                     $scope.mainAnagFormati2Dmodal = function (size, formati2dUtente) {
                         var modalInstance = $uibModal.open({
@@ -123,13 +119,49 @@
                                 }
                             }
                         });
-
                         modalInstance.result.then(function (formati2dScelti) {
                             $scope.formatiStampa2DScelti = formati2dScelti;
                         }, function () {
                             //mainAnagFormati2Dmodal chiusa
                         });
                     };
+                    $scope.mainOpenRegolamentoModal = function (size) {
+                        var modalRegolamentoInstance = $uibModal.open({
+                            animation: true,
+                            templateUrl: 'app/components/commonModal/regolamentoSito.html',
+                            controller: function ($scope, $uibModalInstance) {
+                                $scope.cancel = function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+                            },
+                            size: size
+                        });
+                    };
+                    $scope.mainOpenPrivacyModal = function (size) {
+                        var modalPrivacyInstance = $uibModal.open({
+                            animation: true,
+                            templateUrl: 'app/components/commonModal/infoPrivacy.html',
+                            controller: function ($scope, $uibModalInstance) {
+                                $scope.cancel = function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+                            },
+                            size: size
+                        });
+                    };
+                    $scope.mainOpenContattiModal = function (size) {
+                        var modalContattiInstance = $uibModal.open({
+                            animation: true,
+                            templateUrl: 'app/components/commonModal/contatti.html',
+                            controller: function ($scope, $uibModalInstance) {
+                                $scope.cancel = function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+                            },
+                            size: size
+                        });
+                    };
+
                     /*Eventi del Routing */
                     /*OLD
                      * $scope.$on('$viewContentLoaded', function (event, viewConfig) {
