@@ -123,14 +123,13 @@
                         $scope.resetMessaggioUtente();
                         $scope.mostraFormRegistrazione = true;
                         $scope.mostraFormLogin = false;
-                        
-
+                        $scope.mainMostraCaptcha(true);
                     };
                     $scope.clickTabLogin = function (e) {
                         $scope.resetMessaggioUtente();
                         $scope.mostraFormRegistrazione = false;
                         $scope.mostraFormLogin = true;
-                        
+                        $scope.mainMostraCaptcha(false);
                     };
                 }]);
 }());

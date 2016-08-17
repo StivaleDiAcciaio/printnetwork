@@ -117,3 +117,45 @@
     right: 10px; 
     top:0px;
 }
+
+@media(max-width:1800px){
+    .margineContainer > .boxCaptcha{
+        right: 42%;
+    }
+}
+@media(max-width:991px){
+    .margineContainer > .boxCaptcha{
+        right: 54%;
+    }
+}
+@media(max-width:699px){
+    .margineContainer > .boxCaptcha{
+        right: 25%;
+    }
+}
+@media(max-width:400px){
+    .margineContainer > .boxCaptcha{
+        right: 12%;
+    }
+}
+@media(max-width:300px){
+    .margineContainer > .boxCaptcha{
+        right: -2%;
+    }
+}
+/*
+@media(min-width:700px){
+    .margineContainer > .boxCaptcha{
+        right: 54%;
+    }
+}
+@media(min-width:301px){
+    .margineContainer > .boxCaptcha{
+        right: 20%;
+    }
+}
+@media(min-width:200px){
+    .margineContainer > .boxCaptcha{
+        right: -2%;
+    }
+}*/

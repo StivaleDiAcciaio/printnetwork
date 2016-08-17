@@ -99,8 +99,10 @@
         <div class="container margineContainer">
             <div ui-view="content"></div>
             <!--CAPTCHA-->
-            <div class="boxCaptcha">
-                <div id="Idcaptcha" class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
+            <div ng-show="boxCaptcha" class="boxCaptcha row">
+                <div class="col-xs-12">
+                    <div id="Idcaptcha" class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
+                </div>
             </div>
             <!--/CAPTCHA-->
         </div>

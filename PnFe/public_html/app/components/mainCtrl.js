@@ -7,6 +7,7 @@
                     $scope.paginaCorrente = null;
                     $scope.showLoading = false;
                     $scope.messaggio = null;
+                    $scope.boxCaptcha = false;
                     $scope.dominioFormati2D = [];
                     $scope.dominioFormati2D[0] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A4;
                     $scope.dominioFormati2D[1] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A3;
@@ -161,6 +162,10 @@
                             size: size
                         });
                     };
+                    
+                    $scope.mainMostraCaptcha = function (stato){
+                        $scope.boxCaptcha = stato;
+                    };
 
                     /*Eventi del Routing */
                     /*OLD
@@ -172,6 +177,7 @@
                      });*/
                     $scope.$on('$stateChangeSuccess', function (toSelf, toParams, fromSelf, fromParams) {
                         $scope.resetMessaggioUtente();
+                        $scope.mainMostraCaptcha(false);
                         if (toParams) {
                             $scope.setPaginaCorrente(toParams.name);
                         }
