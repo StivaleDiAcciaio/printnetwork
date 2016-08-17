@@ -124,6 +124,7 @@
                         $scope.mostraFormRegistrazione = true;
                         $scope.mostraFormLogin = false;
                         $scope.mainMostraCaptcha(true);
+                        $scope.scrollTo("idBoxCaptcha");
                     };
                     $scope.clickTabLogin = function (e) {
                         $scope.resetMessaggioUtente();

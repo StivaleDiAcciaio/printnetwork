@@ -61,7 +61,7 @@
                 </div>
             </div>
             <!--/Caricamento Pagina-->
-            <a href="#" ng-class="showLoading ? 'btn btn-link disabled navbar-brand' : 'navbar-brand'"><img style="float:left;" src="assets/img/stampante_80x80.png"></a>
+            <a href="#" ng-class="showLoading ? 'btn btn-link disabled navbar-brand' : 'navbar-brand'"><img ng-class="paginaCorrente.nome != 'home' ? 'navBarIcon' : 'navBarIconHome'" src="assets/img/stampante_80x80.png"></a>
             <a ng-if="checkToken()" href="#autenticazione" class="navbar-brand" style="float:right;" ng-click="logout()">Esci</a>
             <div class="container">
                 <div class="navbar-header">
@@ -99,7 +99,7 @@
         <div class="container margineContainer">
             <div ui-view="content"></div>
             <!--CAPTCHA-->
-            <div ng-show="boxCaptcha" class="boxCaptcha row">
+            <div id="idBoxCaptcha" ng-show="boxCaptcha" class="boxCaptcha row">
                 <div class="col-xs-12">
                     <div id="Idcaptcha" class="g-recaptcha" data-sitekey="6LcciCQTAAAAAMms69y3Wau-tpcWAJOJvjRiHEAR"></div>
                 </div>

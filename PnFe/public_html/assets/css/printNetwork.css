@@ -13,6 +13,16 @@
     right: 47%;
 }
 
+.navBarIcon{
+    float:left;
+    display: block !important;
+}
+
+.navBarIconHome{
+    float:left;
+    display: none !important;
+}
+
 .bodyHome{
     text-align: center;
     font-family: 'Roboto';
@@ -143,19 +153,3 @@
         right: -2%;
     }
 }
-/*
-@media(min-width:700px){
-    .margineContainer > .boxCaptcha{
-        right: 54%;
-    }
-}
-@media(min-width:301px){
-    .margineContainer > .boxCaptcha{
-        right: 20%;
-    }
-}
-@media(min-width:200px){
-    .margineContainer > .boxCaptcha{
-        right: -2%;
-    }
-}*/
