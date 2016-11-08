@@ -38,13 +38,12 @@ Thumbs.db
 
 #Custom file#
 
-/web/nbproject/
-/web/test/
 /nodejs-files/nbproject/
 /nodejs-files/node_modules/
-/web/public_html/node_modules/
 /PnFe/nbproject/
 /PnFe/public_html/node_modules/
 /PnFe/test/
 /PnBe/node_modules/
 /PnBe/nbproject/
+config.js
+/node_modules/
