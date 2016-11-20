@@ -6,27 +6,32 @@
 
 var gulp = require('gulp');
 var scp = require('gulp-scp2');
+var GulpSSH = require('gulp-ssh');
 var config = require('./configGulp'); // mio file di configurazione
-var PN_FE = '/PnFe/';
+var gulpSSH = new GulpSSH({
+  ignoreErrors: false,
+  sshConfig: config
+});
+
+var PN_FE = 'PnFe/';
 
 //Esegue FTP su server remoto
 function ftp2Server(tipoOperazione, cartellaDestinazione,nomeFile) {
-console.log("ftp2Server start..");
-console.log("tipoOperazione "+tipoOperazione);
-console.log("file modificato "+nomeFile);
-console.log("cartella destinazione "+cartellaDestinazione);
-
-/*    var ftp = gulp.src(nomeFile)
+    console.log("ftp di "+nomeFile + " su "+config.dest+cartellaDestinazione);
+var ftp = gulp.src(nomeFile)
             .pipe(scp({
                 host: config.host,
-                username: config.user,
-                password: config.pwd,
+                username: config.username,
+                password: config.password,
                 dest: config.dest+cartellaDestinazione
             }));
     ftp.on('error', function (err) {
         console.log("errore durante FTP:" + err);
-    });*/
-console.log("ftp2Server end");
+    });
+}
+//esegue comandi remoti
+function shellCommandServer(percorso,comando){
+    gulpSSH.exec([comando+percorso]);
 }
 /* 
  * Task in ascolto sulle cartelle di progetto
@@ -39,21 +44,18 @@ console.log("ftp2Server end");
  * 
 */ 
 gulp.task('watch', function () {
-    var pnFeFolder = 'testGulp'+PN_FE+'**/*';
+    var pnFeFolder = 'testGulp/'+PN_FE+'**/*';
     var watcherPnFeFolder = gulp.watch(pnFeFolder);
     console.log("..in ascolto su "+pnFeFolder);
     //=====================//
     //  PnFe
     watcherPnFeFolder.on('change', function (event) {
-        //..nuova cartella
-        if ((event.path).slice(-1) === '/'){
+        if ((event.path).slice(-1) !== '/'){//se ho modificato files..
             var start = event.path.indexOf(PN_FE)+PN_FE.length;
-            var end = event.path.length-1;
-            var cartella = event.path.substring(start,end);
-            console.log(event.type+" cartella..:"+cartella);
-            //creaCartellaServer(PN_FE,cartella);
-        }else{//modifiche a files..
-            ftp2Server(event.type, PN_FE,event.path);   
+            var end = event.path.length;
+            var cartellaPiuFile = event.path.substring(start,end);
+            var origineFile = event.path;
+            ftp2Server(event.type, PN_FE+cartellaPiuFile,origineFile);   
         }
     });
     watcherPnFeFolder.on('error', function (e) {
