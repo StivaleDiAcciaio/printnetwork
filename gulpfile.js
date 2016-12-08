@@ -15,21 +15,25 @@ var gulpSSH = new GulpSSH({
 
 var PN_FE = 'PnFe';
 var PN_BE = 'PnBe';
+var NODEJS_SERVER_FOLDER='nodejs-server';
+var PUBLIC_HTML_SERVER_FOLDER='public_html';
 
 //Esegue FTP o rimozione files su server remoto
-function deploy2Server(tipoOperazione, cartellaDestinazione,nomeFile,origineFile) {
+function deploy2Server(tipoOperazione, cartellaDestinazione,nomeFile,origineFile,cartellaServer) {
     console.log("tipo operazione "+tipoOperazione+" su file "+nomeFile);
+    var destinazioneServer=config.dest+cartellaDestinazione+cartellaServer;
+    console.log("destinazioneServer :"+destinazioneServer);
     if (tipoOperazione === 'deleted'){
-        shellCommandServer('rm',config.dest+cartellaDestinazione+nomeFile);
+        shellCommandServer('rm',destinazioneServer+nomeFile);
     }else{
-        console.log("ftp su "+config.dest+cartellaDestinazione+" del file "+nomeFile);
+        console.log("ftp su "+destinazioneServer+" del file "+nomeFile);
          
             var ftp = gulp.src(origineFile)
                         .pipe(scp({
                             host: config.host,
                             username: config.username,
                             password: config.password,
-                            dest: config.dest+cartellaDestinazione
+                            dest: destinazioneServer
                         }));
                 ftp.on('error', function (err) {
                     console.log("errore durante FTP:" + err);
@@ -52,7 +56,7 @@ function shellCommandServer(comando,percorso){
  * 
 */ 
 gulp.task('watchPnFe', function () {
-    var pnFeFolder = 'testGulp/'+PN_FE+'/**/*';
+    var pnFeFolder = PN_FE+'/**/*';
     var watcherPnFeFolder = gulp.watch(pnFeFolder);
     console.log("..in ascolto su "+pnFeFolder);
     watcherPnFeFolder.on('change', function (event) {
@@ -67,7 +71,7 @@ gulp.task('watchPnFe', function () {
             var endNomeFile = event.path.length;
             var nomeFile =event.path.substring(startNomeFile,endNomeFile);
             var origineFile = event.path;
-            deploy2Server(event.type, PN_FE+cartella,nomeFile,origineFile);   
+            deploy2Server(event.type, PN_FE+cartella,nomeFile,origineFile,PUBLIC_HTML_SERVER_FOLDER);   
         }
     });
     watcherPnFeFolder.on('error', function (e) {
@@ -86,7 +90,7 @@ gulp.task('watchPnFe', function () {
  * 
 */ 
 gulp.task('watchPnBe', function () {
-    var pnBeFolder = 'testGulp/'+PN_BE+'/**/*';
+    var pnBeFolder = PN_BE+'/**/*';
     var watcherPnBeFolder = gulp.watch(pnBeFolder);
     console.log("..in ascolto su "+pnBeFolder);
     watcherPnBeFolder.on('change', function (event) {
@@ -101,7 +105,7 @@ gulp.task('watchPnBe', function () {
             var endNomeFile = event.path.length;
             var nomeFile =event.path.substring(startNomeFile,endNomeFile);
             var origineFile = event.path;
-            deploy2Server(event.type, PN_BE+cartella,nomeFile,origineFile);   
+            deploy2Server(event.type, PN_BE+cartella,nomeFile,origineFile,NODEJS_SERVER_FOLDER);   
         }
     });
     watcherPnBeFolder.on('error', function (e) {

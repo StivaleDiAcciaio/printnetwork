@@ -27,22 +27,27 @@
 
                     $scope.login = function (formLogin) {
                         if (formLogin.$valid) {
+                            $scope.togglePageLoading();
                             serviziRest.autenticazione({utente: $scope.formLoginData}).then(function (response) {
                                 if ($scope.ricordami) {
                                     $scope.setRicordami($scope.formLoginData.email, $scope.formLoginData.password);
                                 }
                                 if (response.esito) {
+                                    $scope.togglePageLoading();
                                     $scope.setToken(response.token);
                                     $scope.setUtenteLoggato(response.utenteLoggato);
                                     $scope.vaiAllaPagina(COSTANTI.PAGINA.PANNELLO_CONTROLLO);
                                 } else {
                                     $scope.mostraMessaggioError(response.codErr);
+                                    $scope.togglePageLoading();
                                 }
                             }, function (err) {
                                 if (err.data) {
                                     $scope.mostraMessaggioError(err.data.codErr);
+                                    $scope.togglePageLoading();
                                 } else {
                                     $scope.mostraMessaggioError($translate.instant("ERR_GENERICO_MSG"));
+                                    $scope.togglePageLoading();
                                 }
                             });
                         }
