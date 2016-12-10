@@ -19,15 +19,13 @@ var NODEJS_SERVER_FOLDER='nodejs-server';
 var PUBLIC_HTML_SERVER_FOLDER='public_html';
 
 //Esegue FTP o rimozione files su server remoto
-function deploy2Server(tipoOperazione, cartellaDestinazione,nomeFile,origineFile,cartellaServer) {
-    console.log("tipo operazione "+tipoOperazione+" su file "+nomeFile);
-    var destinazioneServer=config.dest+cartellaDestinazione+cartellaServer;
-    console.log("destinazioneServer :"+destinazioneServer);
+function deploy2Server(tipoOperazione, cartellaDestinazione,nomeFile,origineFile) {
+    //console.log("tipo operazione "+tipoOperazione+" su file "+nomeFile);
+    var destinazioneServer=config.dest+cartellaDestinazione;
     if (tipoOperazione === 'deleted'){
         shellCommandServer('rm',destinazioneServer+nomeFile);
     }else{
-        console.log("ftp su "+destinazioneServer+" del file "+nomeFile);
-         
+        //console.log("ftp su "+destinazioneServer+" del file "+nomeFile);
             var ftp = gulp.src(origineFile)
                         .pipe(scp({
                             host: config.host,
@@ -42,7 +40,7 @@ function deploy2Server(tipoOperazione, cartellaDestinazione,nomeFile,origineFile
 }
 //esegue comandi remoti
 function shellCommandServer(comando,percorso){
-    console.log ("eseguo "+comando+" su "+percorso);
+    //console.log ("eseguo "+comando+" su "+percorso);
     gulpSSH.exec([comando+' '+percorso]);
 }
 /* 
@@ -51,8 +49,9 @@ function shellCommandServer(comando,percorso){
  * 
  * NB:
  *  non vengono rilevate le cartelle rimosse;
- *  aggiungere le cartelle annidate una per volta
+ *  aggiungere eventuali cartelle annidate una per volta
  *  NON copia e incolla di cartelle annidate
+ *  che non verrebbero rilevate correttamente da GULP
  * 
 */ 
 gulp.task('watchPnFe', function () {
@@ -61,17 +60,17 @@ gulp.task('watchPnFe', function () {
     console.log("..in ascolto su "+pnFeFolder);
     watcherPnFeFolder.on('change', function (event) {
         if ((event.path).slice(-1) !== '/'){//se ho modificato files..
-            var startCartella = event.path.indexOf(PN_FE)+PN_FE.length;
+            var startCartella = event.path.indexOf(PUBLIC_HTML_SERVER_FOLDER)+PUBLIC_HTML_SERVER_FOLDER.length;
             var endCartella = event.path.lastIndexOf('/');
             var cartella = event.path.substring(startCartella,endCartella);
-            if (cartella !== '/'){// se cartella diversa da root di PNFE..
+            if (cartella !== '/'){// se cartella diversa da root (PUBLIC_HTML_SERVER_FOLDER)..
                 cartella = cartella +'/';
             }
             var startNomeFile = endCartella+1;
             var endNomeFile = event.path.length;
             var nomeFile =event.path.substring(startNomeFile,endNomeFile);
             var origineFile = event.path;
-            deploy2Server(event.type, PN_FE+cartella,nomeFile,origineFile,PUBLIC_HTML_SERVER_FOLDER);   
+            deploy2Server(event.type, PUBLIC_HTML_SERVER_FOLDER+'/'+PN_FE+cartella,nomeFile,origineFile);   
         }
     });
     watcherPnFeFolder.on('error', function (e) {
@@ -85,8 +84,9 @@ gulp.task('watchPnFe', function () {
  * 
  * NB:
  *  non vengono rilevate le cartelle rimosse;
- *  aggiungere le cartelle annidate una per volta
+ *  aggiungere eventuali cartelle annidate una per volta
  *  NON copia e incolla di cartelle annidate
+ *  che non verrebbero rilevate correttamente da GULP
  * 
 */ 
 gulp.task('watchPnBe', function () {
@@ -105,7 +105,7 @@ gulp.task('watchPnBe', function () {
             var endNomeFile = event.path.length;
             var nomeFile =event.path.substring(startNomeFile,endNomeFile);
             var origineFile = event.path;
-            deploy2Server(event.type, PN_BE+cartella,nomeFile,origineFile,NODEJS_SERVER_FOLDER);   
+            deploy2Server(event.type, NODEJS_SERVER_FOLDER+'/'+PN_BE+cartella,nomeFile,origineFile);   
         }
     });
     watcherPnBeFolder.on('error', function (e) {

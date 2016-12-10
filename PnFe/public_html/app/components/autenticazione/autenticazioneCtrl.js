@@ -9,7 +9,7 @@
                     $scope.formatoStampa2DSelezionato = null;
                     $scope.mostraFormRegistrazione=false;
                     $scope.mostraFormLogin=true;
-                    
+                     
                     if ($scope.getRicordami()) {
                         $scope.formLoginData.email = $scope.getRicordami().email;
                         $scope.formLoginData.password = $scope.getRicordami().pwd;
@@ -52,6 +52,7 @@
                             });
                         }
                     };
+                    //ottengo il token della risposta captcha
                     $scope.tokenCaptcha = function () {
                         var noToken = false;
                         try {

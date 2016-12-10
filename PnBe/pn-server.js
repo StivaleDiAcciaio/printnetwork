@@ -18,7 +18,7 @@ var log4js = require('log4js');
 // =======================
 // Configurazione ============
 // =======================
-var porta = 3000;
+var porta = 3000; 
 // parola segreta per generazione token
 app.set('superSecret', config.secret);
 // uso body parser per ottenere info da POST e/o URL parameters
@@ -47,19 +47,21 @@ appRouter.post('/login', function (req, res) {
     res.header("Access-Control-Allow-Methods", "POST");
     var esito = null;
     var token = null;
-    logger.debug("metodo login (post) : ip client=" + req.ip);
+    //logger.debug("metodo login (post) : ip client=" + req.headers["x-forwarded-proto"]);
     if (req.body.utente) {
-        // logger.debug("-->email da verificare " + req.body.utente.email);
+        //logger.debug("-->email da verificare " + req.body.utente.email);
         //verifica utente su DB
         moduloDbUtente.cercaUtente(req.body.utente, function (risultato) {
             if (!risultato.esito) {
-                logger.error(risultato.messaggio);
+                //logger.debug(risultato.messaggio);
                 res.json({
                     esito: risultato.esito,
                     codErr: risultato.codErr,
                     messaggio: risultato.messaggio
                 });
             } else {
+          //     logger.debug('utente loggato');
+
                 var utenteLoggato = risultato.utente;
                 token = jwt.sign(utenteLoggato, app.get('superSecret'), {
                     expiresIn: '5h'
@@ -91,8 +93,8 @@ appRouter.post('/registrazione', function (req, res) {
      */
     moduloDbUtente.precheckCreazioneUtente(req.body.utente, function (precheck) {
         if (!precheck.esito && precheck.codErr == 500) {
-            logger.error('errore durante precheck creazione utente');
-            logger.error(precheck.messaggio);
+           // logger.error('errore durante precheck creazione utente');
+           // logger.error(precheck.messaggio);
             res.status(500).send({
                 esito: precheck.esito,
                 codErr: precheck.codErr,
@@ -129,10 +131,10 @@ appRouter.post('/registrazione', function (req, res) {
     });
 });
 function checkTokenCaptcha(tokenUtenteCaptcha, ipClient, callback) {
-    logger.debug("start checkTokenCaptcha");
+ /*   logger.debug("start checkTokenCaptcha");
     logger.debug('tokenCaptcha ' + tokenUtenteCaptcha);
     logger.debug('secretKeyCaptcha ' + config.captchaSecretKey);
-    logger.debug('ipClient ' + ipClient);
+    logger.debug('ipClient ' + ipClient);*/
     if (!tokenUtenteCaptcha || !ipClient) {
         callback(false);
     } else {
@@ -140,33 +142,33 @@ function checkTokenCaptcha(tokenUtenteCaptcha, ipClient, callback) {
                 "?secret=" + config.captchaSecretKey +
                 "&response=" + tokenUtenteCaptcha +
                 "&remoteip=" + ipClient;
-        logger.debug("url invocato " + verificationUrl);
+      //  logger.debug("url invocato " + verificationUrl);
         var req = https.get(verificationUrl, function (res) {
-            logger.debug(res.statusCode);
+            //logger.debug(res.statusCode);
             //logger.debug(JSON.stringify(res.headers));
             var data = "";
             res.on('data', function (checkToken) {
                 data += checkToken.toString();
-                logger.debug(">>risultato check = " + data);
+               // logger.debug(">>risultato check = " + data);
             });
             res.on('end', function () {
                 try {
                     var parsedData = JSON.parse(data);
                     callback(parsedData.success);
                 } catch (e) {
-                    logger.debug(e);
+                    logger.error(e);
                     callback(false);
                 }
             });
         });
         req.on('error', function (err) {
-            logger.debug(">>errore richiesta  = " + err);
+            logger.error(">>errore richiesta  = " + err);
         });
 
         req.end();
     }
 
-    logger.debug("end checkTokenCaptcha");
+   // logger.debug("end checkTokenCaptcha");
 }
 ;
 /* Route middleware per verificare il token
