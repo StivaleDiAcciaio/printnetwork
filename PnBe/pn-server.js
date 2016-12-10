@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 log4js.configure({
     appenders: [
-        {type: 'file', filename: './appLog/pn-server.log', category: 'pn-server'}
+        {type: 'file', filename: '/var/www/nodejs-server/PnBe/appLog/pn-server.log', category: 'pn-server'}
     ],
     replaceConsole: false/* se true il console.log viene disabilitato.*/
 });
@@ -45,12 +45,12 @@ appRouter.post('/login', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
-    var esito = null;
+    var esito = null; 
     var token = null;
     //logger.debug("metodo login (post) : ip client=" + req.headers["x-forwarded-proto"]);
     if (req.body.utente) {
         //logger.debug("-->email da verificare " + req.body.utente.email);
-        //verifica utente su DB
+        //verifica utente su DB 
         moduloDbUtente.cercaUtente(req.body.utente, function (risultato) {
             if (!risultato.esito) {
                 //logger.debug(risultato.messaggio);
