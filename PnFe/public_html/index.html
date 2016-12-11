@@ -22,21 +22,13 @@
         <script src="node_modules/angular/angular.js"></script>
         <script src="node_modules/angular-i18n/angular-locale_it-it.js"></script>
         <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
-        <!--<script src="node_modules/angular-cookies/angular-cookies.min.js"></script>-->
-        <script
-        src="node_modules/angular-animate/angular-animate.min.js"></script>
-        <script
-        src="node_modules/angular-touch/angular-touch.min.js"></script>
-        <script
-        src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
-        <script
-        src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
-        <script
-        src="node_modules/angular-translate/dist/angular-translate-loader-partial/angular-translate-loader-partial.min.js"></script>
+        <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
+        <script src="node_modules/angular-translate/dist/angular-translate-loader-partial/angular-translate-loader-partial.min.js"></script>
+        <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+        <script src="node_modules/angular-touch/angular-touch.min.js"></script>
+        <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
         <script src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
-        <script
-            src="node_modules/nya-bootstrap-select/dist/js/nya-bs-select.min.js"
-        type="text/javascript"></script>
+        <script src="node_modules/nya-bootstrap-select/dist/js/nya-bs-select.min.js" type="text/javascript"></script>
         <!-- moduli, servizi, costanti, direttive etc.. -->
         <script src="app/app.module.js"></script>
         <script src="app/app.routes.js"></script>
@@ -52,7 +44,7 @@
         <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body id="ng-app" ng-app="printNetworkApp" ng-controller="mainCtrl"
-          ng-class="paginaCorrente.nome != 'home' ? 'bodyMain' : 'bodyHome'">
+          ng-class="(paginaCorrente && paginaCorrente.nome != 'home') ? 'bodyMain' : 'bodyHome'">
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <!--Caricamento Pagina-->
             <div ng-show="showLoading" class="col-xs-12 pannelloFissoLoadingPage">
@@ -62,7 +54,7 @@
             </div>
             <!--/Caricamento Pagina-->
             <a href="#" ng-class="showLoading ? 'btn btn-link disabled navbar-brand' : 'navbar-brand'">
-                <img style="z-index: 1;position: relative;" ng-class="paginaCorrente.nome != 'home' ? 'navBarIcon' : 'navBarIconHome'" src="assets/img/stampante_80x80.png"></a>
+                <img style="z-index: 1;position: relative;" ng-class="(paginaCorrente && paginaCorrente.nome != 'home') ? 'navBarIcon' : 'navBarIconHome'" src="assets/img/stampante_80x80.png"></a>
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
@@ -111,7 +103,6 @@
             </div>
             <!--/CAPTCHA-->
         </div>
-    </div>
 </body>
 </html>
 
