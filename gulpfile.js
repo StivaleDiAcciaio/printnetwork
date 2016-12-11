@@ -19,7 +19,7 @@ var NODEJS_SERVER_FOLDER='nodejs-server';
 var PUBLIC_HTML_SERVER_FOLDER='public_html';
 
 //Esegue FTP o rimozione files su server remoto
-function deploy2Server(tipoOperazione, cartellaDestinazione,nomeFile,origineFile,server) {
+function deploy2Server(tipoOperazione, cartellaDestinazione,nomeFile,origineFile) {
     //console.log("tipo operazione "+tipoOperazione+" su file "+nomeFile);
     var destinazioneServer=config.dest+cartellaDestinazione;
     if (tipoOperazione === 'deleted'){
@@ -70,7 +70,7 @@ gulp.task('watchPnFe', function () {
             var endNomeFile = event.path.length;
             var nomeFile =event.path.substring(startNomeFile,endNomeFile);
             var origineFile = event.path;
-            deploy2Server(event.type, PUBLIC_HTML_SERVER_FOLDER+'/'+PN_FE+cartella,nomeFile,'FE');   
+            deploy2Server(event.type, PUBLIC_HTML_SERVER_FOLDER+'/'+PN_FE+cartella,nomeFile,origineFile);   
         }
     });
     watcherPnFeFolder.on('error', function (e) {
@@ -105,7 +105,7 @@ gulp.task('watchPnBe', function () {
             var endNomeFile = event.path.length;
             var nomeFile =event.path.substring(startNomeFile,endNomeFile);
             var origineFile = event.path;
-            deploy2Server(event.type, NODEJS_SERVER_FOLDER+'/'+PN_BE+cartella,nomeFile,origineFile,'BE');   
+            deploy2Server(event.type, NODEJS_SERVER_FOLDER+'/'+PN_BE+cartella,nomeFile,origineFile);   
         }
     });
     watcherPnBeFolder.on('error', function (e) {

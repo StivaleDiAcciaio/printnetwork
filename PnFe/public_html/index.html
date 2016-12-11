@@ -63,7 +63,6 @@
             <!--/Caricamento Pagina-->
             <a href="#" ng-class="showLoading ? 'btn btn-link disabled navbar-brand' : 'navbar-brand'">
                 <img style="z-index: 1;position: relative;" ng-class="paginaCorrente.nome != 'home' ? 'navBarIcon' : 'navBarIconHome'" src="assets/img/stampante_80x80.png"></a>
-            <a ng-if="checkToken()" href="#autenticazione" style="float:right;" class="navbar-brand"  ng-click="logout()">Esci</a>
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
@@ -84,7 +83,12 @@
                         <li>
                             <a ng-class="showLoading ? 'btn btn-link disabled' : 'btn btn-link'" ng-click="mainOpenRegolamentoModal('md')">Regolamento</a>
                         </li>
-                        <li><a ng-class="showLoading ? 'btn btn-link disabled' : 'btn btn-link'" ng-click="mainOpenContattiModal('md')">Contatti</a> </li>
+                        <li>
+                            <a ng-class="showLoading ? 'btn btn-link disabled' : 'btn btn-link'" ng-click="mainOpenContattiModal('md')">Contatti</a>
+                        </li>
+                        <li>
+                            <a ng-if="checkToken()" ng-class="showLoading ? 'btn btn-link disabled' : 'btn btn-link'" href="#autenticazione" ng-click="logout()">Esci</a>
+                        </li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

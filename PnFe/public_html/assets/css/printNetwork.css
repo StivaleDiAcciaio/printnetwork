@@ -30,21 +30,18 @@
 }
 
 .bodyMain {
+    width: 100%;
     padding-top: 90px;
-    background:#F7F7F7;
+    background-repeat: no-repeat;
+    background-image:url("http://odeu.scene7.com/is/image/odeu10/2411bt?id=r5Mpx0&fmt=png&fit=constrain,1&wid=280&hei=249");
     color:#666666;
     font-family: 'Roboto';
     font-weight:400;
+    background-size: 800px;
+    background-position-x: 375px;
+    background-position-y: 29px;
 }
 
-.bodyMain{
-    width: 100%;
-    background: -webkit-linear-gradient(left, #22d686, #24d3d3, #22d686, #24d3d3);
-    background: linear-gradient(to right, #22d686, #24d3d3, #22d686, #24d3d3);
-    background-size: 600% 100%;
-    -webkit-animation: HeroBG 20s ease infinite;
-    animation: HeroBG 20s ease infinite;
-}
 /* css per boxerare immagini */
 .box > .icon { 
     text-align: 
@@ -92,29 +89,6 @@
 .iconaCursoreMano{
     cursor: pointer;
 }
-@-webkit-keyframes HeroBG {
-    0% {
-        background-position: 0 0;
-    }
-    50% {
-        background-position: 100% 0;
-    }
-    100% {
-        background-position: 0 0;
-    }
-}
-
-@keyframes HeroBG {
-    0% {
-        background-position: 0 0;
-    }
-    50% {
-        background-position: 100% 0;
-    }
-    100% {
-        background-position: 0 0;
-    }
-}
 
 .modalHeaderStyle{
     position:relative;
@@ -137,12 +111,29 @@
     .margineContainer > .boxCaptcha{
         right: 54%;
     }
+    .bodyMain {
+        background-size: 500px;
+        background-position-x: 177px;
+        background-position-y: -29px;
+    }
 }
 @media(max-width:699px){
     .margineContainer > .boxCaptcha{
         right: 25%;
     }
 }
+
+@media(max-width:415px){
+    .margineContainer > .boxCaptcha{
+        right: 12%;
+    }
+    .bodyMain {
+        background-size: 400px;
+        background-position-x: 23px;
+        background-position-y: -29px;
+    }
+}
+
 @media(max-width:400px){
     .margineContainer > .boxCaptcha{
         right: 12%;
