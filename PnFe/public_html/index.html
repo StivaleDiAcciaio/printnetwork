@@ -76,9 +76,9 @@
                 
                 <div id="navbar" class="collapse navbar-collapse" uib-collapse="navCollapsed">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#" ng-class="showLoading ? 'btn btn-link disabled' : 'btn btn-link'">Home</a></li>
+                        <li class="active"><a href="#" ng-class="showLoading ? 'btn btn-link disabled' : 'btn btn-link'" ng-click="navCollapsed = !navCollapsed">Home</a></li>
                         <li>
-                            <a href="#autenticazione" role="button" ng-class="showLoading ? 'btn btn-link disabled' : 'btn btn-link'">Autenticazione</a>
+                            <a href="#autenticazione" role="button" ng-class="showLoading ? 'btn btn-link disabled' : 'btn btn-link'" ng-click="navCollapsed = !navCollapsed">Autenticazione</a>
                         </li>
                         <li>
                             <a ng-class="showLoading ? 'btn btn-link disabled' : 'btn btn-link'" ng-click="mainOpenRegolamentoModal('md')">Regolamento</a>
