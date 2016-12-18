@@ -44,8 +44,10 @@ function shellCommandServer(comando,percorso){
     gulpSSH.exec([comando+' '+percorso]);
 }
 /* 
- * Watch su PNFE
+ * Watch su cartella PN_FE
  * rileva cambiamenti sui files e cartelle
+ * 
+ * Vengono esclusi i percorsi /node_modules/ ed /nbproject
  * 
  * NB:
  *  non vengono rilevate le cartelle rimosse;
@@ -54,9 +56,9 @@ function shellCommandServer(comando,percorso){
  *  che non verrebbero rilevate correttamente da GULP
  * 
 */ 
-gulp.task('watchPnFe', function () {
-    var pnFeFolder = PN_FE+'/**/*';
-    var watcherPnFeFolder = gulp.watch(pnFeFolder);
+gulp.task('watchPnFe', function () {  
+    var pnFeFolder = PN_FE+'/**/*' ;
+    var watcherPnFeFolder = gulp.watch([pnFeFolder,'!'+PN_FE+'/public_html/node_modules/**/*','!'+PN_FE+'/nbproject/**/*']);
     console.log("..in ascolto su "+pnFeFolder);
     watcherPnFeFolder.on('change', function (event) {
         if ((event.path).slice(-1) !== '/'){//se ho modificato files..
@@ -79,8 +81,10 @@ gulp.task('watchPnFe', function () {
 });
 
 /* 
- * Watch su PNBE
+ * Watch su cartella PN_BE
  * rileva cambiamenti sui files e cartelle
+ * 
+ * Vengono esclusi i percorsi /node_modules/ ed /nbproject
  * 
  * NB:
  *  non vengono rilevate le cartelle rimosse;
@@ -91,7 +95,7 @@ gulp.task('watchPnFe', function () {
 */ 
 gulp.task('watchPnBe', function () {
     var pnBeFolder = PN_BE+'/**/*';
-    var watcherPnBeFolder = gulp.watch(pnBeFolder);
+    var watcherPnBeFolder = gulp.watch([pnBeFolder,'!'+PN_BE+'/node_modules/**/*','!'+PN_BE+'/nbproject/**/*']);
     console.log("..in ascolto su "+pnBeFolder);
     watcherPnBeFolder.on('change', function (event) {
         if ((event.path).slice(-1) !== '/'){//se ho modificato files..
