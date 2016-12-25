@@ -28,8 +28,7 @@
     font-family: 'Roboto';
     font-weight:400;
     background-image:none;
-}
- 
+} 
 .bodyMain {
     width: 100%;
     padding-top: 90px;
@@ -43,7 +42,6 @@
     background-position-x: 375px;
     background-position-y: 29px;
 }
-
 /* css per boxerare immagini */
 .box > .icon { 
     text-align: 
