@@ -34,7 +34,8 @@
     width: 100%;
     padding-top: 90px;
     background-repeat: no-repeat;
-    background-image:url("http://odeu.scene7.com/is/image/odeu10/2411bt?id=r5Mpx0&fmt=png&fit=constrain,1&wid=280&hei=249");
+    background-attachment: fixed;
+    background-image:url(../img/sfondoPN.png);
     color:#666666;
     font-family: 'Roboto';
     font-weight:400;
