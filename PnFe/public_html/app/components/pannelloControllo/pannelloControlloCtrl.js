@@ -4,7 +4,6 @@
     angular.module('printNetworkApp').controller('pannelloControlloCtrl',
             ['$scope', '$state','serviziRest','CONST',
                 function ($scope, $state,serviziRest,COSTANTI) {
-                   
-                   console.log("pannello controllo");
+                   $scope.isCollapsedHorizontal = true;
                 }]);
 }());

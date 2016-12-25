@@ -25,7 +25,7 @@
                             views: {'content@': {
                                     templateUrl: 'app/components/pannelloControllo/pannelloControllo.html',
                                     controller: 'pannelloControlloCtrl'
-                                }
+                                }            
                             }
                         });
                 $urlRouterProvider.otherwise('/');

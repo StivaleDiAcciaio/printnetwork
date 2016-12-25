@@ -14,6 +14,7 @@
 
         <!-- Custom styles for this template -->
         <link href="assets/css/printNetwork.css" rel="stylesheet">
+        <link href="assets/css/pannelloControllo.css" rel="stylesheet">
         <link href="assets/css/signin.css" rel="stylesheet">
         <link href="assets/css/form-autenticazione.css" rel="stylesheet">
         <link href="assets/css/font-awesome.min_4.2.0.css" rel="stylesheet">
@@ -93,7 +94,8 @@
                         {{messaggio.contenuto}}</span></h3>
             </div>
         </div>
-        <div class="container margineContainer">
+        <div ng-class="(paginaCorrente && paginaCorrente.nome == 'pannelloControllo') ? 'container margineContainer pannelloControlloContainer' : 'container margineContainer'">
+            <div ng-if="(paginaCorrente && paginaCorrente.nome == 'pannelloControllo')" class="nickNameLoggato"><a href="#" class="btn btn-link" role="button" >{{getUtenteLoggato().nick}}</a></div>
             <div ui-view="content"></div>
             <!--CAPTCHA-->
             <div id="idBoxCaptcha" ng-show="boxCaptcha" class="boxCaptcha row">
@@ -105,4 +107,3 @@
         </div>
 </body>
 </html>
-

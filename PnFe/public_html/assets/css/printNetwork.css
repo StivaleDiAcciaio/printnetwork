@@ -4,7 +4,7 @@
 */
 @import url("fontsGstaticRobotoV15.css");
 
-.margineContainer{
+.margineContainer{  
     margin-top: 80px;
     position:relative;
 }
@@ -29,7 +29,7 @@
     font-weight:400;
     background-image:none;
 }
-
+ 
 .bodyMain {
     width: 100%;
     padding-top: 90px;

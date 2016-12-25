@@ -4,7 +4,7 @@
     angular.module('printNetworkApp').controller('mainCtrl',
             ['$scope', '$state', '$location', '$anchorScroll', '$uibModal', 'serviziRest', 'CONST', '$translate',
                 function ($scope, $state, $location, $anchorScroll, $uibModal, serviziRest, COSTANTI, $translate) {
-                    $scope.paginaCorrente = null;
+                    $scope.paginaCorrente = null; 
                     $scope.showLoading = false;
                     $scope.messaggio = null;
                     $scope.boxCaptcha = false;
@@ -45,7 +45,8 @@
                         return localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN) != null;
                     };
                     $scope.getUtenteLoggato = function () {
-                        return JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
+                        var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
+                        return utl != null?utl:"";  
                     };
                     $scope.setUtenteLoggato = function (utenteLoggato) {
                         localStorage.setItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO, JSON.stringify(utenteLoggato));
