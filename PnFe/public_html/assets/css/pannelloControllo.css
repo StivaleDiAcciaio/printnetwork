@@ -37,12 +37,17 @@
 } 
 ul.listaVociMobile,
 ul.listaVociDesktop{
-    list-style-type: none;
-    background-color: #222222;
-    border: 1px solid black;
-    border-radius: 20px;
+    background-color:  #f5f5f5;
 }
 ul.listaVociMobile li a,
 ul.listaVociDesktop li a{
     color :#9d9d9d;
+}
+ul.listaVociMobile li.active,
+ul.listaVociDesktop li.active,
+ul.listaVociMobile li.active a,
+ul.listaVociDesktop li.active a{
+    color: #fff;
+    background-color: #428bca;
+    
 }

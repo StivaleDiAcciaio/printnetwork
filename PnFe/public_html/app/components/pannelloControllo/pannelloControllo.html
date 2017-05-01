@@ -1,6 +1,6 @@
 <!--PANNELLO CONTROLLO -->
 <!-- Sezione visibile solo in MOBILE -->
-<section class="intestazionePannello visible-xs">
+<div class="intestazionePannello visible-xs">
     <!--Bottone per nascondere/mostrare il menu laterale-->
     <div class="divToggleMenu"> 
         <a id="toggleLeftMenu" ng-click="isCollapsedHorizontal = !isCollapsedHorizontal">
@@ -10,26 +10,28 @@
     <!-- Menu laterale -->
     <aside class="col-sm-12 menuLateraleSinistroMobile">
         <nav class="horizontal-collapse" uib-collapse="isCollapsedHorizontal" horizontal>          
-            <ul class="listaVociMobile">             
-                <li><a href="#pannelloControllo">Voce 1-mobile</a></li>             
+            <ul class="listaVociMobile nav nav-sidebar">             
+                <li class="active"><a href="#pannelloControllo">Voce 1-mobile</a></li>             
                 <li><a href="#pannelloControllo">Voce 2-mobile</a></li>             
                 <li><a href="#pannelloControllo">Voce 3-mobile</a></li>          
             </ul>      
         </nav> 
     </aside>
-</section>
+</div>
 <!-- /Sezione visibile solo in MOBILE -->
-<!-- Sezione visibile solo in DESKTOP -->
+
 <div class="col-xs-12">
+    <!-- Sezione visibile solo in DESKTOP -->
     <aside class="col-sm-3 hidden-xs menuLateraleSinistroDesktop">
         <nav>          
-            <ul class="listaVociDesktop">             
-                <li><a href="#pannelloControllo">Voce 1-desktop</a></li>             
+            <ul class="listaVociDesktop nav nav-sidebar">             
+                <li class="active"><a href="#pannelloControllo">Voce 1-desktop</a></li>             
                 <li><a href="#pannelloControllo">Voce 2-desktop</a></li>             
                 <li><a href="#pannelloControllo">Voce 3-desktop</a></li>          
             </ul>      
         </nav>
     </aside> 
+    <!-- /Sezione visibile solo in DESKTOP -->
     <!-- contenuto principale del pannello di controllo -->
     <section class="col-sm-9 col-xs-12 contenutoPannelloControllo">
         <div>
@@ -41,6 +43,11 @@
             <p>6-desktop</p>
             <p>ciao-desktop</p>
             <p>ciaodesktop</p>
+            <p>ciao-desktop</p>
+            <p>ciao-desktop</p>
+            <p>ciao-desktop</p>
+            <p>ciao-desktop</p>
+            <p>ciao-desktop</p>
             <p>ciao-desktop</p>
             <p>ciao-desktop</p>
             <p>ciao-desktop</p>
