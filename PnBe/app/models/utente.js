@@ -26,5 +26,11 @@ module.exports = mongoose.model('Utente', new Schema({
             unitaDimisura: String,
             materiale: String /* Legno, PVC etc..*/
         }
+    },
+    feedback: Number, /* da 0 a 4 */
+    /*location: {type:String, coordinates: [Number]} /* longitude,latitude*/
+    location:{
+        type: { type: String },
+        coordinates: [Number]
     }
 }));

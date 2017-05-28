@@ -54,7 +54,9 @@ module.exports = {
             password: pwdCriptata,
             tipologiaUtente: utenteReq.tipologiaUtente,
             indirizzo: utenteReq.indirizzo,
-            tipologiaStampa: utenteReq.tipologiaStampa
+            tipologiaStampa: utenteReq.tipologiaStampa,
+            feedback:utenteReq.feedback,
+            location:utenteReq.location
         });
         // salva Utente nel DB
         nuovoUtente.save(function (err) {

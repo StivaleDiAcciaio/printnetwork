@@ -71,6 +71,12 @@
                                 $scope.formRegistrazioneData.tipologiaStampa.stampa2D.formato = $scope.formatiStampa2DScelti;
                             }
                             $scope.togglePageLoading();
+                            $scope.formRegistrazioneData.feedback=2;
+                            var locationTest = {};
+                            locationTest.type='Point';
+                            locationTest.coordinates=[44,22];
+                            $scope.formRegistrazioneData.location=locationTest;
+                            
                             serviziRest.registrazione({utente: $scope.formRegistrazioneData, tokenCaptcha: $scope.tokenCaptcha()}).then(function (response) {
                                 if (response.esito) {
                                     $scope.mostraMessaggioInfo(response.codErr);
