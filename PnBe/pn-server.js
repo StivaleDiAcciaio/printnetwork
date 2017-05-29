@@ -135,7 +135,7 @@ function checkTokenCaptcha(tokenUtenteCaptcha, ipClient, callback) {
     logger.debug('tokenCaptcha ' + tokenUtenteCaptcha);
     logger.debug('secretKeyCaptcha ' + config.captchaSecretKey);
     logger.debug('ipClient ' + ipClient);*/
-    callback(true); return;
+    
     if (!tokenUtenteCaptcha || !ipClient) {
         callback(false);
     } else {
