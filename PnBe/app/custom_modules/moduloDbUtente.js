@@ -47,7 +47,7 @@ module.exports = {
         var hash = md5.create();
         hash.update(utenteReq.password);
         var pwdCriptata = hash.hex();
-
+        
         var nuovoUtente = new Utente({
             nick: utenteReq.nick.toUpperCase(),
             email: utenteReq.email.toUpperCase(),
@@ -55,7 +55,7 @@ module.exports = {
             tipologiaUtente: utenteReq.tipologiaUtente,
             indirizzo: utenteReq.indirizzo,
             tipologiaStampa: utenteReq.tipologiaStampa,
-            feedback:utenteReq.feedback,
+            feedback:0,//valore di default per feedback
             location:utenteReq.location
         });
         // salva Utente nel DB
@@ -139,6 +139,14 @@ validaInputCreaUtente = function (utente) {
                             );
 
         }
+    }
+    
+    if(!utente.indirizzo || !utente.indirizzo.descrizione){
+        var location = {};
+        var lng=0,lat=0;
+        location.type = 'Point';
+        location.coordinates = [lng, lat];
+        utente.location = location;
     }
     return true;
 };

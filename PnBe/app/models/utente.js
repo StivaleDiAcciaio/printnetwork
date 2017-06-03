@@ -3,9 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 // ======================================================
 
-// configurazione di un modello mongoose.
-// tramite il module.exports viene reso disponibile ai moduli che lo richiedano
-module.exports = mongoose.model('Utente', new Schema({
+Schema = new Schema({
     nick: String,
     email: String,
     password: String,
@@ -29,8 +27,15 @@ module.exports = mongoose.model('Utente', new Schema({
     },
     feedback: Number, /* da 0 a 4 */
     /*location: {type:String, coordinates: [Number]} /* longitude,latitude*/
-    location:{
-        type: { type: String },
+    location: {
+        type: {type: String},
         coordinates: [Number]
     }
-}));
+});
+
+//Aggiungo indice al campo location
+Schema.index({location:'2dsphere'});
+
+// configurazione di un modello mongoose.
+// tramite il module.exports viene reso disponibile ai moduli che lo richiedano
+module.exports = mongoose.model('Utente', Schema);

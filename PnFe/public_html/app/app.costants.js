@@ -6,6 +6,7 @@
     angular.module('printNetworkApp').constant('CONST', {
         //"CONTEXT_ROOT": contextRoot,
         "RICORDAMI": "ricordami",
+        "KEY_GEOCOD":"&key=AIzaSyDUgfDN2lOzsSvZkl0VNlTpq7BpAqMAO70",
         "LOCAL_STORAGE": {
             TOKEN: "token",
             UTENTE_LOGGATO: "utenteLoggato"
@@ -20,7 +21,8 @@
                 {
                     "REGISTRAZIONE": "printnetwork/apinode/registrazione",
                     "LOGIN": "printnetwork/apinode/login",
-                    "STAMPA_2D": "printnetwork/apinode/2d"
+                    "STAMPA_2D": "printnetwork/apinode/2d",
+                    "GOOGLE_GEOCOD":"https://maps.googleapis.com/maps/api/geocode/json?address="
                 },
         "MESSAGE_LEVEL": {
             "INFO": "INFO",

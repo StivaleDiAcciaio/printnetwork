@@ -2,7 +2,7 @@
 ;
 (function () {
     'use strict';
-    angular.module('printNetworkApp', ['ngSanitize', 'ui.bootstrap', 'ui.router', 'nya.bootstrap.select', 'ngAnimate', 'pascalprecht.translate'])
+    angular.module('printNetworkApp', ['ngSanitize', 'ui.bootstrap', 'ui.router', 'nya.bootstrap.select', 'ngAnimate', 'pascalprecht.translate','angular-google-map'])
             .config(['$translateProvider', '$translatePartialLoaderProvider', function ($translateProvider, $translatePartialLoaderProvider) {
                     //// provider-injector
                     // This is an example of config block.
