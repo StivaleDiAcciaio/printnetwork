@@ -22,7 +22,7 @@
                         };
                         
                         this.geoCodificaIndirizzo = function (indirizzo){
-                            return this.get(COSTANTI.ENDPOINT.GOOGLE_GEOCOD+indirizzo+COSTANTI.KEY_GEOCOD);
+                            return this.get(COSTANTI.ENDPOINT.GOOGLE_GEOCOD+indirizzo+'&key='+COSTANTI.KEY_GEOCOD);
                         };
                         
                         this.post = function (url, data,token,config) {

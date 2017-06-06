@@ -6,7 +6,7 @@
     angular.module('printNetworkApp').constant('CONST', {
         //"CONTEXT_ROOT": contextRoot,
         "RICORDAMI": "ricordami",
-        "KEY_GEOCOD":"&key=AIzaSyDUgfDN2lOzsSvZkl0VNlTpq7BpAqMAO70",
+        "KEY_GEOCOD":"AIzaSyDUgfDN2lOzsSvZkl0VNlTpq7BpAqMAO70",
         "LOCAL_STORAGE": {
             TOKEN: "token",
             UTENTE_LOGGATO: "utenteLoggato"
