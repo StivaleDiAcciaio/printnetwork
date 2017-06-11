@@ -107,7 +107,7 @@
         right: 42%;
     }
     /* stile gmaps */
-    #miaMappa{
+    #mappaPannelloControllo{
         display: block;height: 800px !important;
     }
 }
@@ -121,8 +121,8 @@
         background-position-y: -29px;
     }
     /* stile gmaps */
-    #miaMappa{
-        display: block;height: 500px !important;
+    #mappaPannelloControllo{
+        display: block;height: 600px !important;
     }
 }
 @media(max-width:699px){
@@ -130,8 +130,8 @@
         right: 25%;
     }
     /* stile gmaps */
-    #miaMappa{
-        display: block;height: 300px !important;
+    #mappaPannelloControllo{
+        display: block;height: 500px !important;
     }
 }
 
@@ -146,7 +146,7 @@
     }
     /* stile gmaps */
     #miaMappa{
-        display: block;height: 200px !important;
+        display: block;height: 400px !important;
     }
 }
 
@@ -155,8 +155,8 @@
         right: 12%;
     }
     /* stile gmaps */
-    #miaMappa{
-        display: block;height: 200px !important;
+    #mappaPannelloControllo{
+        display: block;height: 400px !important;
     }
 }
 @media(max-width:300px){
@@ -164,7 +164,7 @@
         right: -2%;
     }
     /* stile gmaps */
-    #miaMappa{
-        display: block;height: 200px !important;
+    #mappaPannelloControllo{
+        display: block;height: 400px !important;
     }
 }

@@ -31,6 +31,7 @@
 } 
 .nickNameLoggato{ 
     position: fixed;
+    top:50px;
     right: 5px;
     font-size: 12px;
     font-style: italic;
@@ -50,5 +51,30 @@ ul.listaVociMobile li.active a,
 ul.listaVociDesktop li.active a{
     color: #fff;
     background-color: #428bca;
-    
+
+}
+/* box ricerca indirizzo per gmaps */
+.wrapperBoxRicercaIndirizzo{
+    display: flex;
+    width: 100%;
+}
+.wrapperBoxRicercaIndirizzo .testoCercaIndirizzo{
+    width: 95%;
+    border:1px solid #428bca;
+}
+
+.wrapperBoxRicercaIndirizzo .testoCercaIndirizzo input{
+    width: 100%;
+}
+
+.wrapperBoxRicercaIndirizzo .btnCercaIndirizzo{
+    width: 5%;
+    float: right;   
+    border:1px solid #428bca;
+    background: antiquewhite;
+}
+.wrapperBoxRicercaIndirizzo .btnCercaIndirizzo i{
+    float: right;
+    font-size: 18px;
+    padding:4px 0 0 0;
 }

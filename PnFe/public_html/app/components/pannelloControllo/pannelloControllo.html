@@ -9,7 +9,19 @@
     </div>
     <!-- Menu laterale -->
     <aside class="col-sm-12 menuLateraleSinistroMobile">
-        <nav class="horizontal-collapse" uib-collapse="isCollapsedHorizontal" horizontal>          
+        <nav class="horizontal-collapse" uib-collapse="isCollapsedHorizontal" horizontal>   
+            <div class="wrapperBoxRicercaIndirizzo">
+                <div class="testoCercaIndirizzo"> 
+                   <input id="cercaMobile"
+                           places-auto-complete size=80
+                           ng-model="address"
+                           component-restrictions="{country:'it'}"
+                           on-place-changed="placeChanged()" type="text" placeholder="Indirizzo">
+                </div>
+                <div class="btnCercaIndirizzo">
+                    <i class="glyphicon glyphicon-search"></i>
+                </div>
+            </div>
             <ul class="listaVociMobile nav nav-sidebar">             
                 <li class="active"><a href="#pannelloControllo">Voce 1-mobile</a></li>             
                 <li><a href="#pannelloControllo">Voce 2-mobile</a></li>             
@@ -23,7 +35,20 @@
 <div class="col-xs-12">
     <!-- Sezione visibile solo in DESKTOP -->
     <aside class="col-sm-3 hidden-xs menuLateraleSinistroDesktop">
-        <nav>          
+        <nav>       
+            <div class="wrapperBoxRicercaIndirizzo">
+                <div class="testoCercaIndirizzo"> 
+                    <input id="cercaDesktop"
+                           places-auto-complete size=80
+                           ng-model="address"
+                           component-restrictions="{country:'it'}"
+                           types="['address']" 
+                           on-place-changed="placeChanged()" placeholder="Indirizzo">
+                </div>
+                <div class="btnCercaIndirizzo">
+                    <i class="glyphicon glyphicon-search"></i>
+                </div>
+            </div>
             <ul class="listaVociDesktop nav nav-sidebar">             
                 <li class="active"><a href="#pannelloControllo">Voce 1-desktop</a></li>             
                 <li><a href="#pannelloControllo">Voce 2-desktop</a></li>             
@@ -35,9 +60,7 @@
     <!-- contenuto principale del pannello di controllo -->
     <section class="col-sm-9 col-xs-12 contenutoPannelloControllo">
         <div>
-            <div map-lazy-load="https://maps.google.com/maps/api/js?key=AIzaSyDUgfDN2lOzsSvZkl0VNlTpq7BpAqMAO70">
-                <ng-map id="miaMappa" center="45.597971, 8.915028" zoom="10" default-style="false"></ng-map>
-            </div>
+            <ng-map id="mappaPannelloControllo" zoom="20" default-style="false"></ng-map>
         </div>
     </section>
 </div>
