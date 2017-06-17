@@ -57,24 +57,49 @@ ul.listaVociDesktop li.active a{
 .wrapperBoxRicercaIndirizzo{
     display: flex;
     width: 100%;
+    margin-bottom: 10px;
 }
 .wrapperBoxRicercaIndirizzo .testoCercaIndirizzo{
-    width: 95%;
+    width: 92%;
     border:1px solid #428bca;
+   
 }
 
 .wrapperBoxRicercaIndirizzo .testoCercaIndirizzo input{
     width: 100%;
 }
 
-.wrapperBoxRicercaIndirizzo .btnCercaIndirizzo{
-    width: 5%;
-    float: right;   
-    border:1px solid #428bca;
-    background: antiquewhite;
-}
-.wrapperBoxRicercaIndirizzo .btnCercaIndirizzo i{
+.wrapperBoxRicercaIndirizzo i{
     float: right;
     font-size: 18px;
-    padding:4px 0 0 0;
+    padding:10% 20% 0 0;
 }
+
+.iconaCercaIndirizzo{
+    width: 8%;
+    border:1px solid #337ab7;
+    background:#337ab7;
+    cursor:pointer;
+}
+.indirizzoTrovato{
+    color: green;
+    border: 1px solid green;
+}
+.indirizzoTrovato.ng-hide-add {
+  transform: rotateZ(0);
+  transform-origin: right;
+  transition: all 0.5s ease-in-out;
+}
+.indirizzoTrovato.ng-hide-add.ng-hide-add-active {
+  transform: rotateZ(-135deg);
+}
+.indirizzoTrovato.ng-hide-remove {
+  transform: rotateY(90deg);
+  transform-origin: left;
+  transition: all 0.5s ease;
+}
+.indirizzoTrovato.ng-hide-remove.ng-hide-remove-active {
+  transform: rotateY(0);
+}
+
+

@@ -12,15 +12,18 @@
         <nav class="horizontal-collapse" uib-collapse="isCollapsedHorizontal" horizontal>   
             <div class="wrapperBoxRicercaIndirizzo">
                 <div class="testoCercaIndirizzo"> 
-                   <input id="cercaMobile"
+                    <input id="cercaMobile"
                            places-auto-complete size=80
-                           ng-model="address"
+                           ng-model="indirizzo.attuale"
                            component-restrictions="{country:'it'}"
-                           on-place-changed="placeChanged()" type="text" placeholder="Indirizzo">
+                           on-place-changed="indirizzoSelezionato()" type="text" placeholder="Indirizzo">
                 </div>
-                <div class="btnCercaIndirizzo">
-                    <i class="glyphicon glyphicon-search"></i>
+                <div class="iconaCercaIndirizzo" ng-click="resetCercaIndirizzo()">
+                    <i ng-class="indirizzoTrovato ? 'placeChangedClass glyphicon glyphicon-remove' : 'placeChangedClass glyphicon glyphicon-search'"></i>
                 </div>
+            </div>
+            <div ng-show="indirizzoTrovato" class="indirizzoTrovato">
+                <i class="glyphicon glyphicon-screenshot"></i> <a href="javascript:void" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
             </div>
             <ul class="listaVociMobile nav nav-sidebar">             
                 <li class="active"><a href="#pannelloControllo">Voce 1-mobile</a></li>             
@@ -40,14 +43,18 @@
                 <div class="testoCercaIndirizzo"> 
                     <input id="cercaDesktop"
                            places-auto-complete size=80
-                           ng-model="address"
+                           ng-model="indirizzo.attuale"
                            component-restrictions="{country:'it'}"
                            types="['address']" 
-                           on-place-changed="placeChanged()" placeholder="Indirizzo">
+                           ng-change="testoIndirizzoChanged()"
+                           on-place-changed="indirizzoSelezionato()" placeholder="Indirizzo">
                 </div>
-                <div class="btnCercaIndirizzo">
-                    <i class="glyphicon glyphicon-search"></i>
+                <div class="iconaCercaIndirizzo" ng-click="resetCercaIndirizzo()">
+                    <i ng-class="indirizzoTrovato ? 'placeChangedClass glyphicon glyphicon-remove' : 'placeChangedClass glyphicon glyphicon-search'"></i>
                 </div>
+            </div>
+            <div ng-show="indirizzoTrovato" class="indirizzoTrovato">
+                <i class="glyphicon glyphicon-screenshot"></i> <a href="javascript:void" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
             </div>
             <ul class="listaVociDesktop nav nav-sidebar">             
                 <li class="active"><a href="#pannelloControllo">Voce 1-desktop</a></li>             
@@ -60,7 +67,11 @@
     <!-- contenuto principale del pannello di controllo -->
     <section class="col-sm-9 col-xs-12 contenutoPannelloControllo">
         <div>
-            <ng-map id="mappaPannelloControllo" zoom="20" default-style="false"></ng-map>
+            <ng-map id="mappaPannelloControllo" zoom="15" default-style="false" center="current-location">
+                 <shape id="circle" name="circle" centered="true"
+                       stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
+                       center="current-location" radius="200" editable="false" ></shape>
+            </ng-map>
         </div>
     </section>
 </div>
