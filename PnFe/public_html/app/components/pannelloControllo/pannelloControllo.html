@@ -14,7 +14,7 @@
                 <div class="testoCercaIndirizzo"> 
                     <input id="cercaMobile"
                            places-auto-complete size=80
-                           ng-model="indirizzo.attuale"
+                           ng-model="indirizzo.cercato"
                            component-restrictions="{country:'it'}"
                            on-place-changed="indirizzoSelezionato()" type="text" placeholder="Indirizzo">
                 </div>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div ng-show="indirizzoTrovato" class="indirizzoTrovato">
-                <i class="glyphicon glyphicon-screenshot"></i> <a href="javascript:void" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
+                <i class="glyphicon glyphicon-screenshot"></i> <a href="javascript:void(0)" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
             </div>
             <ul class="listaVociMobile nav nav-sidebar">             
                 <li class="active"><a href="#pannelloControllo">Voce 1-mobile</a></li>             
@@ -43,7 +43,7 @@
                 <div class="testoCercaIndirizzo"> 
                     <input id="cercaDesktop"
                            places-auto-complete size=80
-                           ng-model="indirizzo.attuale"
+                           ng-model="indirizzo.cercato"
                            component-restrictions="{country:'it'}"
                            types="['address']" 
                            ng-change="testoIndirizzoChanged()"
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div ng-show="indirizzoTrovato" class="indirizzoTrovato">
-                <i class="glyphicon glyphicon-screenshot"></i> <a href="javascript:void" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
+                <i class="glyphicon glyphicon-screenshot"></i> <a href="javascript:void(0)" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
             </div>
             <ul class="listaVociDesktop nav nav-sidebar">             
                 <li class="active"><a href="#pannelloControllo">Voce 1-desktop</a></li>             
@@ -67,10 +67,14 @@
     <!-- contenuto principale del pannello di controllo -->
     <section class="col-sm-9 col-xs-12 contenutoPannelloControllo">
         <div>
-            <ng-map id="mappaPannelloControllo" zoom="15" default-style="false" center="current-location">
-                 <shape id="circle" name="circle" centered="true"
+            <ng-map id="mappaPannelloControllo" 
+                    zoom="{{defaultZoom}}" 
+                    default-style="false" 
+                    center="current-location"
+                    geo-fallback-center="[40.979898, 13.337401999999997]">
+                <shape ng-if="map && !isGeoFallback()" id="circle" name="circle" centered="true"
                        stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
-                       center="current-location" radius="200" editable="false" ></shape>
+                       center="{{map.getCenter().lat()}},{{map.getCenter().lng()}}" radius="1000" editable="false" ></shape>
             </ng-map>
         </div>
     </section>
