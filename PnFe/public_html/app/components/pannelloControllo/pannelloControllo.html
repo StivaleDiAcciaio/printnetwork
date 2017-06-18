@@ -23,7 +23,18 @@
                 </div>
             </div>
             <div ng-show="indirizzoTrovato" class="indirizzoTrovato">
-                <i class="glyphicon glyphicon-screenshot"></i> <a href="javascript:void(0)" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
+                <i class="glyphicon glyphicon-map-marker"></i> <a href="javascript:void(0)" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
+            </div>
+            <div class="geoPosizioneWrapper">
+                <div ng-class="posizioneRilevata ? 'siGps' : 'noGps'">
+                    <i class="glyphicon glyphicon-screenshot"></i> 
+                </div>
+                <div ng-if="posizioneRilevata" class="linkPosizione">
+                    <a href="javascript:void(0)" ng-click="centraPosizioneRilevata()">posizione rilevata</a>
+                </div>
+                <div ng-if="!posizioneRilevata" class="linkPosizione">
+                    <a href="javascript:void(0)">nessuna posizione rilevata</a>
+                </div>
             </div>
             <ul class="listaVociMobile nav nav-sidebar">             
                 <li class="active"><a href="#pannelloControllo">Voce 1-mobile</a></li>             
@@ -54,7 +65,18 @@
                 </div>
             </div>
             <div ng-show="indirizzoTrovato" class="indirizzoTrovato">
-                <i class="glyphicon glyphicon-screenshot"></i> <a href="javascript:void(0)" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
+                <i class="glyphicon glyphicon-map-marker"></i> <a href="javascript:void(0)" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
+            </div>
+            <div class="geoPosizioneWrapper">
+                <div ng-class="posizioneRilevata ? 'gps si' : 'gps no'">
+                    <i class="glyphicon glyphicon-screenshot"></i> 
+                </div>
+                <div ng-if="posizioneRilevata" class="linkPosizione">
+                    <a href="javascript:void(0)" ng-click="centraPosizioneRilevata()">posizione rilevata</a>
+                </div>
+                <div ng-if="!posizioneRilevata" class="linkPosizione">
+                    <a href="javascript:void(0)">nessuna posizione rilevata</a>
+                </div>
             </div>
             <ul class="listaVociDesktop nav nav-sidebar">             
                 <li class="active"><a href="#pannelloControllo">Voce 1-desktop</a></li>             
@@ -68,10 +90,9 @@
     <section class="col-sm-9 col-xs-12 contenutoPannelloControllo">
         <div>
             <ng-map id="mappaPannelloControllo" 
-                    zoom="{{defaultZoom}}" 
+                    zoom="{{zoomCalcolato}}" 
                     default-style="false" 
-                    center="current-location"
-                    geo-fallback-center="[40.979898, 13.337401999999997]">
+                    center="{{posizioneMappa}}">
                 <shape ng-if="map && !isGeoFallback()" id="circle" name="circle" centered="true"
                        stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
                        center="{{map.getCenter().lat()}},{{map.getCenter().lng()}}" radius="1000" editable="false" ></shape>

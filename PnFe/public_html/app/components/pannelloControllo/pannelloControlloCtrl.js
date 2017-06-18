@@ -8,48 +8,77 @@
                     $scope.map = null;
                     $scope.indirizzoTrovato = null;
                     $scope.locationTrovata = null;
-                    $scope.defaultZoom=15;
-                    $scope.fallGeoZoom=6;
+                    $scope.defaultZoom = 15;
+                    $scope.fallGeoZoom = 6;
+                    $scope.zoomCalcolato = $scope.defaultZoom;
                     $scope.fallBackPosition = [40.979898, 13.337401999999997];
+                    $scope.googleFallBackPosition = new google.maps.LatLng($scope.fallBackPosition[0], $scope.fallBackPosition[1]);
                     $scope.indirizzoSelezionato = function () {
                         $scope.place = this.getPlace();
                         if ($scope.place.geometry) {
                             $scope.locationTrovata = $scope.place.geometry.location;
                             $scope.map.setCenter($scope.locationTrovata);
                             $scope.indirizzoTrovato = $scope.place.formatted_address;
-                            $scope.map.setZoom($scope.defaultZoom);
+                            $scope.zoomCalcolato = $scope.defaultZoom;
                         }
                     };
                     NgMap.getMap().then(function (map) {
                         $scope.map = map;
-                        if ($scope.isGeoFallback()){
-                            $scope.map.setZoom($scope.fallGeoZoom);
-                        }else{
-                             $scope.map.setZoom($scope.defaultZoom);
-                        }
                     });
 
                     $scope.centraMappa = function (location) {
-                        $scope.map.setCenter(location);
-                        $scope.map.setZoom($scope.defaultZoom);
+                        if (location) {
+                            $scope.map.setCenter(location);
+                            $scope.zoomCalcolato = $scope.defaultZoom;
+                        }
                     };
-                    
-                    $scope.isGeoFallback = function(){
-                       if (!$scope.map.getCenter() ||
-                            ($scope.map.getCenter().lat() == $scope.fallBackPosition[0] &&
-                             $scope.map.getCenter().lng() == $scope.fallBackPosition[1])){
+                    $scope.centraPosizioneRilevata = function () {
+                        if ($scope.posizioneRilevata) {
+                            var posizione = new google.maps.LatLng($scope.posizioneRilevata.lat(), $scope.posizioneRilevata.lng());
+                            $scope.map.panTo(posizione);
+                            $scope.zoomCalcolato = $scope.defaultZoom;
+                        }
+                    };
+                    $scope.getPosizioneRilevata = function () {
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(function (position) {
+                                if (position) {
+                                    $scope.$apply(function () {
+                                        var posizione = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                                        $scope.posizioneRilevata = posizione;
+                                        $scope.posizioneMappa = $scope.posizioneRilevata.lat() + ", " + $scope.posizioneRilevata.lng();
+                                        $scope.zoomCalcolato = $scope.defaultZoom;
+                                    });
+                                }
+                            }, function (error) {
+                                $scope.$apply(function () {
+                                    //imposto posizione di geoFallback
+                                    var geoFallBackPosiz = new google.maps.LatLng($scope.fallBackPosition[0], $scope.fallBackPosition[1]);
+                                    $scope.posizioneMappa = geoFallBackPosiz.lat() + ", " + geoFallBackPosiz.lng();
+                                    $scope.zoomCalcolato = $scope.fallGeoZoom;
+                                });
+                            });
+                        }
+                    };
+                    $scope.isGeoFallback = function () {
+                        if (!$scope.map.getCenter() ||
+                                ($scope.map.getCenter().lat() == $scope.fallBackPosition[0] &&
+                                        $scope.map.getCenter().lng() == $scope.fallBackPosition[1])) {
                             return true;
                         }
                         return false;
                     };
 
                     $scope.resetCercaIndirizzo = function () {
-                        $scope.locationTrovata = null;
-                        $scope.indirizzoTrovato = null;
-                        $scope.indirizzo.cercato = null;
-                        var posizione = new google.maps.LatLng($scope.fallBackPosition[0], $scope.fallBackPosition[1]);
-                        $scope.map.setCenter(posizione);
-                        $scope.map.setZoom($scope.fallGeoZoom);
+                        if ($scope.indirizzo.cercato) {
+                            $scope.locationTrovata = null;
+                            $scope.indirizzoTrovato = null;
+                            $scope.indirizzo.cercato = null;
+                            $scope.map.setCenter($scope.googleFallBackPosition);
+                            $scope.zoomCalcolato = $scope.fallGeoZoom;
+                        }
                     };
+
+                    $scope.getPosizioneRilevata();
                 }]);
 }());
