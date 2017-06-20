@@ -105,10 +105,12 @@ ul.listaVociDesktop li.active a{
 .geoPosizioneWrapper{
     width: 100%;
     display: inline-flex;
+    background: whitesmoke;
 }
 
 .gps{
     width: 5%;
+    margin-right:5px;
 }
 .gps.no i{
     color: red;

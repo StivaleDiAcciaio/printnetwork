@@ -8,7 +8,7 @@
                     $scope.map = null;
                     $scope.indirizzoTrovato = null;
                     $scope.locationTrovata = null;
-                    $scope.defaultZoom = 15;
+                    $scope.defaultZoom = 13;
                     $scope.fallGeoZoom = 6;
                     $scope.zoomCalcolato = $scope.defaultZoom;
                     $scope.fallBackPosition = [40.979898, 13.337401999999997];
@@ -53,7 +53,7 @@
                                         geocoder.geocode({'location': latlng}, function(results, status) {
                                               $scope.$apply(function () {
                                                  if (status === 'OK' && results[1]) {
-                                                     $scope.indirizzoRilevato = results[1].formatted_address;
+                                                     $scope.indirizzoRilevato = results[0].formatted_address;
                                                  } 
                                               });
                                         });
