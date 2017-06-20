@@ -84,6 +84,7 @@ ul.listaVociDesktop li.active a{
 .indirizzoTrovato{
     color: green;
     border: 1px solid green;
+    background: whitesmoke;
 }
 .indirizzoTrovato.ng-hide-add {
     transform: rotateZ(0);
@@ -107,14 +108,16 @@ ul.listaVociDesktop li.active a{
 }
 
 .gps{
-    width: 8%;
+    width: 5%;
 }
 .gps.no i{
     color: red;
+    font-size: 18px;
 }
 .gps.si i{
     color: green;
+    font-size: 18px;
 }
 .linkPosizione{
-    width: 92%;
+    width: 95%;
 }

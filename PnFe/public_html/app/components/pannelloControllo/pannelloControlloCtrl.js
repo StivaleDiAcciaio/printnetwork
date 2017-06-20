@@ -44,10 +44,19 @@
                             navigator.geolocation.getCurrentPosition(function (position) {
                                 if (position) {
                                     $scope.$apply(function () {
+                                        var geocoder = new google.maps.Geocoder;
                                         var posizione = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                                         $scope.posizioneRilevata = posizione;
                                         $scope.posizioneMappa = $scope.posizioneRilevata.lat() + ", " + $scope.posizioneRilevata.lng();
                                         $scope.zoomCalcolato = $scope.defaultZoom;
+                                        var latlng = {lat: $scope.posizioneRilevata.lat(), lng: $scope.posizioneRilevata.lng()};
+                                        geocoder.geocode({'location': latlng}, function(results, status) {
+                                              $scope.$apply(function () {
+                                                 if (status === 'OK' && results[1]) {
+                                                     $scope.indirizzoRilevato = results[1].formatted_address;
+                                                 } 
+                                              });
+                                        });
                                     });
                                 }
                             }, function (error) {

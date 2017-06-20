@@ -26,11 +26,11 @@
                 <i class="glyphicon glyphicon-map-marker"></i> <a href="javascript:void(0)" ng-click="centraMappa(locationTrovata)">{{indirizzoTrovato}}</a>
             </div>
             <div class="geoPosizioneWrapper">
-                <div ng-class="posizioneRilevata ? 'siGps' : 'noGps'">
+                <div ng-class="posizioneRilevata ? 'gps si' : 'gps no'">
                     <i class="glyphicon glyphicon-screenshot"></i> 
                 </div>
                 <div ng-if="posizioneRilevata" class="linkPosizione">
-                    <a href="javascript:void(0)" ng-click="centraPosizioneRilevata()">posizione rilevata</a>
+                    <a href="javascript:void(0)" ng-click="centraPosizioneRilevata()">{{indirizzoRilevato}}</a>
                 </div>
                 <div ng-if="!posizioneRilevata" class="linkPosizione">
                     <a href="javascript:void(0)">nessuna posizione rilevata</a>
@@ -72,7 +72,7 @@
                     <i class="glyphicon glyphicon-screenshot"></i> 
                 </div>
                 <div ng-if="posizioneRilevata" class="linkPosizione">
-                    <a href="javascript:void(0)" ng-click="centraPosizioneRilevata()">posizione rilevata</a>
+                    <a href="javascript:void(0)" ng-click="centraPosizioneRilevata()">{{indirizzoRilevato}}</a>
                 </div>
                 <div ng-if="!posizioneRilevata" class="linkPosizione">
                     <a href="javascript:void(0)">nessuna posizione rilevata</a>
