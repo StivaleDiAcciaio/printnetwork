@@ -10,7 +10,7 @@
                             floor: COSTANTI.MAPPA.RAGGIO_CERCHIO_MIN,
                             ceil: COSTANTI.MAPPA.RAGGIO_CERCHIO_MAX,
                             translate: function (value) {
-                                return value+" metri";
+                                return value + " metri";
                             }
                         }
                     };
@@ -93,6 +93,20 @@
                             $scope.map.setCenter($scope.googleFallBackPosition);
                             $scope.zoomCalcolato = COSTANTI.MAPPA.FALL_GEO_ZOOM;
                         }
+                    };
+
+                    $scope.trovaPDS = function () {
+                        serviziRest.trovaPDS({paramRicercaPDS: {lng:$scope.map.getCenter().lng(),lat:$scope.map.getCenter().lat()} }).then(function (response) {
+                            if (response.esito) {
+                                console.log(response.esito);
+                            } else {
+                                $scope.mostraMessaggioError(response.codErr);
+                            }
+                        }, function (err) {
+                            if (err.data) {
+                                $scope.mostraMessaggioError(err.data.codErr);
+                            } 
+                        });
                     };
 
                     $scope.getPosizioneRilevata();

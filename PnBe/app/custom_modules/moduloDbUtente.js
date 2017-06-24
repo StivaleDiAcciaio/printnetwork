@@ -47,7 +47,7 @@ module.exports = {
         var hash = md5.create();
         hash.update(utenteReq.password);
         var pwdCriptata = hash.hex();
-        
+
         var nuovoUtente = new Utente({
             nick: utenteReq.nick.toUpperCase(),
             email: utenteReq.email.toUpperCase(),
@@ -55,8 +55,8 @@ module.exports = {
             tipologiaUtente: utenteReq.tipologiaUtente,
             indirizzo: utenteReq.indirizzo,
             tipologiaStampa: utenteReq.tipologiaStampa,
-            feedback:0,//valore di default per feedback
-            location:utenteReq.location
+            feedback: 0, //valore di default per feedback
+            location: utenteReq.location
         });
         // salva Utente nel DB
         nuovoUtente.save(function (err) {
@@ -107,6 +107,34 @@ module.exports = {
             }
             callback(data);
         });
+    }, trovaPDS: function (paramRicercaPDS, callback) {
+        // ricerca Utente
+        Utente.find({
+            location: {$near:
+                        {
+                            $geometry: {type: "Point", coordinates: [paramRicercaPDS.lng, paramRicercaPDS.lat]},
+                            $minDistance: 100,
+                            $maxDistance: 5000
+                        }
+            }
+        },{ nick: 1,feedback: 1, location: 1}, function (err, utenti) {
+            var data = {};
+            if (err) {
+                data.esito = false;
+                data.codErr = 500;
+                data.messaggio = err;
+            } else if (!utenti) {
+                data.esito = false;
+                data.codErr = 3;
+                data.messaggio = 'punti di stampa non trovati';
+            } else if (utenti) {
+                data.esito = true;
+                data.codErr = 0;
+                data.messaggio = 'punti di stampa trovati';
+                data.utenti = utenti;
+            }
+            callback(data);
+        });
     }
 };
 
@@ -140,10 +168,10 @@ validaInputCreaUtente = function (utente) {
 
         }
     }
-    
-    if(!utente.indirizzo || !utente.indirizzo.descrizione){
+
+    if (!utente.indirizzo || !utente.indirizzo.descrizione) {
         var location = {};
-        var lng=0,lat=0;
+        var lng = 0, lat = 0;
         location.type = 'Point';
         location.coordinates = [lng, lat];
         utente.location = location;

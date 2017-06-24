@@ -30,6 +30,7 @@
                     "REGISTRAZIONE": "printnetwork/apinode/registrazione",
                     "LOGIN": "printnetwork/apinode/login",
                     "STAMPA_2D": "printnetwork/apinode/2d",
+                    "TROVA_PDS": "printnetwork/apinode/pds",
                     "GOOGLE_GEOCOD": "https://maps.googleapis.com/maps/api/geocode/json?address="
                 },
         "MESSAGE_LEVEL": {

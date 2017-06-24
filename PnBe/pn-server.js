@@ -18,7 +18,7 @@ var log4js = require('log4js');
 // =======================
 // Configurazione ============
 // =======================
-var porta = 3000; 
+var porta = 3000;
 // parola segreta per generazione token
 app.set('superSecret', config.secret);
 // uso body parser per ottenere info da POST e/o URL parameters
@@ -45,7 +45,7 @@ appRouter.post('/login', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
-    var esito = null; 
+    var esito = null;
     var token = null;
     //logger.debug("metodo login (post) : ip client=" + req.headers["x-forwarded-proto"]);
     if (req.body.utente) {
@@ -60,7 +60,7 @@ appRouter.post('/login', function (req, res) {
                     messaggio: risultato.messaggio
                 });
             } else {
-          //     logger.debug('utente loggato');
+                //     logger.debug('utente loggato');
 
                 var utenteLoggato = risultato.utente;
                 token = jwt.sign(utenteLoggato, app.get('superSecret'), {
@@ -93,8 +93,8 @@ appRouter.post('/registrazione', function (req, res) {
      */
     moduloDbUtente.precheckCreazioneUtente(req.body.utente, function (precheck) {
         if (!precheck.esito && precheck.codErr == 500) {
-           // logger.error('errore durante precheck creazione utente');
-           // logger.error(precheck.messaggio);
+            // logger.error('errore durante precheck creazione utente');
+            // logger.error(precheck.messaggio);
             res.status(500).send({
                 esito: precheck.esito,
                 codErr: precheck.codErr,
@@ -131,11 +131,12 @@ appRouter.post('/registrazione', function (req, res) {
     });
 });
 function checkTokenCaptcha(tokenUtenteCaptcha, ipClient, callback) {
- /*   logger.debug("start checkTokenCaptcha");
-    logger.debug('tokenCaptcha ' + tokenUtenteCaptcha);
-    logger.debug('secretKeyCaptcha ' + config.captchaSecretKey);
-    logger.debug('ipClient ' + ipClient);*/
-    callback(true); return;
+    /*   logger.debug("start checkTokenCaptcha");
+     logger.debug('tokenCaptcha ' + tokenUtenteCaptcha);
+     logger.debug('secretKeyCaptcha ' + config.captchaSecretKey);
+     logger.debug('ipClient ' + ipClient);*/
+    callback(true);
+    return;
     if (!tokenUtenteCaptcha || !ipClient) {
         callback(false);
     } else {
@@ -143,14 +144,14 @@ function checkTokenCaptcha(tokenUtenteCaptcha, ipClient, callback) {
                 "?secret=" + config.captchaSecretKey +
                 "&response=" + tokenUtenteCaptcha +
                 "&remoteip=" + ipClient;
-      //  logger.debug("url invocato " + verificationUrl);
+        //  logger.debug("url invocato " + verificationUrl);
         var req = https.get(verificationUrl, function (res) {
             //logger.debug(res.statusCode);
             //logger.debug(JSON.stringify(res.headers));
             var data = "";
             res.on('data', function (checkToken) {
                 data += checkToken.toString();
-               // logger.debug(">>risultato check = " + data);
+                // logger.debug(">>risultato check = " + data);
             });
             res.on('end', function () {
                 try {
@@ -169,7 +170,7 @@ function checkTokenCaptcha(tokenUtenteCaptcha, ipClient, callback) {
         req.end();
     }
 
-   // logger.debug("end checkTokenCaptcha");
+    // logger.debug("end checkTokenCaptcha");
 }
 ;
 /* Route middleware per verificare il token
@@ -232,15 +233,54 @@ appRouter.post('/2D', function (req, res) {
     req.accepts('application/json');
     res.json({data: 'stampa 2D avviata!', token: req.decoded});
 });
+
+
+appRouter.post('/pds', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "POST");
+    var esito = null;
+    var token = null;
+    //logger.debug("metodo trovaPDS (post) : ip client=" + req.headers["x-forwarded-proto"]);
+    if (req.body.paramRicercaPDS) {
+        //logger.debug("-->email utente " + req.body.utente.email);
+        moduloDbUtente.trovaPDS(req.body.paramRicercaPDS, function (risultato) {
+            if (!risultato.esito) {
+                //logger.debug(risultato.messaggio);
+                res.json({
+                    esito: risultato.esito,
+                    codErr: risultato.codErr,
+                    messaggio: risultato.messaggio
+                });
+            } else {
+                //     logger.debug('utente loggato');
+                res.json({
+                    esito: risultato.esito,
+                    messaggio: risultato.messaggio,
+                    codErr: risultato.codErr,
+                    utenti: risultato.utenti
+                });
+            }
+        });
+    } else {
+//In caso di parametri vuoti
+//    logger.debug("-->Parametri PDS vuoti");
+        res.status(500);
+        res.json({esito: false,
+            messaggio: 'parametri PDS mancanti',
+            codErr: 500,
+            utenti: {}});
+    }
+});
 //Imposto radice /apinode per tutte le chiamate ai rest nodejs (es: /apinode/login )
 app.use('/apinode', appRouter);
 //Abilito protocollo HTTPS
 //con certificato self-signed
- https.createServer({
-      key: fs.readFileSync(config.keyPermPublic),
-      cert: fs.readFileSync(config.certPermPublic),
-      passphrase: config.passphraseCert
-    }, app).listen(porta);
+https.createServer({
+    key: fs.readFileSync(config.keyPermPublic),
+    cert: fs.readFileSync(config.certPermPublic),
+    passphrase: config.passphraseCert
+}, app).listen(porta);
 logger.debug('PnBe server in ascolto sulla porta ' + porta);
 
 
