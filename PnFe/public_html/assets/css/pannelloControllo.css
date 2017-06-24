@@ -123,3 +123,6 @@ ul.listaVociDesktop li.active a{
 .linkPosizione{
     width: 95%;
 }
+#ex1Slider .slider-selection {
+	background: #BABABA;
+}

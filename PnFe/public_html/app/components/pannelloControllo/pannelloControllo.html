@@ -10,6 +10,10 @@
     <!-- Menu laterale -->
     <aside class="col-sm-12 menuLateraleSinistroMobile">
         <nav class="horizontal-collapse" uib-collapse="isCollapsedHorizontal" horizontal>   
+            <div>
+                <rzslider rz-slider-model="slider.raggioCerchio"
+                          rz-slider-options="slider.options"></rzslider>
+            </div>
             <div class="wrapperBoxRicercaIndirizzo">
                 <div class="testoCercaIndirizzo"> 
                     <input id="cercaMobile"
@@ -50,6 +54,10 @@
     <!-- Sezione visibile solo in DESKTOP -->
     <aside class="col-sm-3 hidden-xs menuLateraleSinistroDesktop">
         <nav>       
+            <div>
+                <rzslider rz-slider-model="slider.raggioCerchio"
+                          rz-slider-options="slider.options"></rzslider>
+            </div>
             <div class="wrapperBoxRicercaIndirizzo">
                 <div class="testoCercaIndirizzo"> 
                     <input id="cercaDesktop"
@@ -95,7 +103,7 @@
                     center="{{posizioneMappa}}">
                 <shape ng-if="map && !isGeoFallback()" id="circle" name="circle" centered="true"
                        stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
-                       center="{{map.getCenter().lat()}},{{map.getCenter().lng()}}" radius="1000" editable="false" ></shape>
+                       center="{{map.getCenter().lat()}},{{map.getCenter().lng()}}" radius="{{slider.raggioCerchio}}" editable="false" ></shape>
             </ng-map>
         </div>
     </section>

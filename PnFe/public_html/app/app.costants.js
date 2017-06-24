@@ -6,7 +6,15 @@
     angular.module('printNetworkApp').constant('CONST', {
         //"CONTEXT_ROOT": contextRoot,
         "RICORDAMI": "ricordami",
-        "KEY_GEOCOD":"AIzaSyDUgfDN2lOzsSvZkl0VNlTpq7BpAqMAO70",
+        "KEY_GEOCOD": "AIzaSyDUgfDN2lOzsSvZkl0VNlTpq7BpAqMAO70",
+        "MAPPA": {
+            "RAGGIO_CERCHIO_DEFAULT": 500,
+            "RAGGIO_CERCHIO_MIN": 100,
+            "RAGGIO_CERCHIO_MAX": 5000,
+            "DEFAULT_ZOOM":13,
+            "FALL_GEO_ZOOM":6,
+            "FALL_GEO_POSITION":[40.979898, 13.337401999999997]
+        },
         "LOCAL_STORAGE": {
             TOKEN: "token",
             UTENTE_LOGGATO: "utenteLoggato"
@@ -22,7 +30,7 @@
                     "REGISTRAZIONE": "printnetwork/apinode/registrazione",
                     "LOGIN": "printnetwork/apinode/login",
                     "STAMPA_2D": "printnetwork/apinode/2d",
-                    "GOOGLE_GEOCOD":"https://maps.googleapis.com/maps/api/geocode/json?address="
+                    "GOOGLE_GEOCOD": "https://maps.googleapis.com/maps/api/geocode/json?address="
                 },
         "MESSAGE_LEVEL": {
             "INFO": "INFO",

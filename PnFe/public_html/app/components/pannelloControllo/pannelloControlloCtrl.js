@@ -4,22 +4,29 @@
     angular.module('printNetworkApp').controller('pannelloControlloCtrl',
             ['$scope', '$state', 'serviziRest', 'CONST', 'NgMap',
                 function ($scope, $state, serviziRest, COSTANTI, NgMap) {
+                    $scope.slider = {
+                        raggioCerchio: COSTANTI.MAPPA.RAGGIO_CERCHIO_DEFAULT,
+                        options: {
+                            floor: COSTANTI.MAPPA.RAGGIO_CERCHIO_MIN,
+                            ceil: COSTANTI.MAPPA.RAGGIO_CERCHIO_MAX,
+                            translate: function (value) {
+                                return value+" metri";
+                            }
+                        }
+                    };
                     $scope.isCollapsedHorizontal = true;
                     $scope.map = null;
                     $scope.indirizzoTrovato = null;
                     $scope.locationTrovata = null;
-                    $scope.defaultZoom = 13;
-                    $scope.fallGeoZoom = 6;
                     $scope.zoomCalcolato = $scope.defaultZoom;
-                    $scope.fallBackPosition = [40.979898, 13.337401999999997];
-                    $scope.googleFallBackPosition = new google.maps.LatLng($scope.fallBackPosition[0], $scope.fallBackPosition[1]);
+                    $scope.googleFallBackPosition = new google.maps.LatLng(COSTANTI.MAPPA.FALL_GEO_POSITION[0], COSTANTI.MAPPA.FALL_GEO_POSITION[1]);
                     $scope.indirizzoSelezionato = function () {
                         $scope.place = this.getPlace();
                         if ($scope.place.geometry) {
                             $scope.locationTrovata = $scope.place.geometry.location;
                             $scope.map.setCenter($scope.locationTrovata);
                             $scope.indirizzoTrovato = $scope.place.formatted_address;
-                            $scope.zoomCalcolato = $scope.defaultZoom;
+                            $scope.zoomCalcolato = COSTANTI.MAPPA.DEFAULT_ZOOM;
                         }
                     };
                     NgMap.getMap().then(function (map) {
@@ -29,14 +36,14 @@
                     $scope.centraMappa = function (location) {
                         if (location) {
                             $scope.map.setCenter(location);
-                            $scope.zoomCalcolato = $scope.defaultZoom;
+                            $scope.zoomCalcolato = COSTANTI.MAPPA.DEFAULT_ZOOM;
                         }
                     };
                     $scope.centraPosizioneRilevata = function () {
                         if ($scope.posizioneRilevata) {
                             var posizione = new google.maps.LatLng($scope.posizioneRilevata.lat(), $scope.posizioneRilevata.lng());
                             $scope.map.panTo(posizione);
-                            $scope.zoomCalcolato = $scope.defaultZoom;
+                            $scope.zoomCalcolato = COSTANTI.MAPPA.DEFAULT_ZOOM;
                         }
                     };
                     $scope.getPosizioneRilevata = function () {
@@ -48,31 +55,31 @@
                                         var posizione = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                                         $scope.posizioneRilevata = posizione;
                                         $scope.posizioneMappa = $scope.posizioneRilevata.lat() + ", " + $scope.posizioneRilevata.lng();
-                                        $scope.zoomCalcolato = $scope.defaultZoom;
+                                        $scope.zoomCalcolato = COSTANTI.MAPPA.DEFAULT_ZOOM;
                                         var latlng = {lat: $scope.posizioneRilevata.lat(), lng: $scope.posizioneRilevata.lng()};
-                                        geocoder.geocode({'location': latlng}, function(results, status) {
-                                              $scope.$apply(function () {
-                                                 if (status === 'OK' && results[1]) {
-                                                     $scope.indirizzoRilevato = results[0].formatted_address;
-                                                 } 
-                                              });
+                                        geocoder.geocode({'location': latlng}, function (results, status) {
+                                            $scope.$apply(function () {
+                                                if (status === 'OK' && results[1]) {
+                                                    $scope.indirizzoRilevato = results[0].formatted_address;
+                                                }
+                                            });
                                         });
                                     });
                                 }
                             }, function (error) {
                                 $scope.$apply(function () {
                                     //imposto posizione di geoFallback
-                                    var geoFallBackPosiz = new google.maps.LatLng($scope.fallBackPosition[0], $scope.fallBackPosition[1]);
+                                    var geoFallBackPosiz = new google.maps.LatLng(COSTANTI.MAPPA.FALL_GEO_POSITION[0], COSTANTI.MAPPA.FALL_GEO_POSITION[1]);
                                     $scope.posizioneMappa = geoFallBackPosiz.lat() + ", " + geoFallBackPosiz.lng();
-                                    $scope.zoomCalcolato = $scope.fallGeoZoom;
+                                    $scope.zoomCalcolato = COSTANTI.MAPPA.FALL_GEO_ZOOM;
                                 });
                             });
                         }
                     };
                     $scope.isGeoFallback = function () {
                         if (!$scope.map.getCenter() ||
-                                ($scope.map.getCenter().lat() == $scope.fallBackPosition[0] &&
-                                        $scope.map.getCenter().lng() == $scope.fallBackPosition[1])) {
+                                ($scope.map.getCenter().lat() == COSTANTI.MAPPA.FALL_GEO_POSITION[0] &&
+                                        $scope.map.getCenter().lng() == COSTANTI.MAPPA.FALL_GEO_POSITION[1])) {
                             return true;
                         }
                         return false;
@@ -84,7 +91,7 @@
                             $scope.indirizzoTrovato = null;
                             $scope.indirizzo.cercato = null;
                             $scope.map.setCenter($scope.googleFallBackPosition);
-                            $scope.zoomCalcolato = $scope.fallGeoZoom;
+                            $scope.zoomCalcolato = COSTANTI.MAPPA.FALL_GEO_ZOOM;
                         }
                     };
 
