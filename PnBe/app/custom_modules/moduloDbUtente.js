@@ -117,21 +117,21 @@ module.exports = {
                             $maxDistance: 5000
                         }
             }
-        },{ nick: 1,feedback: 1, location: 1}, function (err, utenti) {
+        },{ nick: 1,feedback: 1, location: 1}, function (err, utentiPds) {
             var data = {};
             if (err) {
                 data.esito = false;
                 data.codErr = 500;
                 data.messaggio = err;
-            } else if (!utenti) {
+            } else if (!utentiPds) {
                 data.esito = false;
                 data.codErr = 3;
                 data.messaggio = 'punti di stampa non trovati';
-            } else if (utenti) {
+            } else if (utentiPds) {
                 data.esito = true;
                 data.codErr = 0;
                 data.messaggio = 'punti di stampa trovati';
-                data.utenti = utenti;
+                data.utentiPds = utentiPds;
             }
             callback(data);
         });

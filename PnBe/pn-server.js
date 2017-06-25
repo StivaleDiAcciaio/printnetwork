@@ -258,7 +258,7 @@ appRouter.post('/pds', function (req, res) {
                     esito: risultato.esito,
                     messaggio: risultato.messaggio,
                     codErr: risultato.codErr,
-                    utenti: risultato.utenti
+                    utentiPds: risultato.utentiPds
                 });
             }
         });

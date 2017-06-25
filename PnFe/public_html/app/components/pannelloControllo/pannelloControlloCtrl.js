@@ -27,25 +27,26 @@
                             $scope.map.setCenter($scope.locationTrovata);
                             $scope.indirizzoTrovato = $scope.place.formatted_address;
                             $scope.zoomCalcolato = COSTANTI.MAPPA.DEFAULT_ZOOM;
+                            $scope.trovaPDS();
                         }
                     };
                     NgMap.getMap().then(function (map) {
                         $scope.map = map;
+                        $scope.trovaPDS();
                     });
 
                     $scope.centraMappa = function (location) {
                         if (location) {
-                            $scope.map.setCenter(location);
+                            $scope.map.panTo(location);
                             $scope.zoomCalcolato = COSTANTI.MAPPA.DEFAULT_ZOOM;
-                        }
-                    };
-                    $scope.centraPosizioneRilevata = function () {
-                        if ($scope.posizioneRilevata) {
+                        } else if ($scope.posizioneRilevata) {
                             var posizione = new google.maps.LatLng($scope.posizioneRilevata.lat(), $scope.posizioneRilevata.lng());
                             $scope.map.panTo(posizione);
                             $scope.zoomCalcolato = COSTANTI.MAPPA.DEFAULT_ZOOM;
                         }
+
                     };
+
                     $scope.getPosizioneRilevata = function () {
                         if (navigator.geolocation) {
                             navigator.geolocation.getCurrentPosition(function (position) {
@@ -96,17 +97,19 @@
                     };
 
                     $scope.trovaPDS = function () {
-                        serviziRest.trovaPDS({paramRicercaPDS: {lng:$scope.map.getCenter().lng(),lat:$scope.map.getCenter().lat()} }).then(function (response) {
-                            if (response.esito) {
-                                console.log(response.esito);
-                            } else {
-                                $scope.mostraMessaggioError(response.codErr);
-                            }
-                        }, function (err) {
-                            if (err.data) {
-                                $scope.mostraMessaggioError(err.data.codErr);
-                            } 
-                        });
+                        if (!$scope.isGeoFallback()) {
+                            serviziRest.trovaPDS({paramRicercaPDS: {lng: $scope.map.getCenter().lng(), lat: $scope.map.getCenter().lat()}}).then(function (response) {
+                                if (response.esito) {
+                                    console.log(response.esito);
+                                } else {
+                                    $scope.mostraMessaggioError(response.codErr);
+                                }
+                            }, function (err) {
+                                if (err.data) {
+                                    $scope.mostraMessaggioError(err.data.codErr);
+                                }
+                            });
+                        }
                     };
 
                     $scope.getPosizioneRilevata();

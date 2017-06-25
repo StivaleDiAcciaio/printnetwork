@@ -34,7 +34,7 @@
                     <i class="glyphicon glyphicon-screenshot"></i> 
                 </div>
                 <div ng-if="posizioneRilevata" class="linkPosizione">
-                    <a href="javascript:void(0)" ng-click="centraPosizioneRilevata()">{{indirizzoRilevato}}</a>
+                    <a href="javascript:void(0)" ng-click="centraMappa()">{{indirizzoRilevato}}</a>
                 </div>
                 <div ng-if="!posizioneRilevata" class="linkPosizione">
                     <a href="javascript:void(0)">nessuna posizione rilevata</a>
@@ -80,7 +80,7 @@
                     <i class="glyphicon glyphicon-screenshot"></i> 
                 </div>
                 <div ng-if="posizioneRilevata" class="linkPosizione">
-                    <a href="javascript:void(0)" ng-click="centraPosizioneRilevata()">{{indirizzoRilevato}}</a>
+                    <a href="javascript:void(0)" ng-click="centraMappa()">{{indirizzoRilevato}}</a>
                 </div>
                 <div ng-if="!posizioneRilevata" class="linkPosizione">
                     <a href="javascript:void(0)">nessuna posizione rilevata</a>
@@ -97,7 +97,6 @@
     <!-- contenuto principale del pannello di controllo -->
     <section class="col-sm-9 col-xs-12 contenutoPannelloControllo">
         <div>
-            <button class="btn btn-default" ng-click="trovaPDS()">cerca PDS</button>
             <ng-map id="mappaPannelloControllo" 
                     zoom="{{zoomCalcolato}}" 
                     default-style="false" 
