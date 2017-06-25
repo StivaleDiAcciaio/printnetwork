@@ -2,8 +2,11 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('pannelloControlloCtrl',
-            ['$scope', '$state', 'serviziRest', 'CONST', 'NgMap',
-                function ($scope, $state, serviziRest, COSTANTI, NgMap) {
+            ['$scope', '$state', 'serviziRest', 'CONST', 'NgMap', '$timeout',
+                function ($scope, $state, serviziRest, COSTANTI, NgMap, $timeout) {
+                    $scope.onChangeFn = function (id, model) {
+                        $scope.mostraPDS($scope.locationsPDS);
+                    };
                     $scope.slider = {
                         raggioCerchio: COSTANTI.MAPPA.RAGGIO_CERCHIO_DEFAULT,
                         options: {
@@ -11,8 +14,14 @@
                             ceil: COSTANTI.MAPPA.RAGGIO_CERCHIO_MAX,
                             translate: function (value) {
                                 return value + " metri";
-                            }
+                            },
+                            onChange: $scope.onChangeFn
                         }
+                    };
+                    $scope.refreshSlider = function () {
+                        $timeout(function () {
+                            $scope.$broadcast('rzSliderForceRender');
+                        });
                     };
                     $scope.isCollapsedHorizontal = true;
                     $scope.map = null;
@@ -20,6 +29,7 @@
                     $scope.locationTrovata = null;
                     $scope.zoomCalcolato = $scope.defaultZoom;
                     $scope.googleFallBackPosition = new google.maps.LatLng(COSTANTI.MAPPA.FALL_GEO_POSITION[0], COSTANTI.MAPPA.FALL_GEO_POSITION[1]);
+                    $scope.locationsPDS = null;
                     $scope.indirizzoSelezionato = function () {
                         $scope.place = this.getPlace();
                         if ($scope.place.geometry) {
@@ -33,6 +43,8 @@
                     NgMap.getMap().then(function (map) {
                         $scope.map = map;
                         $scope.trovaPDS();
+                        //per evitare problema di render scorretto della slider
+                        $scope.refreshSlider();
                     });
 
                     $scope.centraMappa = function (location) {
@@ -100,7 +112,16 @@
                         if (!$scope.isGeoFallback()) {
                             serviziRest.trovaPDS({paramRicercaPDS: {lng: $scope.map.getCenter().lng(), lat: $scope.map.getCenter().lat()}}).then(function (response) {
                                 if (response.esito) {
-                                    console.log(response.esito);
+                                    if (response.utentiPds) {
+                                        //costruzione position dalle location trovate
+                                        var locationsPDS = [];
+                                        for (var i = 0; i < response.utentiPds.length; i++) {
+                                            locationsPDS.push(new google.maps.LatLng(response.utentiPds[i].location.coordinates[1], response.utentiPds[i].location.coordinates[0]));
+                                        }
+                                        $scope.locationsPDS = locationsPDS;
+                                        $scope.mostraPDS(locationsPDS);
+                                    }
+
                                 } else {
                                     $scope.mostraMessaggioError(response.codErr);
                                 }
@@ -109,6 +130,15 @@
                                     $scope.mostraMessaggioError(err.data.codErr);
                                 }
                             });
+                        }
+                    };
+                    $scope.mostraPDS = function (locationsPDS) {
+                        if (locationsPDS) {
+                            for (var i = 0; i < locationsPDS.length; i++) {
+                                if (google.maps.geometry.spherical.computeDistanceBetween(locationsPDS[i], $scope.map.shapes.circle.getCenter()) <= $scope.map.shapes.circle.getRadius()) {
+                                    new google.maps.Marker({position: locationsPDS[i], map: $scope.map, draggable: false});
+                                }
+                            }
                         }
                     };
 
