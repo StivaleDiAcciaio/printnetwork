@@ -4,8 +4,8 @@
     angular.module('printNetworkApp').controller('pannelloControlloCtrl',
             ['$scope', '$state', 'serviziRest', 'CONST', 'NgMap', '$timeout',
                 function ($scope, $state, serviziRest, COSTANTI, NgMap, $timeout) {
-                    $scope.onChangeFn = function (id, model) {
-                        $scope.mostraPDS($scope.locationsPDS);
+                   $scope.onChangeSliderFn = function (id, model) {
+                        $scope.mostraPDS($scope.arrayMarkerPDS);
                     };
                     $scope.slider = {
                         raggioCerchio: COSTANTI.MAPPA.RAGGIO_CERCHIO_DEFAULT,
@@ -15,7 +15,7 @@
                             translate: function (value) {
                                 return value + " metri";
                             },
-                            onChange: $scope.onChangeFn
+                            onChange: $scope.onChangeSliderFn
                         }
                     };
                     $scope.refreshSlider = function () {
@@ -29,12 +29,12 @@
                     $scope.locationTrovata = null;
                     $scope.zoomCalcolato = $scope.defaultZoom;
                     $scope.googleFallBackPosition = new google.maps.LatLng(COSTANTI.MAPPA.FALL_GEO_POSITION[0], COSTANTI.MAPPA.FALL_GEO_POSITION[1]);
-                    $scope.locationsPDS = null;
+                    $scope.arrayMarkerPDS = null;
                     $scope.indirizzoSelezionato = function () {
                         $scope.place = this.getPlace();
                         if ($scope.place.geometry) {
                             $scope.locationTrovata = $scope.place.geometry.location;
-                            $scope.map.setCenter($scope.locationTrovata);
+                            $scope.map.panTo($scope.locationTrovata);
                             $scope.indirizzoTrovato = $scope.place.formatted_address;
                             $scope.zoomCalcolato = COSTANTI.MAPPA.DEFAULT_ZOOM;
                             $scope.trovaPDS();
@@ -67,6 +67,7 @@
                                         var geocoder = new google.maps.Geocoder;
                                         var posizione = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                                         $scope.posizioneRilevata = posizione;
+                                        $scope.locationTrovata = posizione;
                                         $scope.posizioneMappa = $scope.posizioneRilevata.lat() + ", " + $scope.posizioneRilevata.lng();
                                         $scope.zoomCalcolato = COSTANTI.MAPPA.DEFAULT_ZOOM;
                                         var latlng = {lat: $scope.posizioneRilevata.lat(), lng: $scope.posizioneRilevata.lng()};
@@ -99,27 +100,28 @@
                     };
 
                     $scope.resetCercaIndirizzo = function () {
-                        if ($scope.indirizzo.cercato) {
+                        if ($scope.indirizzo && $scope.indirizzo.cercato) {
                             $scope.locationTrovata = null;
                             $scope.indirizzoTrovato = null;
                             $scope.indirizzo.cercato = null;
-                            $scope.map.setCenter($scope.googleFallBackPosition);
+                            $scope.map.panTo($scope.googleFallBackPosition);
                             $scope.zoomCalcolato = COSTANTI.MAPPA.FALL_GEO_ZOOM;
                         }
                     };
 
                     $scope.trovaPDS = function () {
                         if (!$scope.isGeoFallback()) {
-                            serviziRest.trovaPDS({paramRicercaPDS: {lng: $scope.map.getCenter().lng(), lat: $scope.map.getCenter().lat()}}).then(function (response) {
+                            serviziRest.trovaPDS({paramRicercaPDS: {lng: $scope.locationTrovata.lng(), lat: $scope.locationTrovata.lat()}}).then(function (response) {
                                 if (response.esito) {
                                     if (response.utentiPds) {
                                         //costruzione position dalle location trovate
-                                        var locationsPDS = [];
+                                        var arrayMarkerPDS = [];
                                         for (var i = 0; i < response.utentiPds.length; i++) {
-                                            locationsPDS.push(new google.maps.LatLng(response.utentiPds[i].location.coordinates[1], response.utentiPds[i].location.coordinates[0]));
+                                            var posizionePDS = new google.maps.LatLng(response.utentiPds[i].location.coordinates[1], response.utentiPds[i].location.coordinates[0]);
+                                            arrayMarkerPDS.push(new google.maps.Marker({position: posizionePDS, map: null, draggable: false}));
                                         }
-                                        $scope.locationsPDS = locationsPDS;
-                                        $scope.mostraPDS(locationsPDS);
+                                        $scope.arrayMarkerPDS = arrayMarkerPDS;
+                                        $scope.mostraPDS(arrayMarkerPDS);
                                     }
 
                                 } else {
@@ -132,16 +134,17 @@
                             });
                         }
                     };
-                    $scope.mostraPDS = function (locationsPDS) {
-                        if (locationsPDS) {
-                            for (var i = 0; i < locationsPDS.length; i++) {
-                                if (google.maps.geometry.spherical.computeDistanceBetween(locationsPDS[i], $scope.map.shapes.circle.getCenter()) <= $scope.map.shapes.circle.getRadius()) {
-                                    new google.maps.Marker({position: locationsPDS[i], map: $scope.map, draggable: false});
+                    $scope.mostraPDS = function (arrayMarkerPDS) {
+                        if (arrayMarkerPDS) {
+                            for (var i = 0; i < arrayMarkerPDS.length; i++) {
+                                if (google.maps.geometry.spherical.computeDistanceBetween(arrayMarkerPDS[i].getPosition(), $scope.map.shapes.cerchioRicerca.getCenter()) <= $scope.map.shapes.cerchioRicerca.getRadius()) {
+                                    arrayMarkerPDS[i].setMap($scope.map);
+                                }else{
+                                    arrayMarkerPDS[i].setMap(null);
                                 }
                             }
                         }
                     };
-
                     $scope.getPosizioneRilevata();
                 }]);
 }());

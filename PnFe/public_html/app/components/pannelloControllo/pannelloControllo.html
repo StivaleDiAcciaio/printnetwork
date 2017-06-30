@@ -101,9 +101,9 @@
                     zoom="{{zoomCalcolato}}" 
                     default-style="false" 
                     center="{{posizioneMappa}}">
-                <shape ng-if="map && !isGeoFallback()" id="circle" name="circle" centered="true"
-                       stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
-                       center="{{map.getCenter().lat()}},{{map.getCenter().lng()}}" radius="{{slider.raggioCerchio}}" editable="false" ></shape>
+                <shape ng-if="map && !isGeoFallback()" id="cerchioRicerca" name="circle" centered="true"
+                        stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
+                        center="{{map.getCenter().lat()}},{{map.getCenter().lng()}}" radius="{{slider.raggioCerchio}}" editable="false" ></shape>
             </ng-map>
         </div>
     </section>
