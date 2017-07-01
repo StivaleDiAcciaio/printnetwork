@@ -100,10 +100,10 @@
             <ng-map id="mappaPannelloControllo" 
                     zoom="{{zoomCalcolato}}" 
                     default-style="false" 
-                    center="{{posizioneMappa}}">
+                    center="{{posCentroMappa}}">
                 <shape ng-if="map && !isGeoFallback()" id="cerchioRicerca" name="circle" centered="true"
                         stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
-                        center="{{map.getCenter().lat()}},{{map.getCenter().lng()}}" radius="{{slider.raggioCerchio}}" editable="false" ></shape>
+                        center="{{slider.posizioneCerchio.lat()}},{{slider.posizioneCerchio.lng()}}" radius="{{slider.raggioCerchio}}" editable="false" ></shape>
             </ng-map>
         </div>
     </section>

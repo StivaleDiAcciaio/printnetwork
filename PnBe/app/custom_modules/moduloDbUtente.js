@@ -108,12 +108,12 @@ module.exports = {
             callback(data);
         });
     }, trovaPDS: function (paramRicercaPDS, callback) {
-        // ricerca Utente
+        // ricerca Utenti PDS nel raggio di 5 km
         Utente.find({
             location: {$near:
                         {
                             $geometry: {type: "Point", coordinates: [paramRicercaPDS.lng, paramRicercaPDS.lat]},
-                            $minDistance: 100,
+                            $minDistance: 0,
                             $maxDistance: 5000
                         }
             }
