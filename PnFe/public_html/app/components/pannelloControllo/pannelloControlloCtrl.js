@@ -129,7 +129,7 @@
                                         //costruzione position dalle location trovate
                                         for (var i = 0; i < response.utentiPds.length; i++) {
                                             var posizionePDS = new google.maps.LatLng(response.utentiPds[i].location.coordinates[1], response.utentiPds[i].location.coordinates[0]);
-                                            $scope.arrayMarkerPDS.push(new google.maps.Marker({position: posizionePDS, map: null, draggable: false}));
+                                            $scope.caricaArrayMarkerPDS(posizionePDS);
                                         }                                        
                                         $scope.mostraPDS();
                                     }
@@ -144,10 +144,22 @@
                             });
                         }
                     };
+                    $scope.caricaArrayMarkerPDS = function(posizionePDS){
+                        var pdsPresente = false;
+                        for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
+                            if($scope.arrayMarkerPDS[i].getPosition().equals(posizionePDS)){
+                                pdsPresente = true;
+                            }
+                        }
+                        if(!pdsPresente){
+                            $scope.arrayMarkerPDS.push(new google.maps.Marker({position: posizionePDS, map: null, draggable: false}));   
+                        }
+                    };
+                    
                     $scope.mostraPDS = function () {
                         if ($scope.arrayMarkerPDS) {
                             for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
-                                if (google.maps.geometry.spherical.computeDistanceBetween($scope.arrayMarkerPDS[i].getPosition(), $scope.map.shapes.cerchioRicerca.getCenter()) <= $scope.map.shapes.cerchioRicerca.getRadius()) {
+                                if (google.maps.geometry.spherical.computeDistanceBetween($scope.arrayMarkerPDS[i].getPosition(), $scope.slider.posizioneCerchio) <= $scope.slider.raggioCerchio) {
                                     $scope.arrayMarkerPDS[i].setMap($scope.map);
                                 } else {
                                     $scope.arrayMarkerPDS[i].setMap(null);
