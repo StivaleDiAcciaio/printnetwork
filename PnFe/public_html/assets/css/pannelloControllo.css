@@ -126,3 +126,11 @@ ul.listaVociDesktop li.active a{
 #ex1Slider .slider-selection {
 	background: #BABABA;
 }
+.markerWrapper{
+    margin-top:10px;
+    font-size: 30px;
+}
+.markerWrapper i{
+    color:greenyellow;
+    text-shadow: 2px 0 black;
+}

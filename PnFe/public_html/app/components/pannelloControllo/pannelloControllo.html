@@ -101,9 +101,18 @@
                     zoom="{{zoomCalcolato}}" 
                     default-style="false" 
                     center="{{posCentroMappa}}">
-                <shape ng-if="map && !isGeoFallback()" id="cerchioRicerca" name="circle" centered="true"
-                        stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
-                        center="{{slider.posizioneCerchio.lat()}},{{slider.posizioneCerchio.lng()}}" radius="{{slider.raggioCerchio}}" editable="false" ></shape>
+                <div ng-if="map && !isGeoFallback()">
+                    <shape id="cerchioRicerca" name="circle" centered="true"
+                           stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
+                           center="{{slider.posizioneCerchio.lat()}},{{slider.posizioneCerchio.lng()}}" radius="{{slider.raggioCerchio}}" editable="false" ></shape>
+                    <custom-marker  ng-repeat="posPds in arrayMarkerPDS|filter:'true' track by $index" 
+                                    id="pds-marker-{{$index}}"
+                                    position="{{posPds.lat()}},{{posPds.lng()}}">
+                        <div class="markerWrapper">
+                            <i class="glyphicon glyphicon-map-marker"></i>
+                        </div>
+                    </custom-marker>
+                </div>
             </ng-map>
         </div>
     </section>

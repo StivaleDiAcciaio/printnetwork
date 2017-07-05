@@ -103,7 +103,7 @@
 
                     $scope.resetCercaIndirizzo = function () {
                         if ($scope.indirizzo && $scope.indirizzo.cercato) {
-                            $scope.resetPDS();
+                            $scope.arrayMarkerPDS =[];
                             $scope.locationTrovata = null;
                             $scope.indirizzoTrovato = null;
                             $scope.indirizzo.cercato = null;
@@ -113,14 +113,6 @@
                         }
                     };
                     
-                    $scope.resetPDS = function () {
-                        if ($scope.arrayMarkerPDS) {
-                            //resetto precedente caricamento PDS
-                            for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
-                                $scope.arrayMarkerPDS[i].setMap(null);
-                            }
-                        }
-                    };
                     $scope.trovaPDS = function (posizioneScelta) {
                         if (!$scope.isGeoFallback()) {
                             serviziRest.trovaPDS({paramRicercaPDS: {lng: posizioneScelta.lng(), lat: posizioneScelta.lat()}}).then(function (response) {
@@ -147,22 +139,25 @@
                     $scope.caricaArrayMarkerPDS = function(posizionePDS){
                         var pdsPresente = false;
                         for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
-                            if($scope.arrayMarkerPDS[i].getPosition().equals(posizionePDS)){
+                            if($scope.arrayMarkerPDS[i].equals(posizionePDS)){
                                 pdsPresente = true;
                             }
                         }
                         if(!pdsPresente){
-                            $scope.arrayMarkerPDS.push(new google.maps.Marker({position: posizionePDS, map: null, draggable: false}));   
+                            //$scope.arrayMarkerPDS.push(new google.maps.Marker({position: posizionePDS, map: null, draggable: false}));   
+                            $scope.arrayMarkerPDS.push(posizionePDS);   
                         }
                     };
                     
                     $scope.mostraPDS = function () {
                         if ($scope.arrayMarkerPDS) {
                             for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
-                                if (google.maps.geometry.spherical.computeDistanceBetween($scope.arrayMarkerPDS[i].getPosition(), $scope.slider.posizioneCerchio) <= $scope.slider.raggioCerchio) {
-                                    $scope.arrayMarkerPDS[i].setMap($scope.map);
+                                if (google.maps.geometry.spherical.computeDistanceBetween($scope.arrayMarkerPDS[i], $scope.slider.posizioneCerchio) <= $scope.slider.raggioCerchio) {
+                                   // $scope.arrayMarkerPDS[i].setMap($scope.map);
+                                   $scope.arrayMarkerPDS[i].mostra=true;
                                 } else {
-                                    $scope.arrayMarkerPDS[i].setMap(null);
+                                    //$scope.arrayMarkerPDS[i].setMap(null);
+                                    $scope.arrayMarkerPDS[i].mostra=false;
                                 }
                             }
                         }
