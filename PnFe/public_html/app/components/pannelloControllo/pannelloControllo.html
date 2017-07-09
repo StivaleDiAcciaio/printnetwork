@@ -105,15 +105,22 @@
                     <shape id="cerchioRicerca" name="circle" centered="true"
                            stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
                            center="{{slider.posizioneCerchio.lat()}},{{slider.posizioneCerchio.lng()}}" radius="{{slider.raggioCerchio}}" editable="false" ></shape>
-                    <custom-marker  ng-repeat="posPds in arrayMarkerPDS|filter:'true' track by $index" 
+                    <custom-marker  ng-repeat="utPds in arrayMarkerPDS|filter:'true' track by $index" 
                                     id="pds-marker-{{$index}}"
-                                    position="{{posPds.lat()}},{{posPds.lng()}}">
-                        <div class="markerWrapper">
+                                    position="{{utPds.geoposizione.lat()}},{{utPds.geoposizione.lng()}}">
+                        <div class="markerWrapper" ng-click="markerPDSonClick(utPds)">
                             <i class="glyphicon glyphicon-map-marker"></i>
                         </div>
                     </custom-marker>
                 </div>
             </ng-map>
+            <div ng-if="pdsSelezionato" class="infoPDS row">
+                <div class="col-md-4 col-xs-12">Nick: {{pdsSelezionato.nick}}</div>
+                <div class="col-md-4 col-xs-12">Tip.Stampa: {{pdsSelezionato.tipologiaStampa}}</div>
+                <div class="col-md-4 col-xs-12">formati: {{pdsSelezionato.formati}}</div>
+                <div class="col-md-12 col-xs-12">indirizzo: {{pdsSelezionato.indirizzo}}</div>
+                <div class="col-md-12 col-xs-12">feedback: {{pdsSelezionato.feedback}}</div>
+            </div>
         </div>
     </section>
 </div>
