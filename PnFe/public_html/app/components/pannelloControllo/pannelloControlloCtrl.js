@@ -112,7 +112,10 @@
                             
                         }
                     };
-                    
+                    $scope.infoPDScancel = function (){
+                        $scope.pdsSelezionato.classe='pdsNoActive';
+                        $scope.pdsSelezionato=null;
+                    };
                     $scope.trovaPDS = function (posizioneScelta) {
                         if (!$scope.isGeoFallback()) {
                             serviziRest.trovaPDS({paramRicercaPDS: {lng: posizioneScelta.lng(), lat: posizioneScelta.lat()}}).then(function (response) {
@@ -140,7 +143,7 @@
                     $scope.caricaArrayMarkerPDS = function(utentePDS){
                         var pdsPresente = false;
                         for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
-                            if($scope.arrayMarkerPDS[i].equals(utentePDS.geoposizione)){
+                            if($scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione)){
                                 pdsPresente = true;
                             }
                         }
@@ -161,8 +164,11 @@
                         }
                     };
                     $scope.markerPDSonClick = function(utentePDS){
-                      $scope.pdsSelezionato={};
-                      $scope.pdsSelezionato.nick = utentePDS.nick;
+                      utentePDS.classe='pdsActive';
+                      if ($scope.pdsSelezionato){
+                          $scope.pdsSelezionato.classe='pdsNoActive';
+                      }
+                      $scope.pdsSelezionato=utentePDS;
                     };
                     $scope.getPosizioneRilevata();
                 }]);

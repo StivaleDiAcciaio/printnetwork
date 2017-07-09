@@ -134,6 +134,20 @@ ul.listaVociDesktop li.active a{
     color:greenyellow;
     text-shadow: 2px 0 black;
 }
+.markerWrapper i.pdsActive{
+    color:blue;
+    text-shadow: 2px 0 greenyellow;
+}
+.markerWrapper i.pdsNoActive{
+    color:greenyellow;
+    text-shadow: 2px 0 black;
+}
+
+
 .infoPDS{
     border:1px solid blue;
+}
+.infoPDS button{
+    float: right;
+    margin:2px;
 }

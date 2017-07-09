@@ -109,17 +109,21 @@
                                     id="pds-marker-{{$index}}"
                                     position="{{utPds.geoposizione.lat()}},{{utPds.geoposizione.lng()}}">
                         <div class="markerWrapper" ng-click="markerPDSonClick(utPds)">
-                            <i class="glyphicon glyphicon-map-marker"></i>
+                            <i class="glyphicon glyphicon-map-marker {{utPds.classe}}"></i>
                         </div>
                     </custom-marker>
                 </div>
             </ng-map>
             <div ng-if="pdsSelezionato" class="infoPDS row">
-                <div class="col-md-4 col-xs-12">Nick: {{pdsSelezionato.nick}}</div>
-                <div class="col-md-4 col-xs-12">Tip.Stampa: {{pdsSelezionato.tipologiaStampa}}</div>
-                <div class="col-md-4 col-xs-12">formati: {{pdsSelezionato.formati}}</div>
-                <div class="col-md-12 col-xs-12">indirizzo: {{pdsSelezionato.indirizzo}}</div>
-                <div class="col-md-12 col-xs-12">feedback: {{pdsSelezionato.feedback}}</div>
+                <div class="col-md-2 col-xs-12">Nick: {{pdsSelezionato.nick}}</div>
+                <div class="col-md-2 col-xs-12">Tip.Stampa: {{pdsSelezionato.tipologiaStampa}}</div>
+                <div class="col-md-3 col-xs-12">formati: {{pdsSelezionato.formati}}</div>
+                <div class="col-md-5 col-xs-12">indirizzo: {{pdsSelezionato.indirizzo}} <button class="close" type="button" ng-click="infoPDScancel()">×</button></div>
+                <div class="col-md-6 col-xs-12">feedback: {{pdsSelezionato.feedback}}</div>
+                <div class="col-md-6 col-xs-12">
+                    <button class="btn btn-xs btn-primary">richiedi stampa</button> 
+                    <button class="btn btn-xs btn-primary">calcola percorso</button> 
+                </div>
             </div>
         </div>
     </section>
