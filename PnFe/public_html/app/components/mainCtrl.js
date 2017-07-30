@@ -70,6 +70,7 @@
                         return null;
                     };
                     function mostraMessaggioUtente(codice, level, scope) {
+                        if (codice==98){$scope.logout(); return;}
                         scope.messaggio = {};
                         scope.messaggio.contenuto = $translate.instant("SERVER_COD_" + codice);
                         scope.messaggio.level = level;

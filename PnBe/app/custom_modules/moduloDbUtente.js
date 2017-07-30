@@ -117,7 +117,7 @@ module.exports = {
                             $maxDistance: 5000
                         }
             }
-        },{ nick: 1,feedback: 1, location: 1}, function (err, utentiPds) {
+        },{ nick: 1,tipologiaUtente: 1,indirizzo: 1,tipologiaStampa: 1,feedback: 1, location: 1}, function (err, utentiPds) {
             var data = {};
             if (err) {
                 data.esito = false;

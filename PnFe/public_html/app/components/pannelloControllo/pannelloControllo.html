@@ -116,11 +116,11 @@
             </ng-map>
             <div ng-if="pdsSelezionato" class="infoPDS row">
                 <div class="col-md-2 col-xs-12">Nick: {{pdsSelezionato.nick}}</div>
-                <div class="col-md-2 col-xs-12">Tip.Stampa: {{pdsSelezionato.tipologiaStampa}}</div>
-                <div class="col-md-3 col-xs-12">formati: {{pdsSelezionato.formati}}</div>
-                <div class="col-md-5 col-xs-12">indirizzo: {{pdsSelezionato.indirizzo}} <button class="close" type="button" ng-click="infoPDScancel()">×</button></div>
-                <div class="col-md-6 col-xs-12">feedback: {{pdsSelezionato.feedback}}</div>
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-xs-12">Tip.Stampa: {{pdsSelezionato.tipologiaStampa.stampa2D?'2d':''}} {{pdsSelezionato.tipologiaStampa.stampa3D?'3d':''}}</div>
+                <div class="col-md-4 col-xs-12">indirizzo: {{pdsSelezionato.indirizzo.descrizione}} <button class="close" type="button" ng-click="infoPDScancel()">×</button></div>
+                <div class="col-md-2 col-xs-12">feedback: {{pdsSelezionato.feedback}}</div>
+                <div class="col-md-2 col-xs-12">tipo utente: {{pdsSelezionato.tipologiaUtente}}</div>
+                <div class="col-md-offset-2 col-md-6 col-xs-12">
                     <button class="btn btn-xs btn-primary">richiedi stampa</button> 
                     <button class="btn btn-xs btn-primary">calcola percorso</button> 
                 </div>

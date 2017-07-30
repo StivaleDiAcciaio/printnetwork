@@ -64,5 +64,5 @@
     "SERVER_COD_10":"indirizzo nick gia' utilizzato",
     "SERVER_COD_20":"indirizzo email gia' utilizzato",
     "SERVER_COD_99":"Verifica No robot fallita",
-    "SERVER_COD_98":"Utente non autenticato"
+    "SERVER_COD_98":"Effettua il Login"
 }
