@@ -164,12 +164,13 @@
                         }
                     };
                     $scope.markerPDSonClick = function(utentePDS){
-                      utentePDS.classe='pdsActive';
-                      if ($scope.pdsSelezionato){
+                      if ($scope.pdsSelezionato && $scope.pdsSelezionato !== utentePDS){
                           $scope.pdsSelezionato.classe='pdsNoActive';
                       }
+                      utentePDS.classe='pdsActive';
                       $scope.pdsSelezionato=utentePDS;
+                      $scope.scrollTo('infoPDSscroll');
                     };
-                    $scope.getPosizioneRilevata();
+                    $scope.getPosizioneRilevata();                    
                 }]);
 }());

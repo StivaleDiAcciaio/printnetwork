@@ -2,9 +2,9 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('mainCtrl',
-            ['$scope', '$state', '$location', '$anchorScroll', '$uibModal', 'serviziRest', 'CONST', '$translate',
-                function ($scope, $state, $location, $anchorScroll, $uibModal, serviziRest, COSTANTI, $translate) {
-                    $scope.paginaCorrente = null; 
+            ['$scope', '$state', '$uibModal', 'serviziRest', 'CONST', '$translate', 'animatedScroll',
+                function ($scope, $state, $uibModal, serviziRest, COSTANTI, $translate, animatedScroll) {
+                    $scope.paginaCorrente = null;
                     $scope.showLoading = false;
                     $scope.messaggio = null;
                     $scope.boxCaptcha = false;
@@ -46,7 +46,7 @@
                     };
                     $scope.getUtenteLoggato = function () {
                         var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
-                        return utl != null?utl:"";  
+                        return utl != null ? utl : "";
                     };
                     $scope.setUtenteLoggato = function (utenteLoggato) {
                         localStorage.setItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO, JSON.stringify(utenteLoggato));
@@ -83,8 +83,13 @@
                         }
                     };
                     $scope.scrollTo = function (idElemento) {
-                        $location.hash(idElemento);
-                        $anchorScroll();
+                        var elementIWantToScrollTo = document.getElementById(idElemento);
+                        animatedScroll.scroll(elementIWantToScrollTo, {
+                            duration: 800
+                        }).then(function (element) {
+                            // do something after the the list item was scrolled into view 
+                            // element = listItemIWantToScrollTo 
+                        });
                     };
                     $scope.mainAggiungiFormato2D = function (formato) {
                         //prima di aggiungere il formato verifico che non sia già presente
@@ -163,8 +168,8 @@
                             size: size
                         });
                     };
-                    
-                    $scope.mainMostraCaptcha = function (stato){
+
+                    $scope.mainMostraCaptcha = function (stato) {
                         $scope.boxCaptcha = stato;
                     };
 

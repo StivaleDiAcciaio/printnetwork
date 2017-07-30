@@ -23,6 +23,7 @@
     "angular-ui-router": "0.2.17",
     "angularjs-slider": "^6.2.2",
     "bootstrap": "3.3.6",
+    "ng-animated-scroll": "^1.5.0",
     "ngmap": "^1.18.4",
     "nya-bootstrap-select": "2.0.11"
   }
