@@ -148,6 +148,7 @@
                         $scope.chkBoxRegolamento = false;
                         $scope.chkBoxPrivacy = false;
                         $scope.formRegistrazioneData = null;
+                        $scope.mainResetFormati2D();
                         $scope.resetMessaggioUtente();
                         try {
                             grecaptcha.reset();
@@ -157,7 +158,7 @@
 
                     };
                     $scope.clickTabRegistrazione = function (e) {
-                        $scope.resetMessaggioUtente();
+                        $scope.resetRegistrazione();
                         $scope.mostraFormRegistrazione = true;
                         $scope.mostraFormLogin = false;
                         $scope.mainMostraCaptcha(true);

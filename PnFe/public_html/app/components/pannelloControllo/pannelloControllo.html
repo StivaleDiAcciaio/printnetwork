@@ -115,13 +115,24 @@
                 </div>
             </ng-map>
             <div ng-if="pdsSelezionato" class="infoPDS row">
-                <div class="col-xs-12"><span class="label label-info">Nick: {{pdsSelezionato.nick}}</span><span class="close" type="button" ng-click="infoPDScancel()">×</span></div>
-                <div class="col-xs-12"><span class="label label-info">Indirizzo: {{pdsSelezionato.indirizzo.descrizione}}</span></div>
-                <div class="col-xs-12"><div ng-if="pdsSelezionato.tipologiaStampa.stampa2D"><span class="label label-info">Stampa2D: {{pdsSelezionato.tipologiaStampa.stampa2D.colore=='C'?'a colori':'bianco&nero'}}, formati:<span ng-repeat="frmt in pdsSelezionato.tipologiaStampa.stampa2D.formato">{{frmt.value}} </span></span></div>  
-                                       <div ng-if="pdsSelezionato.tipologiaStampa.stampa3D"><span class="label label-info">Stampa3D: materiale {{pdsSelezionato.tipologiaStampa.stampa3D.materiale}}-H.{{pdsSelezionato.tipologiaStampa.stampa3D.altezza}},L.{{pdsSelezionato.tipologiaStampa.stampa3D.larghezza}},P.{{pdsSelezionato.tipologiaStampa.stampa3D.profondita}}</span></div>  
+                <div class="col-xs-12"><span class="label">Nick: {{pdsSelezionato.nick}}</span><span class="close" type="button" ng-click="infoPDScancel()">×</span></div>
+                <div class="col-xs-12"><span class="label">Indirizzo: {{pdsSelezionato.indirizzo.descrizione}}</span></div>
+                <div class="col-xs-12"><div ng-if="pdsSelezionato.tipologiaStampa.stampa2D"><span class="label">Stampa2D: {{pdsSelezionato.tipologiaStampa.stampa2D.colore=='C'?'a colori':'bianco&nero'}}, formati:<span ng-repeat="frmt in pdsSelezionato.tipologiaStampa.stampa2D.formato">{{frmt.value}} </span></span></div>  
+                                       <div ng-if="pdsSelezionato.tipologiaStampa.stampa3D"><span class="label">Stampa3D: materiale {{pdsSelezionato.tipologiaStampa.stampa3D.materiale}}-H.{{pdsSelezionato.tipologiaStampa.stampa3D.altezza}},L.{{pdsSelezionato.tipologiaStampa.stampa3D.larghezza}},P.{{pdsSelezionato.tipologiaStampa.stampa3D.profondita}}</span></div>  
                 </div>
-                <div class="col-xs-12"><span class="label label-info">tipo utente: {{pdsSelezionato.tipologiaUtente}}</span></div>
-                <div class="col-md-6 col-xs-12"><span class="label label-info">feedback: {{pdsSelezionato.feedback}}</span></div>
+                <div class="col-xs-12">
+                    <div ng-if="pdsSelezionato.tipologiaUtente=='P'"><span class="label">tipo utente: Privato</span></div>
+                    <div ng-if="pdsSelezionato.tipologiaUtente=='A'"><span class="label">tipo utente: Attivita' commerciale</span></div>
+                                            
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <span class="label">feedback:</span>
+                    <span ng-class="pdsSelezionato.feedback==0?'glyphicon glyphicon-star-empty':'glyphicon glyphicon-star colorStar'"></span>
+                    <span ng-class="(pdsSelezionato.feedback==2 || pdsSelezionato.feedback>2)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                    <span ng-class="(pdsSelezionato.feedback==3 || pdsSelezionato.feedback>3)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                    <span ng-class="(pdsSelezionato.feedback==4 || pdsSelezionato.feedback>4)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                    <span ng-class="pdsSelezionato.feedback==5?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                </div>
                 <div class="col-md-6 col-xs-12">
                     <button class="btn btn-xs btn-primary">richiedi stampa</button> 
                     <button class="btn btn-xs btn-primary">calcola percorso</button> 

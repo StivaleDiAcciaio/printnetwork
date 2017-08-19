@@ -124,7 +124,7 @@ ul.listaVociDesktop li.active a{
     width: 95%;
 }
 #ex1Slider .slider-selection {
-	background: #BABABA;
+    background: #BABABA;
 }
 .markerWrapper{
     margin-top:10px;
@@ -142,12 +142,18 @@ ul.listaVociDesktop li.active a{
     color:greenyellow;
     text-shadow: 2px 0 black;
 }
-
-
 .infoPDS{
-    border:1px solid blue;
+    background-color: #a8a69f;
+    border:2px solid blue;
+    box-shadow: 3px 0 greenyellow;
+    position: absolute;
+    bottom: 5px;
 }
 .infoPDS button{
     float: right;
     margin:2px;
+}
+
+.colorStar{
+   color:yellow;
 }

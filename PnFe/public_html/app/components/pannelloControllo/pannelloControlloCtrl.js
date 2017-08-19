@@ -143,8 +143,20 @@
                     $scope.caricaArrayMarkerPDS = function(utentePDS){
                         var pdsPresente = false;
                         for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
-                            if($scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione)){
+                            //se utentePDS e' gia presente nell'array dei Markers non lo ricarico nuovamente.
+                            if($scope.arrayMarkerPDS[i].nick == utentePDS.nick && $scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione)){
                                 pdsPresente = true;
+                                break;
+                            }//se piu utenti diversi condividono lo stesso indirizzo carico l'utentePDS nell'array dei Markers
+                            else if ($scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione) && $scope.arrayMarkerPDS[i].nick != utentePDS.nick){
+                                if ($scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo && $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.length>0){
+                                    $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.push(utentePDS);
+                                }else{//se array di utentiPDS con lo stesso indirizzo è vuoto lo creo..
+                                    var utentiPDSstessoIndirizzo = [];
+                                    utentiPDSstessoIndirizzo.push(utentePDS);
+                                    $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo = utentiPDSstessoIndirizzo;
+                                }
+                                return;
                             }
                         }
                         if(!pdsPresente){
