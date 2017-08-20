@@ -134,15 +134,16 @@
                     <button class="btn btn-xs btn-primary">calcola percorso</button> 
                 </div>
             </div>
-            <div ng-show="pdsSelezionato && pdsSelezionato.utentiPDSstessoIndirizzo" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoMorePDS" ng-class="pdsSelezionato?'boxInfoPdsActive':'boxInfoPdsNoActive'">
-                <div ng-repeat="utsPds in pdsSelezionato.utentiPDSstessoIndirizzo track by $index">
-                    <div class="col-xs-8"><span class="label">{{utsPds.nick}}</span></div>
+            <!-- Box in alto contenente gli altri utenti Pds collegati allo stesso indirizzo -->
+            <div ng-show="pdsSelezionato && pdsSelezionato.utentiPDSstessoIndirizzo" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoMorePDS" ng-class="pdsSelezionato && pdsSelezionato.utentiPDSstessoIndirizzo?'boxInfoPdsActive':'boxInfoPdsNoActive'">
+                <div ng-repeat="altroUtPds in pdsSelezionato.utentiPDSstessoIndirizzo track by $index">
+                    <div class="col-xs-8"><a ng-click="altroUtentePDSonClick(altroUtPds,pdsSelezionato)" class="label">{{altroUtPds.nick}}</a></div>
                     <div class="col-xs-4">
-                        <span ng-class="utsPds.feedback==0?'glyphicon glyphicon-star-empty':'glyphicon glyphicon-star colorStar'"></span>
-                        <span ng-class="(utsPds.feedback==2 || utsPds.feedback>2)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
-                        <span ng-class="(utsPds.feedback==3 || utsPds.feedback>3)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
-                        <span ng-class="(utsPds.feedback==4 || utsPds.feedback>4)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
-                        <span ng-class="utsPds.feedback==5?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                        <span ng-class="altroUtPds.feedback==0?'glyphicon glyphicon-star-empty':'glyphicon glyphicon-star colorStar'"></span>
+                        <span ng-class="(altroUtPds.feedback==2 || altroUtPds.feedback>2)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                        <span ng-class="(altroUtPds.feedback==3 || altroUtPds.feedback>3)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                        <span ng-class="(altroUtPds.feedback==4 || altroUtPds.feedback>4)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                        <span ng-class="altroUtPds.feedback==5?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
                     </div>
                 </div>   
             </div>

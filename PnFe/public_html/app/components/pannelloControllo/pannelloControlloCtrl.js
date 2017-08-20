@@ -118,6 +118,11 @@
                         $scope.pdsSelezionato.classe='pdsNoActive';
                         $scope.pdsSelezionato=null;
                     };
+                    /**
+                     * Cerca sul DB i PDS intorno alla posizioneScelta
+                     * @param {type} posizioneScelta
+                     * @returns {undefined}
+                     */
                     $scope.trovaPDS = function (posizioneScelta) {
                         if (!$scope.isGeoFallback()) {
                             serviziRest.trovaPDS({paramRicercaPDS: {lng: posizioneScelta.lng(), lat: posizioneScelta.lat()}}).then(function (response) {
@@ -142,15 +147,21 @@
                             });
                         }
                     };
+                    /**
+                     * Carica l'array dei markersPDS con le info prese dal DB
+                     * evitando di ricaricare nell'array i PDS già presenti
+                     * @param {type} utentePDS
+                     * @returns {undefined}
+                     */
                     $scope.caricaArrayMarkerPDS = function(utentePDS){
                         var pdsPresente = false;
                         for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
                             //se utentePDS e' gia presente nell'array dei Markers non lo ricarico nuovamente.
-                            if($scope.arrayMarkerPDS[i].nick == utentePDS.nick && $scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione)){
+                            if($scope.arrayMarkerPDS[i]._id == utentePDS._id){
                                 pdsPresente = true;
                                 break;
                             }//se piu utenti diversi condividono lo stesso indirizzo carico l'utentePDS nell'array dei Markers
-                            else if ($scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione) && $scope.arrayMarkerPDS[i].nick != utentePDS.nick){
+                            else if ($scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione) && $scope.arrayMarkerPDS[i]._id != utentePDS._id){
                                 if ($scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo && $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.length>0){
                                     $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.push(utentePDS);
                                 }else{//se array di utentiPDS con lo stesso indirizzo è vuoto lo creo..
@@ -165,7 +176,11 @@
                             $scope.arrayMarkerPDS.push(utentePDS);   
                         }
                     };
-                    
+                    /**
+                     * Mostra i markers PDS sulla mappa
+                     * che rientrano nel raggio del cerchio che filtra gli utenti
+                     * @returns {undefined}
+                     */
                     $scope.mostraPDS = function () {
                         if ($scope.arrayMarkerPDS) {
                             for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
@@ -177,6 +192,11 @@
                             }
                         }
                     };
+                    /**
+                     * gestisce il click sul marker PDS nella mappa
+                     * @param {type} utentePDS
+                     * @returns {undefined}
+                     */
                     $scope.markerPDSonClick = function(utentePDS){
                       if ($scope.pdsSelezionato && $scope.pdsSelezionato !== utentePDS){
                           $scope.pdsSelezionato.classe='pdsNoActive';
@@ -185,6 +205,37 @@
                       $scope.pdsSelezionato=utentePDS;
                       $scope.scrollTo('infoPDSscroll');
                     };
+                    /**
+                     * Gestisce il click sul nick di un eventuale
+                     * altro utentePDS che si trova allo stesso indirizzo
+                     * di altri PDS (box in alto nella mappa)
+                     * @param {type} altroUtentePDS
+                     * @returns {undefined}
+                     */
+                    $scope.altroUtentePDSonClick = function(altroUtentePDS,pdsSelezionato){
+                        $scope.pdsSelezionato=$scope.swapPdsSelezionatoAltroPDS(pdsSelezionato,altroUtentePDS);
+                        $scope.scrollTo('infoPDSscroll');
+                    };
+                    /**
+                     * Effettua lo swap tra utente selezionato nel markers e utente selezionato
+                     * nel box degli altri utenti connessi allo stesso indirizzo
+                     * @param {type} pdsCorrente
+                     * @param {type} nuovoPdsSelezionato
+                     * @returns {undefined}
+                     */
+                    $scope.swapPdsSelezionatoAltroPDS = function(pdsCorrente,nuovoPdsSelezionato){
+                        var nuovoArrayPdsStessoIndirizzo=[];
+                        for (var idx=0; idx<pdsCorrente.utentiPDSstessoIndirizzo.length; idx++){
+                            if(pdsCorrente.utentiPDSstessoIndirizzo[idx]._id != nuovoPdsSelezionato._id){
+                                nuovoArrayPdsStessoIndirizzo.push(pdsCorrente.utentiPDSstessoIndirizzo[idx]);
+                            }
+                        }
+                        pdsCorrente.utentiPDSstessoIndirizzo=null;
+                        nuovoArrayPdsStessoIndirizzo.push(pdsCorrente);/* sposto il pdsCorrente nella lista dei PDS collegati */
+                        nuovoPdsSelezionato.utentiPDSstessoIndirizzo = nuovoArrayPdsStessoIndirizzo;
+                        return nuovoPdsSelezionato;
+                    };
+                    
                     $scope.getPosizioneRilevata();                    
                 }]);
 }());
