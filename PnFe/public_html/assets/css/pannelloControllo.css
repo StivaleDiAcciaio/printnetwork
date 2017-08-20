@@ -154,7 +154,24 @@ ul.listaVociDesktop li.active a{
     float: right;
     margin:2px;
 }
-
+.infoMorePDS{
+    background-color: #a8a69f;
+    border:1px solid blue;
+    box-shadow: 2px 0 greenyellow;
+    position: absolute;
+    top: 60px;
+}
 .colorStar{
    color:yellow;
+}
+
+.boxInfoPdsNoActive{
+    transform: rotateY(90deg);
+    transform-origin: left;
+    transition: all 0.5s ease;
+}
+.boxInfoPdsActive{
+   transform: rotateZ(360deg);
+   transform-origin: right;
+   transition: all 0.5s ease;
 }

@@ -134,7 +134,7 @@ module.exports = {
                 data.utentiPds = utentiPds;
             }
             callback(data);
-        });
+        }).sort( { feedback: -1 } );
     }
 };
 

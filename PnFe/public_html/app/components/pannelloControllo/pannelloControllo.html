@@ -110,7 +110,7 @@
                     </custom-marker>
                 </div>
             </ng-map>
-            <div ng-if="pdsSelezionato" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS">
+            <div ng-show="pdsSelezionato" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS" ng-class="pdsSelezionato?'boxInfoPdsActive':'boxInfoPdsNoActive'">
                 <div class="col-xs-12"><span class="label">Nick: {{pdsSelezionato.nick}}</span><span class="close" type="button" ng-click="infoPDScancel()">×</span></div>
                 <div class="col-xs-12"><span class="label">Indirizzo: {{pdsSelezionato.indirizzo.descrizione}}</span></div>
                 <div class="col-xs-12"><div ng-if="pdsSelezionato.tipologiaStampa.stampa2D"><span class="label">Stampa2D: {{pdsSelezionato.tipologiaStampa.stampa2D.colore=='C'?'a colori':'bianco&nero'}}, formati:<span ng-repeat="frmt in pdsSelezionato.tipologiaStampa.stampa2D.formato">{{frmt.value}} </span></span></div>  
@@ -133,6 +133,18 @@
                     <button class="btn btn-xs btn-primary">richiedi stampa</button> 
                     <button class="btn btn-xs btn-primary">calcola percorso</button> 
                 </div>
+            </div>
+            <div ng-show="pdsSelezionato && pdsSelezionato.utentiPDSstessoIndirizzo" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoMorePDS" ng-class="pdsSelezionato?'boxInfoPdsActive':'boxInfoPdsNoActive'">
+                <div ng-repeat="utsPds in pdsSelezionato.utentiPDSstessoIndirizzo track by $index">
+                    <div class="col-xs-8"><span class="label">{{utsPds.nick}}</span></div>
+                    <div class="col-xs-4">
+                        <span ng-class="utsPds.feedback==0?'glyphicon glyphicon-star-empty':'glyphicon glyphicon-star colorStar'"></span>
+                        <span ng-class="(utsPds.feedback==2 || utsPds.feedback>2)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                        <span ng-class="(utsPds.feedback==3 || utsPds.feedback>3)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                        <span ng-class="(utsPds.feedback==4 || utsPds.feedback>4)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                        <span ng-class="utsPds.feedback==5?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                    </div>
+                </div>   
             </div>
             <div id="infoPDSscroll"></div>
         </div>
