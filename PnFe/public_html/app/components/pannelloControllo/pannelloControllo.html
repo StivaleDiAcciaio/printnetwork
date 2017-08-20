@@ -113,7 +113,7 @@
             <div ng-show="pdsSelezionato" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS" ng-class="pdsSelezionato?'boxInfoPdsActive':'boxInfoPdsNoActive'">
                 <div class="col-xs-12"><span class="label">Nick: {{pdsSelezionato.nick}}</span><span class="close" type="button" ng-click="infoPDScancel()">×</span></div>
                 <div class="col-xs-12"><span class="label">Indirizzo: {{pdsSelezionato.indirizzo.descrizione}}</span></div>
-                <div class="col-xs-12"><div ng-if="pdsSelezionato.tipologiaStampa.stampa2D"><span class="label">Stampa2D: {{pdsSelezionato.tipologiaStampa.stampa2D.colore=='C'?'a colori':'bianco&nero'}}, formati:<span ng-repeat="frmt in pdsSelezionato.tipologiaStampa.stampa2D.formato">{{frmt.value}} </span></span></div>  
+                <div class="col-xs-12"><div ng-if="pdsSelezionato.tipologiaStampa.stampa2D.formato.length>0"><span class="label">Stampa2D: {{pdsSelezionato.tipologiaStampa.stampa2D.colore=='C'?'a colori':'bianco&nero'}}, formati:<span ng-repeat="frmt in pdsSelezionato.tipologiaStampa.stampa2D.formato">{{frmt.value}} </span></span></div>  
                                        <div ng-if="pdsSelezionato.tipologiaStampa.stampa3D"><span class="label">Stampa3D: materiale {{pdsSelezionato.tipologiaStampa.stampa3D.materiale}}-H.{{pdsSelezionato.tipologiaStampa.stampa3D.altezza}},L.{{pdsSelezionato.tipologiaStampa.stampa3D.larghezza}},P.{{pdsSelezionato.tipologiaStampa.stampa3D.profondita}}</span></div>  
                 </div>
                 <div class="col-xs-12">
@@ -136,7 +136,7 @@
             </div>
             <!-- Box in alto contenente gli altri utenti Pds collegati allo stesso indirizzo -->
             <div ng-show="pdsSelezionato && pdsSelezionato.utentiPDSstessoIndirizzo" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoMorePDS" ng-class="pdsSelezionato && pdsSelezionato.utentiPDSstessoIndirizzo?'boxInfoPdsActive':'boxInfoPdsNoActive'">
-                <div ng-repeat="altroUtPds in pdsSelezionato.utentiPDSstessoIndirizzo track by $index">
+                <div ng-repeat="altroUtPds in pdsSelezionato.utentiPDSstessoIndirizzo | orderBy:'feedback' track by $index">
                     <div class="col-xs-8"><a ng-click="altroUtentePDSonClick(altroUtPds,pdsSelezionato)" class="label">{{altroUtPds.nick}}</a></div>
                     <div class="col-xs-4">
                         <span ng-class="altroUtPds.feedback==0?'glyphicon glyphicon-star-empty':'glyphicon glyphicon-star colorStar'"></span>
