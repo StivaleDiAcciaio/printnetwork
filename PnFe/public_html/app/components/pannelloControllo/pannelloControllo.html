@@ -10,10 +10,6 @@
     <!-- Menu laterale -->
     <aside class="col-sm-12 menuLateraleSinistroMobile">
         <nav class="horizontal-collapse" uib-collapse="isCollapsedHorizontal" horizontal>   
-            <div>
-                <rzslider rz-slider-model="slider.raggioCerchio"
-                          rz-slider-options="slider.options"></rzslider>
-            </div>
             <div class="wrapperBoxRicercaIndirizzo">
                 <div class="testoCercaIndirizzo"> 
                     <input id="cercaMobile"
@@ -54,10 +50,6 @@
     <!-- Sezione visibile solo in DESKTOP -->
     <aside class="col-sm-3 hidden-xs menuLateraleSinistroDesktop">
         <nav>       
-            <div>
-                <rzslider rz-slider-model="slider.raggioCerchio"
-                          rz-slider-options="slider.options"></rzslider>
-            </div>
             <div class="wrapperBoxRicercaIndirizzo">
                 <div class="testoCercaIndirizzo"> 
                     <input id="cercaDesktop"
@@ -96,6 +88,10 @@
     <!-- /Sezione visibile solo in DESKTOP -->
     <!-- contenuto principale del pannello di controllo -->
     <section class="col-sm-9 col-xs-12 contenutoPannelloControllo">
+       <!--Slider per CERCHIO-->
+       <div>
+            <rzslider rz-slider-model="slider.raggioCerchio" rz-slider-options="slider.options"></rzslider>
+       </div>
         <div>
             <ng-map id="mappaPannelloControllo" 
                     zoom="{{zoomCalcolato}}" 
@@ -114,7 +110,7 @@
                     </custom-marker>
                 </div>
             </ng-map>
-            <div ng-if="pdsSelezionato" class="infoPDS row">
+            <div ng-if="pdsSelezionato" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS">
                 <div class="col-xs-12"><span class="label">Nick: {{pdsSelezionato.nick}}</span><span class="close" type="button" ng-click="infoPDScancel()">×</span></div>
                 <div class="col-xs-12"><span class="label">Indirizzo: {{pdsSelezionato.indirizzo.descrizione}}</span></div>
                 <div class="col-xs-12"><div ng-if="pdsSelezionato.tipologiaStampa.stampa2D"><span class="label">Stampa2D: {{pdsSelezionato.tipologiaStampa.stampa2D.colore=='C'?'a colori':'bianco&nero'}}, formati:<span ng-repeat="frmt in pdsSelezionato.tipologiaStampa.stampa2D.formato">{{frmt.value}} </span></span></div>  

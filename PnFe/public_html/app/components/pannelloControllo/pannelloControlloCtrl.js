@@ -34,6 +34,7 @@
                     $scope.indirizzoSelezionato = function () {
                         $scope.place = this.getPlace();
                         if ($scope.place.geometry) {
+                            $scope.isCollapsedHorizontal = !$scope.isCollapsedHorizontal;
                             $scope.locationTrovata = $scope.place.geometry.location;
                             $scope.map.panTo($scope.locationTrovata);
                             $scope.slider.posizioneCerchio = $scope.locationTrovata;
@@ -51,6 +52,7 @@
                     });
 
                     $scope.centraMappa = function (location) {
+                         $scope.isCollapsedHorizontal = !$scope.isCollapsedHorizontal;
                         if (location) {
                             $scope.map.panTo(location);
                             $scope.slider.posizioneCerchio = location;

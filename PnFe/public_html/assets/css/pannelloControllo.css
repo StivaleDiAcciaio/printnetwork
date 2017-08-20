@@ -26,9 +26,10 @@
 .menuLateraleSinistroMobile{
     position: absolute;
     top: 70px;
-    left: -30px;
+    left: -25px;
     width: 100%;
 } 
+
 .nickNameLoggato{ 
     position: fixed;
     top:50px;
@@ -147,7 +148,7 @@ ul.listaVociDesktop li.active a{
     border:2px solid blue;
     box-shadow: 3px 0 greenyellow;
     position: absolute;
-    bottom: 5px;
+    bottom: 15px;
 }
 .infoPDS button{
     float: right;
