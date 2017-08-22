@@ -2,8 +2,8 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('pannelloControlloCtrl',
-            ['$scope', '$state', 'serviziRest', 'CONST', 'NgMap', '$timeout',
-                function ($scope, $state, serviziRest, COSTANTI, NgMap, $timeout) {
+            ['$scope','$filter','$state', 'serviziRest', 'CONST', 'NgMap', '$timeout',
+                function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout) {
                     $scope.onChangeSliderFn = function (id, model) {
                         $scope.mostraPDS();
                     };
@@ -128,6 +128,8 @@
                             serviziRest.trovaPDS({paramRicercaPDS: {lng: posizioneScelta.lng(), lat: posizioneScelta.lat()}}).then(function (response) {
                                 if (response.esito) {
                                     if (response.utentiPds) {
+                                        /* reset array di markers*/
+                                        $scope.arrayMarkerPDS = [];
                                         //costruzione position dalle location trovate
                                         for (var i = 0; i < response.utentiPds.length; i++) {
                                             var posizionePDS = new google.maps.LatLng(response.utentiPds[i].location.coordinates[1], response.utentiPds[i].location.coordinates[0]);
@@ -149,32 +151,29 @@
                     };
                     /**
                      * Carica l'array dei markersPDS con le info prese dal DB
-                     * evitando di ricaricare nell'array i PDS già presenti
                      * @param {type} utentePDS
                      * @returns {undefined}
                      */
                     $scope.caricaArrayMarkerPDS = function(utentePDS){
-                        var pdsPresente = false;
-                        for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
-                            //se utentePDS e' gia presente nell'array dei Markers non lo ricarico nuovamente.
-                            if($scope.arrayMarkerPDS[i]._id == utentePDS._id){
-                                pdsPresente = true;
-                                break;
-                            }//se piu utenti diversi condividono lo stesso indirizzo carico l'utentePDS nell'array dei Markers
-                            else if ($scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione) && $scope.arrayMarkerPDS[i]._id != utentePDS._id){
-                                if ($scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo && $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.length>0){
-                                    $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.push(utentePDS);
-                                }else{//se array di utentiPDS con lo stesso indirizzo è vuoto lo creo..
-                                    var utentiPDSstessoIndirizzo = [];
-                                    utentiPDSstessoIndirizzo.push(utentePDS);
-                                    $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo = utentiPDSstessoIndirizzo;
+                        if ($scope.arrayMarkerPDS.length>0){
+                          for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
+                                //se piu utenti diversi condividono lo stesso indirizzo carico l'utentePDS nell'array dei Markers
+                                if ($scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione)){
+                                    if ($scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo && $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.length>0){
+                                        utentePDS.parent=$scope.arrayMarkerPDS[i]._id;
+                                        $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.push(utentePDS);
+                                    }else{//se array di utentiPDS con lo stesso indirizzo è vuoto lo creo..
+                                        var utentiPDSstessoIndirizzo = [];
+                                        utentePDS.parent=$scope.arrayMarkerPDS[i]._id;
+                                        utentiPDSstessoIndirizzo.push(utentePDS);
+                                        $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo = utentiPDSstessoIndirizzo;
+                                    }
+                                    return;
                                 }
-                                return;
-                            }
+                            } 
                         }
-                        if(!pdsPresente){
-                            $scope.arrayMarkerPDS.push(utentePDS);   
-                        }
+                        utentePDS.master=true;
+                        $scope.arrayMarkerPDS.push(utentePDS);   
                     };
                     /**
                      * Mostra i markers PDS sulla mappa
@@ -198,8 +197,16 @@
                      * @returns {undefined}
                      */
                     $scope.markerPDSonClick = function(utentePDS){
-                      if ($scope.pdsSelezionato && $scope.pdsSelezionato !== utentePDS){
+                      //gestisco anche gli utenti PDS collegati allo stesso indirizzo
+                      if ($scope.pdsSelezionato && $scope.pdsSelezionato.master && $scope.pdsSelezionato !== utentePDS){
                           $scope.pdsSelezionato.classe='pdsNoActive';
+                      }else if($scope.pdsSelezionato && $scope.pdsSelezionato.parent && $scope.pdsSelezionato !== utentePDS){
+                          //nel caso sto deselezionando un pds slave allora cerco il suo parent e deseleziono lui
+                         for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
+                             if($scope.arrayMarkerPDS[i]._id==$scope.pdsSelezionato.parent){
+                                $scope.arrayMarkerPDS[i].classe='pdsNoActive'; 
+                             }
+                         }
                       }
                       utentePDS.classe='pdsActive';
                       $scope.pdsSelezionato=utentePDS;
@@ -223,19 +230,29 @@
                      * @param {type} nuovoPdsSelezionato
                      * @returns {undefined}
                      */
-                    $scope.swapPdsSelezionatoAltroPDS = function(pdsCorrente,nuovoPdsSelezionato){
+                     $scope.swapPdsSelezionatoAltroPDS = function(pdsCorrente,nuovoPdsSelezionato){
                         var nuovoArrayPdsStessoIndirizzo=[];
                         for (var idx=0; idx<pdsCorrente.utentiPDSstessoIndirizzo.length; idx++){
+                            /* prepara il nuovo array utenti collegati */
                             if(pdsCorrente.utentiPDSstessoIndirizzo[idx]._id != nuovoPdsSelezionato._id){
                                 nuovoArrayPdsStessoIndirizzo.push(pdsCorrente.utentiPDSstessoIndirizzo[idx]);
                             }
                         }
-                        pdsCorrente.utentiPDSstessoIndirizzo=null;
-                        nuovoArrayPdsStessoIndirizzo.push(pdsCorrente);/* sposto il pdsCorrente nella lista dei PDS collegati */
-                        nuovoPdsSelezionato.utentiPDSstessoIndirizzo = nuovoArrayPdsStessoIndirizzo;
+                        /* se si tratta del PDS master creo clone..*/
+                        if (pdsCorrente.master){
+                            var pdsMasterClone=JSON.stringify(pdsCorrente);
+                            pdsMasterClone = JSON.parse(pdsMasterClone);
+                            pdsMasterClone.utentiPDSstessoIndirizzo=null;
+                            nuovoArrayPdsStessoIndirizzo.push(pdsMasterClone);
+                        }else{
+                            //altrimenti lo inserisco direttamente nell'array dei Pds collegati
+                            //privandolo del suo subArray (che darebbe errore nella visulizzazione)
+                            pdsCorrente.utentiPDSstessoIndirizzo=null;
+                            nuovoArrayPdsStessoIndirizzo.push(pdsCorrente);/* sposto il pdsCorrente nella lista dei PDS collegati */
+                        }
+                        nuovoPdsSelezionato.utentiPDSstessoIndirizzo = $filter('orderBy')(nuovoArrayPdsStessoIndirizzo, 'feedback','reverse');
                         return nuovoPdsSelezionato;
-                    };
-                    
+                    };                   
                     $scope.getPosizioneRilevata();                    
                 }]);
 }());

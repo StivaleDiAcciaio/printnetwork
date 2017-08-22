@@ -101,7 +101,7 @@
                     <shape id="cerchioRicerca" name="circle" centered="true"
                            stroke-color='green' stroke-opacity="0.8" stroke-weight="2"
                            center="{{slider.posizioneCerchio.lat()}},{{slider.posizioneCerchio.lng()}}" radius="{{slider.raggioCerchio}}" editable="false" ></shape>
-                    <custom-marker  ng-repeat="utPds in arrayMarkerPDS|filter:'true' track by $index" 
+                    <custom-marker  ng-repeat="utPds in arrayMarkerPDS|filter:{mostra:true} track by $index" 
                                     id="pds-marker-{{$index}}"
                                     position="{{utPds.geoposizione.lat()}},{{utPds.geoposizione.lng()}}">
                         <div class="markerWrapper" ng-click="markerPDSonClick(utPds)">
@@ -136,7 +136,7 @@
             </div>
             <!-- Box in alto contenente gli altri utenti Pds collegati allo stesso indirizzo -->
             <div ng-show="pdsSelezionato && pdsSelezionato.utentiPDSstessoIndirizzo" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoMorePDS" ng-class="pdsSelezionato && pdsSelezionato.utentiPDSstessoIndirizzo?'boxInfoPdsActive':'boxInfoPdsNoActive'">
-                <div ng-repeat="altroUtPds in pdsSelezionato.utentiPDSstessoIndirizzo | orderBy:'feedback' track by $index">
+                <div ng-repeat="altroUtPds in pdsSelezionato.utentiPDSstessoIndirizzo track by $index">
                     <div class="col-xs-8"><a ng-click="altroUtentePDSonClick(altroUtPds,pdsSelezionato)" class="label">{{altroUtPds.nick}}</a></div>
                     <div class="col-xs-4">
                         <span ng-class="altroUtPds.feedback==0?'glyphicon glyphicon-star-empty':'glyphicon glyphicon-star colorStar'"></span>
