@@ -205,6 +205,7 @@
                          for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
                              if($scope.arrayMarkerPDS[i]._id==$scope.pdsSelezionato.parent){
                                 $scope.arrayMarkerPDS[i].classe='pdsNoActive'; 
+                                $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo=$scope.pdsSelezionato.pdsConnMaster
                              }
                          }
                       }
@@ -238,18 +239,14 @@
                                 nuovoArrayPdsStessoIndirizzo.push(pdsCorrente.utentiPDSstessoIndirizzo[idx]);
                             }
                         }
-                        /* se si tratta del PDS master creo clone..*/
-                        if (pdsCorrente.master){
-                            var pdsMasterClone=JSON.stringify(pdsCorrente);
-                            pdsMasterClone = JSON.parse(pdsMasterClone);
-                            pdsMasterClone.utentiPDSstessoIndirizzo=null;
-                            nuovoArrayPdsStessoIndirizzo.push(pdsMasterClone);
-                        }else{
-                            //altrimenti lo inserisco direttamente nell'array dei Pds collegati
-                            //privandolo del suo subArray (che darebbe errore nella visulizzazione)
-                            pdsCorrente.utentiPDSstessoIndirizzo=null;
-                            nuovoArrayPdsStessoIndirizzo.push(pdsCorrente);/* sposto il pdsCorrente nella lista dei PDS collegati */
+                        //lo inserisco direttamente nell'array dei Pds collegati
+                        //privandolo del suo subArray (che darebbe errore nella visulizzazione)
+                        if(pdsCorrente.master){
+                            //se il sono in presenza del master (salvo le dipendenze iniziali nel nuovoPdsSelezionato)
+                            nuovoPdsSelezionato.pdsConnMaster= pdsCorrente.utentiPDSstessoIndirizzo;
                         }
+                        pdsCorrente.utentiPDSstessoIndirizzo=null;
+                        nuovoArrayPdsStessoIndirizzo.push(pdsCorrente);/* sposto il pdsCorrente nella lista dei PDS collegati */
                         nuovoPdsSelezionato.utentiPDSstessoIndirizzo = $filter('orderBy')(nuovoArrayPdsStessoIndirizzo, 'feedback','reverse');
                         return nuovoPdsSelezionato;
                     };                   
