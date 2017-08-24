@@ -241,7 +241,7 @@
                         }
                         //lo inserisco direttamente nell'array dei Pds collegati
                         //privandolo del suo subArray (che darebbe errore nella visulizzazione)
-                        if(pdsCorrente.master){
+                        if(pdsCorrente.master && pdsCorrente.utentiPDSstessoIndirizzo){
                             //se il sono in presenza del master (salvo le dipendenze iniziali nel nuovoPdsSelezionato)
                             nuovoPdsSelezionato.pdsConnMaster= pdsCorrente.utentiPDSstessoIndirizzo;
                         }
