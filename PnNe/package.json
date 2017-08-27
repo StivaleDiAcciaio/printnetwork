@@ -1,0 +1,22 @@
+{
+  "name": "PnNe",
+  "main": "pn-neServer.js",
+  "version": "1.0.0",
+  "keywords": [
+    "util",
+    "functional",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "stivale",
+  "contributors": [],
+  "dependencies": {
+    "express": "4.13.4",
+    "log4js": "0.6.33",
+    "socket.io": "^2.0.3"
+  },
+  "scripts": {
+    "start": "nodejs pn-neServer.js"
+  }
+}
