@@ -276,11 +276,13 @@ appRouter.post('/pds', function (req, res) {
 app.use('/apinode', appRouter);
 //Abilito protocollo HTTPS
 //con certificato self-signed
-https.createServer({
+var server = https.createServer({
     key: fs.readFileSync(config.keyPermPublic),
     cert: fs.readFileSync(config.certPermPublic),
     passphrase: config.passphraseCert
-}, app).listen(porta);
+}, app);
+
+server.listen(porta);
 logger.debug('PnBe server in ascolto sulla porta ' + porta);
 
 

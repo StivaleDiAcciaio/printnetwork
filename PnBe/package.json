@@ -10,8 +10,7 @@
     "mongoose": "4.4.3",
     "morgan": "1.6.1"
   },
-    "scripts": {
-        "start": "node pn-server.js"
-    }
-
+  "scripts": {
+    "start": "node pn-server.js"
+  }
 }
