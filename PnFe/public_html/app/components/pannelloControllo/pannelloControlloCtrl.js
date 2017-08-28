@@ -2,8 +2,9 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('pannelloControlloCtrl',
-            ['$scope','$filter','$state', 'serviziRest', 'CONST', 'NgMap', '$timeout',
-                function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout) {
+            ['$scope','$filter','$state', 'serviziRest', 'CONST', 'NgMap', '$timeout','notificationEngine',
+                function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout,notificationEngine) {
+                    $scope.notificationEngine = notificationEngine;
                     $scope.onChangeSliderFn = function (id, model) {
                         $scope.mostraPDS();
                     };
