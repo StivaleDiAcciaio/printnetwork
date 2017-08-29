@@ -67,20 +67,21 @@
         }]);
     pnApp.factory('notificationEngine', ['$websocket', function ($websocket) {
             // Open a WebSocket connection
-            var dataStream = $websocket('ws://127.0.0.1:3300/ns');
+            var dataStream = $websocket('ws://127.0.0.1:3300/chatPN');
             var collection = [];
 
-            dataStream.onMessage(function (message) {
-                collection.push(JSON.parse(message.data));
-            });
 
+            dataStream.onMessage(function (message) {
+                collection.push(message);
+                console.log("onMessage scattato:"+message.data);
+            });
             var methods = {
                 collection: collection,
                 get: function () {
-                    dataStream.send(JSON.stringify({action: 'call'}));
+                    dataStream.send('ciao');
                 }
             };
-
+            //methods.get() ->fa scattare il send al websocket server
             return methods;
         }]);
 
