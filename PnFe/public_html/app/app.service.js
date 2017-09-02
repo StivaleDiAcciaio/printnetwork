@@ -67,7 +67,7 @@
         }]);
     pnApp.factory('notificationEngine', ['$websocket', function ($websocket) {
             // Open a WebSocket connection
-            var dataStream = $websocket('ws://127.0.0.1:3300/chatPN');
+            var dataStream = $websocket('wss://127.0.0.1/printnetwork/chat');/*gestire i certificati self-signed */
             var collection = [];
 
 
