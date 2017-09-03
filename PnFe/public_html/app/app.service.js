@@ -5,22 +5,17 @@
             var portaDefault = '80';
             var ServiziRest = function () {
 
-                this.getHostAddressAndPort = function () {
-                    //return 'http://' + $location.host() + ':' + $location.port() + "/";
-                    //return 'https://' + $location.host() + ':' + portaDefault + "/";
-                    return 'https://' + $location.host() + "/";
-                };
                 this.autenticazione = function (utente) {
-                    return this.post(this.getHostAddressAndPort() + COSTANTI.ENDPOINT.LOGIN, utente, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.LOGIN, utente, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 };
                 this.trovaPDS = function (paramRicercaPDS) {
-                    return this.post(this.getHostAddressAndPort() + COSTANTI.ENDPOINT.TROVA_PDS, paramRicercaPDS, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.TROVA_PDS, paramRicercaPDS, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 };
                 this.registrazione = function (utente) {
-                    return this.post(this.getHostAddressAndPort() + COSTANTI.ENDPOINT.REGISTRAZIONE, utente, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.REGISTRAZIONE, utente, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 };
                 this.stampa2D = function (data) {
-                    return this.post(this.getHostAddressAndPort() + COSTANTI.ENDPOINT.STAMPA_2D, data, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.STAMPA_2D, data, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 };
 
                 this.geoCodificaIndirizzo = function (indirizzo) {
@@ -65,12 +60,12 @@
             };
             return new ServiziRest();
         }]);
-    pnApp.factory('notificationEngine', ['$websocket', function ($websocket) {
-            // Open a WebSocket connection
-            var dataStream = $websocket('wss://127.0.0.1/printnetwork/chat');/*gestire i certificati self-signed */
+    pnApp.factory('notificationEngine', ['$websocket','CONST', '$location',function ($websocket,COSTANTI,$location) {
+            // Apro connessione con il websocket in SSL
+            // (gestire i certificati self-signed)
+            var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
+            var dataStream = $websocket('wss://'+ $location.host() + "/"+COSTANTI.ENDPOINT.NOTIFICHE_WSOCKET,[utl.nick,localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN)]);
             var collection = [];
-
-
             dataStream.onMessage(function (message) {
                 collection.push(message);
                 console.log("onMessage scattato:"+message.data);
@@ -81,7 +76,7 @@
                     dataStream.send('ciao');
                 }
             };
-            //methods.get() ->fa scattare il send al websocket server
+            methods.get();
             return methods;
         }]);
 

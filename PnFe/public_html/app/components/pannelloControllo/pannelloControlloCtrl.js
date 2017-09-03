@@ -5,7 +5,7 @@
             ['$scope','$filter','$state', 'serviziRest', 'CONST', 'NgMap', '$timeout','notificationEngine',
                 function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout,notificationEngine) {
                     $scope.notificationEngine = notificationEngine;
-                    $scope.notificationEngine.get
+                    
                     $scope.onChangeSliderFn = function (id, model) {
                         $scope.mostraPDS();
                     };
