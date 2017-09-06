@@ -234,6 +234,10 @@ appRouter.post('/2D', function (req, res) {
     res.json({data: 'stampa 2D avviata!', token: req.decoded});
 });
 
+appRouter.post('/checkToken', function (req, res) {
+    req.accepts('application/json');
+    res.json({token: req.decoded});
+});
 
 appRouter.post('/pds', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");

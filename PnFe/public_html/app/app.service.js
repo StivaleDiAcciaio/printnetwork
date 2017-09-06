@@ -63,8 +63,7 @@
     pnApp.factory('notificationEngine', ['$websocket','CONST', '$location',function ($websocket,COSTANTI,$location) {
             // Apro connessione con il websocket in SSL
             // (gestire i certificati self-signed)
-            var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
-            var dataStream = $websocket('wss://'+ $location.host() + "/"+COSTANTI.ENDPOINT.NOTIFICHE_WSOCKET,[utl.nick,localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN)]);
+            var dataStream = $websocket('wss://'+ $location.host() + "/"+COSTANTI.ENDPOINT.NOTIFICHE_WSOCKET,localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
             var collection = [];
             dataStream.onMessage(function (message) {
                 collection.push(message);
