@@ -42,13 +42,14 @@ var WebSocketServer = require('ws').Server;
 //Check autorizzazione utente
 //**************************
 var checkTokenUtente = function (token) {
-    var checkToken = token;
+    var checkToken = null;
     /*rejectUnauthorized is one of the HTTPS client options. It allows a client to talk to a server with self-signed certificate.*/
     var options = {
         connection: {
             rejectUnauthorized: false,
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "token": token
             }
         },
         requestConfig: {
@@ -64,16 +65,17 @@ var checkTokenUtente = function (token) {
 
     var client = new Client(options);
     // set content-type header and data as json in args parameter 
-    var args = {
-        data: {test: "hello"}
-    };
+    var args = {data: {token: token}};
 
     client.post("https://localhost:3000/apinode/checkToken", args, function (data, response) {
         // parsed response body as js object 
         logger.debug(data);
-        // raw response 
-        logger.debug(response);
+        //logger.debug(response);
+
+        checkToken = token;//viene valorizzata in maniera asincrona!!! trovare alternativa per syncronizzazione
+        logger.debug("checkToken valorizzato con il token ");
     });
+    logger.debug("esco dalla checkTokenUtente ");
     return checkToken;
 };
 var wss = new WebSocketServer({

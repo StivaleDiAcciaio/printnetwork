@@ -229,14 +229,20 @@ appRouter.use(function (req, res, next) {
  * Metodi Rest che necessitano l'autenticazione
  */
 
+/*
+ * Utilizzato per verificare il token da parte del PnNe
+ */
+appRouter.post('/checkToken', function (req, res) {
+    /*res.header("Access-Control-Allow-Origin", "localhost");
+    res.header("Access-Control-Allow-Methods", "POST");*/
+    req.accepts('application/json');
+    logger.debug("req.decoded "+req.decoded);
+    res.json({token: req.decoded});
+});
+
 appRouter.post('/2D', function (req, res) {
     req.accepts('application/json');
     res.json({data: 'stampa 2D avviata!', token: req.decoded});
-});
-
-appRouter.post('/checkToken', function (req, res) {
-    req.accepts('application/json');
-    res.json({token: req.decoded});
 });
 
 appRouter.post('/pds', function (req, res) {
