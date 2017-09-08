@@ -236,8 +236,7 @@ appRouter.post('/checkToken', function (req, res) {
     /*res.header("Access-Control-Allow-Origin", "localhost");
     res.header("Access-Control-Allow-Methods", "POST");*/
     req.accepts('application/json');
-    logger.debug("req.decoded "+req.decoded);
-    res.json({token: req.decoded});
+    res.json({datiUtente: req.decoded});
 });
 
 appRouter.post('/2D', function (req, res) {
