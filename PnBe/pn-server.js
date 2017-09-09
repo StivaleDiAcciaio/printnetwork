@@ -18,7 +18,7 @@ var log4js = require('log4js');
 // =======================
 // Configurazione ============
 // =======================
-var porta = 3000;
+var porta = config.portaPnBeService;
 // parola segreta per generazione token
 app.set('superSecret', config.secret);
 // uso body parser per ottenere info da POST e/o URL parameters

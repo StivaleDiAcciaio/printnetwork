@@ -15,6 +15,7 @@
     "express": "4.13.4",
     "log4js": "0.6.33",
     "node-rest-client": "^3.1.0",
+    "sync-request": "^4.1.0",
     "ws": "^3.1.0"
   },
   "scripts": {
