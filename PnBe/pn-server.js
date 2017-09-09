@@ -233,8 +233,8 @@ appRouter.use(function (req, res, next) {
  * Utilizzato per verificare il token da parte del PnNe
  */
 appRouter.post('/checkToken', function (req, res) {
-    /*res.header("Access-Control-Allow-Origin", "localhost");
-    res.header("Access-Control-Allow-Methods", "POST");*/
+    res.header("Access-Control-Allow-Origin", "localhost");
+    res.header("Access-Control-Allow-Methods", "POST");
     req.accepts('application/json');
     res.json({datiUtente: req.decoded});
 });
