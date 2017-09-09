@@ -10,7 +10,6 @@ var log4js = require('log4js');
 var express = require('express');
 var app = express();
 var Client = require('node-rest-client').Client;
-var SSL_OP_NO_TLSv1_2 = require('constants').SSL_OP_NO_TLSv1_2;
 var portaHttpsServer = 8443;
 //******************************************************************************
 //** Configurazione Log4j
