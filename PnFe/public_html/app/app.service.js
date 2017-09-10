@@ -63,16 +63,23 @@
     pnApp.factory('notificationEngine', ['$websocket','CONST', '$location',function ($websocket,COSTANTI,$location) {
             // Apro connessione con il websocket in SSL
             // (gestire i certificati self-signed)
-            var dataStream = $websocket('wss://'+ $location.host() + "/"+COSTANTI.ENDPOINT.NOTIFICHE_WSOCKET,localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+            var protocollo=[];
+            var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
+            protocollo.push(utl.nick);
+            protocollo.push(localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+            var dataStream = $websocket('wss://'+ $location.host() + "/"+COSTANTI.ENDPOINT.NOTIFICHE_WSOCKET,protocollo);
             var collection = [];
             dataStream.onMessage(function (message) {
                 collection.push(message);
                 console.log("onMessage scattato:"+message.data);
             });
+            var messaggio={};
+            messaggio.nick="CARMELO";
+            messaggio.data="ciao bello da renero";
             var methods = {
                 collection: collection,
                 get: function () {
-                    dataStream.send('ciao');
+                    dataStream.send(messaggio);
                 }
             };
             methods.get();

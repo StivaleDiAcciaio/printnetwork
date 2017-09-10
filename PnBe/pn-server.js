@@ -230,7 +230,9 @@ appRouter.use(function (req, res, next) {
  */
 
 /*
- * Utilizzato per verificare il token da parte del PnNe
+ * Utilizzato per verificare il token da parte del modulo PnNe.
+ * In datiUtente ci sono le info dell'utente legato al token.
+ * Queste vengono restituite dalla libreria jwt.verify..
  */
 appRouter.post('/checkToken', function (req, res) {
     res.header("Access-Control-Allow-Origin", "localhost");

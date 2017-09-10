@@ -36,13 +36,15 @@ var credentials = {key: privateKey, cert: certificate, passphrase: passphrase};
 //******************************************************************************
 //******************************************************************************
 //** Creo metodo REST per invio istantaneo di messaggi agli utenti (usa WEBSOCKET)
+//** utilizzato dal modulo PnBe notifiche varie
 //******************************************************************************
+var prefissoMsgServer='SERVER:';
 appRouter.post('/sendMessageToUser', function (req, res) {
     res.header("Access-Control-Allow-Origin", "localhost");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
-    var token = req.headers.token;
-    sendMessageToUser(token);
+    var bodyReq = req.body;
+    sendMessageToUser(bodyReq.nick,prefissoMsgServer+bodyReq.msg);
     res.status(200);
     res.json({
         esito: true,
@@ -105,11 +107,12 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 /*********************************************************************************/
 //******************************************************************************
 //**Check autorizzazione utente durante handshake con il websocket
-//** verifica il token e restituisce info su utente
-//** utilizzo chiamata sincrona in questo caso **
+//** verifica il token utente e acquisisce info su utente legato al token.
+//** Utilizza chiamata REST sincrona verso il modulo PnBe **
 //******************************************************************************
-var checkTokenUtente = function (token) {
-    var checkToken = null;
+var checkUtente = function (protocollo) {
+    var tokenProtocollo = protocollo[1];
+    var checkUtenteProtocollo = null;
     var checkTokenPnBeService = require('sync-request');
     var resPnBeService =
             checkTokenPnBeService('POST',
@@ -117,26 +120,27 @@ var checkTokenUtente = function (token) {
                     + config.portaPnBeService +
                     config.checkTokenPnBeService, {
                         'headers': {
-                            "token": token
+                            "token": tokenProtocollo
                         }
                     });
     try {
         var bodyResp = JSON.parse(resPnBeService.getBody('utf8'));
         logger.debug("utente connesso->" + bodyResp.datiUtente._doc.nick);
-
-        checkToken = token;
+        //restituisco nick associato al token
+        checkUtenteProtocollo = bodyResp.datiUtente._doc.nick;
     } catch (exception) {
         logger.debug("errore @checkTokenUtente:" + exception);
     }
-
-    return checkToken;
+    //se checkUtenteProtocollo e' uguale a utenteProtocollo
+    //viene stabilita la connessione con il websocket
+    return checkUtenteProtocollo;
 };
 //******************************************************************************
 //** ISTANZA SOCKET SERVER
 //******************************************************************************
 var wss = new WebSocketServer.Server({
     server: httpsServer,
-    handleProtocols: checkTokenUtente
+    handleProtocols: checkUtente
 });
 logger.debug("WebSocket server in ascolto su " + config.portaNotificationService);
 //******************************************************************************
@@ -145,29 +149,59 @@ logger.debug("WebSocket server in ascolto su " + config.portaNotificationService
 // Gestione messaggi bidirezionali client-server
 //******************************************************************************
 wss.on('connection', function connection(ws, req) {
-    logger.debug(ws.protocol);
-    ws.on('message', function incoming(message) {
-        logger.debug('received: %s', message);
+    ws.on('message', function incoming(messaggio) {
+        //se messaggio da un utente contiene prefisso server..lo elimino
+        if(messaggio){
+            var msgJson = JSON.parse(messaggio); 
+            var msgUtente =ws.protocol+':'+msgJson.data.replace(prefissoMsgServer, '');
+            sendMessageToUser(msgJson.nick,msgUtente);
+        }      
     });
     ws.on('close', function close() {
-        logger.debug('disconnected');
+        logger.debug('disconnected:'+ws.protocol);
     });
     //un saluto al client dal server
     ws.send('un saluto dal websocket server');
 });
-
-function sendMessageToUser(token) {
+/**
+ * Invia messaggio ad uno specifico nick
+ * @param {type} nick
+ * @param {type} messaggio
+ * @returns {undefined}
+ */
+function sendMessageToUser(nick,messaggio) {
     //loop su tutti i client connessi..
     wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocketServer.OPEN &&
-                client.protocol == token) {
-            client.send("Ciao Cliente");
+                client.protocol === nick) {
+            client.send(messaggio);
         }
     });
 }
-
-
-
+/**
+ * Invia messaggi a diversi utenti
+ * 
+ * es: 
+ * listaMessaggi=
+ * [
+ *  {'nick':'RENERO','msg':'ciao renero'},
+ *  {'nick':'CARMELO','msg':'ciao carmelo'},
+ * ]
+ * @param {type} listaMessaggi
+ * @returns {undefined}
+ */
+function sendMessageToMoreUser(listaMessaggi) {
+    //loop su tutti i client connessi..
+    wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocketServer.OPEN) {
+            for (var idxMsg=0;idxMsg<listaMessaggi.length;idxMsg++){
+                if (listaMessaggi[idxMsg].nick===client.protocol){
+                    client.send(listaMessaggi[idxMsg].msg);
+                }
+            }
+        }
+    });
+}
 
 /* Ogni 30 secondi saluto client*/
 /*var interval = setInterval(function ping() {
