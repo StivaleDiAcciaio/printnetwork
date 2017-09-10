@@ -44,12 +44,12 @@ appRouter.post('/sendMessageToUser', function (req, res) {
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
     var bodyReq = req.body;
-    sendMessageToUser(bodyReq.nick,prefissoMsgServer+bodyReq.msg);
+    var esito = sendMessageToUser(bodyReq.nick,prefissoMsgServer+bodyReq.msg);
     res.status(200);
     res.json({
-        esito: true,
-        messaggio: 'OK',
-        codErr: 0
+        esito: esito,
+        messaggio: esito?'OK':'KO',
+        codErr: esito?0:-1
     });
 });
 app.use('/notificationws', appRouter);
@@ -152,10 +152,10 @@ wss.on('connection', function connection(ws, req) {
     ws.on('message', function incoming(messaggio) {
         //se messaggio da un utente contiene prefisso server..lo elimino
         if(messaggio){
-            var msgJson = JSON.parse(messaggio); 
+            var msgJson = JSON.parse(messaggio);
             var msgUtente =ws.protocol+':'+msgJson.data.replace(prefissoMsgServer, '');
             sendMessageToUser(msgJson.nick,msgUtente);
-        }      
+        }
     });
     ws.on('close', function close() {
         logger.debug('disconnected:'+ws.protocol);
@@ -170,13 +170,16 @@ wss.on('connection', function connection(ws, req) {
  * @returns {undefined}
  */
 function sendMessageToUser(nick,messaggio) {
+    var esito=false;
     //loop su tutti i client connessi..
     wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocketServer.OPEN &&
                 client.protocol === nick) {
             client.send(messaggio);
+            esito = true;
         }
     });
+    return esito;
 }
 /**
  * Invia messaggi a diversi utenti

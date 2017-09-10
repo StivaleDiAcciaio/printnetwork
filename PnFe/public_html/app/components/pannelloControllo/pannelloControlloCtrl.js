@@ -5,6 +5,9 @@
             ['$scope','$filter','$state', 'serviziRest', 'CONST', 'NgMap', '$timeout','notificationEngine',
                 function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout,notificationEngine) {
                     $scope.notificationEngine = notificationEngine;
+                    $scope.apriChat = function (){
+                      $scope.notificationEngine.chatUtente("CARMELO","CIAO CARMELO!");
+                    };
                     
                     $scope.onChangeSliderFn = function (id, model) {
                         $scope.mostraPDS();
@@ -253,5 +256,6 @@
                         return nuovoPdsSelezionato;
                     };                   
                     $scope.getPosizioneRilevata();                    
+                    $scope.notificationEngine.connect();
                 }]);
 }());
