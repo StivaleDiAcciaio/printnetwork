@@ -92,7 +92,17 @@
        <div>
             <rzslider rz-slider-model="slider.raggioCerchio" rz-slider-options="slider.options"></rzslider>
        </div>
-       <button class="btn btn-default" ng-click="apriChat()">Invia Messaggio a Carmelo</button>
+       <div class="col-xs-12">
+           <input type="text" ng-model="nickDestinatario" placeholder="nome destinatario"/>
+           <input type="text" ng-model="msgUtente" placeholder="messaggio"/>
+           <button class="btn btn-default" ng-click="apriChat()">Invia Messaggio a Carmelo</button>
+       </div>
+       
+           <div class="col-xs-12" ng-repeat="messaggio in listaMessaggi track by $index">
+               <div class="col-xs-12">{{messaggio.data}}</div>
+           </div>
+           
+           
         <div>
             <ng-map id="mappaPannelloControllo" 
                     zoom="{{zoomCalcolato}}" 

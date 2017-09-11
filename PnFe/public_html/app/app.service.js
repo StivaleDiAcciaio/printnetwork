@@ -66,32 +66,36 @@
                 var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
                 protocollo.push(utl.nick);
                 protocollo.push(localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
-                var collection = [];
+                var listaMessaggiRicevuti = [];
                 var dataStream = null;
                 this.connect = function () {
                     // Apro connessione con il websocket in SSL
                     // (gestire i certificati self-signed)
                     dataStream = $websocket('wss://' + $location.host() + "/" + COSTANTI.ENDPOINT.NOTIFICHE_WSOCKET, protocollo);
                     dataStream.onMessage(function (message) {
-                        collection.push(message);
+                        listaMessaggiRicevuti.push(message);
                         console.log(message.data);
                     });
 
                 };
                 this.chatUtente = function (utente, msg) {
-                    if (dataStream) {
+                    if (utente && msg) {
+                        if (!dataStream) {
+                            this.connect();
+                        }else if(dataStream.readyState !== 1){
+                            //persa connessione con il socket server..
+                            dataStream.reconnect();
+                        }
                         var messaggio = {};
                         messaggio.nick = utente;
                         messaggio.data = msg;
                         dataStream.send(messaggio);
-                        console.log("messaggio inviato a utente "+utente);
-                    }else{
-                        console.log("connessione wss chiusa, la apro");
-                        this.connect();
                     }
+                };
+                this.getMessaggi = function(){
+                  return listaMessaggiRicevuti;
                 };
             };
             return new NotificationEngine();
         }]);
-
 }());

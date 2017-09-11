@@ -171,6 +171,7 @@ wss.on('connection', function connection(ws, req) {
  */
 function sendMessageToUser(nick,messaggio) {
     var esito=false;
+     logger.debug("cerco di inviare messaggio a "+nick+":"+messaggio);
     //loop su tutti i client connessi..
     wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocketServer.OPEN &&
