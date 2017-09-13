@@ -62,38 +62,52 @@
         }]);
     pnApp.factory('notificationEngine', ['$websocket', 'CONST', '$location', function ($websocket, COSTANTI, $location) {
             var NotificationEngine = function () {
+                console.log("Notification Engine");
                 var protocollo = [];
-                var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
-                protocollo.push(utl.nick);
-                protocollo.push(localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 var listaMessaggiRicevuti = [];
                 var dataStream = null;
-                this.connect = function () {
-                    // Apro connessione con il websocket in SSL
-                    // (gestire i certificati self-signed)
-                    dataStream = $websocket('wss://' + $location.host() + "/" + COSTANTI.ENDPOINT.NOTIFICHE_WSOCKET, protocollo);
-                    dataStream.onMessage(function (message) {
-                        listaMessaggiRicevuti.push(message);
-                        console.log(message.data);
-                    });
-
+                this.connettiWS = function () {
+                    if (!dataStream) {
+                        var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
+                        protocollo.push(utl.nick);
+                        protocollo.push(localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                        // Apro connessione con il websocket in SSL
+                        // (gestire i certificati self-signed)
+                        console.log("apro connessione con server socket");
+                        dataStream = $websocket('wss://' + $location.host() + "/" + COSTANTI.ENDPOINT.NOTIFICHE_WSOCKET, protocollo);
+                        dataStream.onMessage(function (message) {
+                            listaMessaggiRicevuti.push(message);
+                            console.log(message.data);
+                        });
+                        dataStream.onClose(function () {
+                            console.log("connessione chiusa con il server");
+                        });
+                    } else if (dataStream.readyState !== 1) {
+                        //persa connessione con il socket server..
+                        dataStream.reconnect();
+                    }
                 };
                 this.chatUtente = function (utente, msg) {
                     if (utente && msg) {
-                        if (!dataStream) {
-                            this.connect();
-                        }else if(dataStream.readyState !== 1){
-                            //persa connessione con il socket server..
-                            dataStream.reconnect();
-                        }
+                        this.connettiWS();
                         var messaggio = {};
                         messaggio.nick = utente;
                         messaggio.data = msg;
                         dataStream.send(messaggio);
                     }
                 };
-                this.getMessaggi = function(){
-                  return listaMessaggiRicevuti;
+                this.getMessaggi = function () {
+                    return listaMessaggiRicevuti;
+                };
+                this.pingWs = function () {
+                    this.connettiWS();
+                    dataStream.send("ping");
+                };
+                this.chiudiWs = function () {
+                    dataStream.close();
+                };
+                this.isConnected = function () {
+                    return (dataStream !== null && dataStream.readyState === 1) ? true : false;
                 };
             };
             return new NotificationEngine();

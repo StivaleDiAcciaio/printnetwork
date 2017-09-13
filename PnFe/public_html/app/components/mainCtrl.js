@@ -2,8 +2,9 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('mainCtrl',
-            ['$scope', '$state', '$uibModal', 'serviziRest', 'CONST', '$translate', 'animatedScroll',
-                function ($scope, $state, $uibModal, serviziRest, COSTANTI, $translate, animatedScroll) {
+            ['$scope', '$state', '$uibModal', 'serviziRest', 'CONST', '$translate', 'animatedScroll','notificationEngine',
+                function ($scope, $state, $uibModal, serviziRest, COSTANTI, $translate, animatedScroll,notificationEngine) {
+                    $scope.notificationEngine=notificationEngine;
                     $scope.paginaCorrente = null;
                     $scope.showLoading = false;
                     $scope.messaggio = null;
@@ -40,6 +41,7 @@
                     $scope.logout = function () {
                         localStorage.removeItem(COSTANTI.LOCAL_STORAGE.TOKEN);
                         localStorage.removeItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO);
+                        $scope.notificationEngine.chiudiWs();
                     };
                     $scope.checkToken = function () {
                         return localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN) != null;

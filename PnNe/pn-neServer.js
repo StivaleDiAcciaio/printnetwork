@@ -151,7 +151,8 @@ logger.debug("WebSocket server in ascolto su " + config.portaNotificationService
 wss.on('connection', function connection(ws, req) {
     ws.on('message', function incoming(messaggio) {
         //se messaggio da un utente contiene prefisso server..lo elimino
-        if(messaggio){
+        logger.debug(messaggio);
+        if(messaggio !== "ping"){
             var msgJson = JSON.parse(messaggio);
             var msgUtente =ws.protocol+':'+msgJson.data.replace(prefissoMsgServer, '');
             sendMessageToUser(msgJson.nick,msgUtente);
@@ -161,7 +162,7 @@ wss.on('connection', function connection(ws, req) {
         logger.debug('disconnected:'+ws.protocol);
     });
     //un saluto al client dal server
-    ws.send('un saluto dal websocket server');
+    ws.send('connesso al server!');
 });
 /**
  * Invia messaggio ad uno specifico nick

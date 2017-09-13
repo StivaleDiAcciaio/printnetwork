@@ -2,12 +2,12 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('pannelloControlloCtrl',
-            ['$scope','$filter','$state', 'serviziRest', 'CONST', 'NgMap', '$timeout','notificationEngine',
-                function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout,notificationEngine) {
-                    $scope.notificationEngine = notificationEngine;
-                    $scope.listaMessaggi = notificationEngine.getMessaggi();
-                    $scope.apriChat = function (){
-                      $scope.notificationEngine.chatUtente($scope.nickDestinatario,$scope.msgUtente);
+            ['$scope', '$filter', '$state', 'serviziRest', 'CONST', 'NgMap', '$timeout', '$q', '$interval',
+                function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout, $q, $interval) {
+                    /* notification engine sta nello scope del mainCtrl */
+                    $scope.listaMessaggi = $scope.notificationEngine.getMessaggi();
+                    $scope.apriChat = function () {
+                        $scope.notificationEngine.chatUtente($scope.nickDestinatario, $scope.msgUtente);
                     };
                     $scope.onChangeSliderFn = function (id, model) {
                         $scope.mostraPDS();
@@ -51,13 +51,18 @@
                     NgMap.getMap().then(function (map) {
                         $scope.map = map;
                         $scope.slider.posizioneCerchio = $scope.map.getCenter();
-                        $scope.trovaPDS($scope.map.getCenter());
+                        $scope.trovaPDS($scope.map.getCenter()).then(function () {
+                            //dopo aver invocato la funzione trovaPds
+                            //tento la connessione al wsocket
+                            $scope.notificationEngine.connettiWS();
+                            $scope.jobPingSocket();
+                        });
                         //per evitare problema di render scorretto della slider
                         $scope.refreshSlider();
                     });
 
                     $scope.centraMappa = function (location) {
-                         $scope.isCollapsedHorizontal = !$scope.isCollapsedHorizontal;
+                        $scope.isCollapsedHorizontal = !$scope.isCollapsedHorizontal;
                         if (location) {
                             $scope.map.panTo(location);
                             $scope.slider.posizioneCerchio = location;
@@ -110,18 +115,18 @@
 
                     $scope.resetCercaIndirizzo = function () {
                         if ($scope.indirizzo && $scope.indirizzo.cercato) {
-                            $scope.arrayMarkerPDS =[];
+                            $scope.arrayMarkerPDS = [];
                             $scope.locationTrovata = null;
                             $scope.indirizzoTrovato = null;
                             $scope.indirizzo.cercato = null;
                             $scope.map.panTo($scope.googleFallBackPosition);
                             $scope.zoomCalcolato = COSTANTI.MAPPA.FALL_GEO_ZOOM;
-                            
+
                         }
                     };
-                    $scope.infoPDScancel = function (){
-                        $scope.pdsSelezionato.classe='pdsNoActive';
-                        $scope.pdsSelezionato=null;
+                    $scope.infoPDScancel = function () {
+                        $scope.pdsSelezionato.classe = 'pdsNoActive';
+                        $scope.pdsSelezionato = null;
                     };
                     /**
                      * Cerca sul DB i PDS intorno alla posizioneScelta
@@ -129,6 +134,7 @@
                      * @returns {undefined}
                      */
                     $scope.trovaPDS = function (posizioneScelta) {
+                        var q = $q.defer();
                         if (!$scope.isGeoFallback()) {
                             serviziRest.trovaPDS({paramRicercaPDS: {lng: posizioneScelta.lng(), lat: posizioneScelta.lat()}}).then(function (response) {
                                 if (response.esito) {
@@ -140,10 +146,10 @@
                                             var posizionePDS = new google.maps.LatLng(response.utentiPds[i].location.coordinates[1], response.utentiPds[i].location.coordinates[0]);
                                             response.utentiPds[i].geoposizione = posizionePDS;
                                             $scope.caricaArrayMarkerPDS(response.utentiPds[i]);
-                                        }                                        
+                                        }
                                         $scope.mostraPDS();
                                     }
-
+                                    q.resolve();
                                 } else {
                                     $scope.mostraMessaggioError(response.codErr);
                                 }
@@ -152,33 +158,36 @@
                                     $scope.mostraMessaggioError(err.data.codErr);
                                 }
                             });
+                        } else {
+                            q.resolve();
                         }
+                        return q.promise;
                     };
                     /**
                      * Carica l'array dei markersPDS con le info prese dal DB
                      * @param {type} utentePDS
                      * @returns {undefined}
                      */
-                    $scope.caricaArrayMarkerPDS = function(utentePDS){
-                        if ($scope.arrayMarkerPDS.length>0){
-                          for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
+                    $scope.caricaArrayMarkerPDS = function (utentePDS) {
+                        if ($scope.arrayMarkerPDS.length > 0) {
+                            for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
                                 //se piu utenti diversi condividono lo stesso indirizzo carico l'utentePDS nell'array dei Markers
-                                if ($scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione)){
-                                    if ($scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo && $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.length>0){
-                                        utentePDS.parent=$scope.arrayMarkerPDS[i]._id;
+                                if ($scope.arrayMarkerPDS[i].geoposizione.equals(utentePDS.geoposizione)) {
+                                    if ($scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo && $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.length > 0) {
+                                        utentePDS.parent = $scope.arrayMarkerPDS[i]._id;
                                         $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo.push(utentePDS);
-                                    }else{//se array di utentiPDS con lo stesso indirizzo è vuoto lo creo..
+                                    } else {//se array di utentiPDS con lo stesso indirizzo è vuoto lo creo..
                                         var utentiPDSstessoIndirizzo = [];
-                                        utentePDS.parent=$scope.arrayMarkerPDS[i]._id;
+                                        utentePDS.parent = $scope.arrayMarkerPDS[i]._id;
                                         utentiPDSstessoIndirizzo.push(utentePDS);
                                         $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo = utentiPDSstessoIndirizzo;
                                     }
                                     return;
                                 }
-                            } 
+                            }
                         }
-                        utentePDS.master=true;
-                        $scope.arrayMarkerPDS.push(utentePDS);   
+                        utentePDS.master = true;
+                        $scope.arrayMarkerPDS.push(utentePDS);
                     };
                     /**
                      * Mostra i markers PDS sulla mappa
@@ -189,9 +198,9 @@
                         if ($scope.arrayMarkerPDS) {
                             for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
                                 if (google.maps.geometry.spherical.computeDistanceBetween($scope.arrayMarkerPDS[i].geoposizione, $scope.slider.posizioneCerchio) <= $scope.slider.raggioCerchio) {
-                                   $scope.arrayMarkerPDS[i].mostra=true;
+                                    $scope.arrayMarkerPDS[i].mostra = true;
                                 } else {
-                                    $scope.arrayMarkerPDS[i].mostra=false;
+                                    $scope.arrayMarkerPDS[i].mostra = false;
                                 }
                             }
                         }
@@ -201,22 +210,22 @@
                      * @param {type} utentePDS
                      * @returns {undefined}
                      */
-                    $scope.markerPDSonClick = function(utentePDS){
-                      //gestisco anche gli utenti PDS collegati allo stesso indirizzo
-                      if ($scope.pdsSelezionato && $scope.pdsSelezionato.master && $scope.pdsSelezionato !== utentePDS){
-                          $scope.pdsSelezionato.classe='pdsNoActive';
-                      }else if($scope.pdsSelezionato && $scope.pdsSelezionato.parent && $scope.pdsSelezionato !== utentePDS){
-                          //nel caso sto deselezionando un pds slave allora cerco il suo parent e deseleziono lui
-                         for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
-                             if($scope.arrayMarkerPDS[i]._id==$scope.pdsSelezionato.parent){
-                                $scope.arrayMarkerPDS[i].classe='pdsNoActive'; 
-                                $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo=$scope.pdsSelezionato.pdsConnMaster
-                             }
-                         }
-                      }
-                      utentePDS.classe='pdsActive';
-                      $scope.pdsSelezionato=utentePDS;
-                      $scope.scrollTo('infoPDSscroll');
+                    $scope.markerPDSonClick = function (utentePDS) {
+                        //gestisco anche gli utenti PDS collegati allo stesso indirizzo
+                        if ($scope.pdsSelezionato && $scope.pdsSelezionato.master && $scope.pdsSelezionato !== utentePDS) {
+                            $scope.pdsSelezionato.classe = 'pdsNoActive';
+                        } else if ($scope.pdsSelezionato && $scope.pdsSelezionato.parent && $scope.pdsSelezionato !== utentePDS) {
+                            //nel caso sto deselezionando un pds slave allora cerco il suo parent e deseleziono lui
+                            for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
+                                if ($scope.arrayMarkerPDS[i]._id == $scope.pdsSelezionato.parent) {
+                                    $scope.arrayMarkerPDS[i].classe = 'pdsNoActive';
+                                    $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo = $scope.pdsSelezionato.pdsConnMaster
+                                }
+                            }
+                        }
+                        utentePDS.classe = 'pdsActive';
+                        $scope.pdsSelezionato = utentePDS;
+                        $scope.scrollTo('infoPDSscroll');
                     };
                     /**
                      * Gestisce il click sul nick di un eventuale
@@ -225,8 +234,8 @@
                      * @param {type} altroUtentePDS
                      * @returns {undefined}
                      */
-                    $scope.altroUtentePDSonClick = function(altroUtentePDS,pdsSelezionato){
-                        $scope.pdsSelezionato=$scope.swapPdsSelezionatoAltroPDS(pdsSelezionato,altroUtentePDS);
+                    $scope.altroUtentePDSonClick = function (altroUtentePDS, pdsSelezionato) {
+                        $scope.pdsSelezionato = $scope.swapPdsSelezionatoAltroPDS(pdsSelezionato, altroUtentePDS);
                         $scope.scrollTo('infoPDSscroll');
                     };
                     /**
@@ -236,25 +245,41 @@
                      * @param {type} nuovoPdsSelezionato
                      * @returns {undefined}
                      */
-                     $scope.swapPdsSelezionatoAltroPDS = function(pdsCorrente,nuovoPdsSelezionato){
-                        var nuovoArrayPdsStessoIndirizzo=[];
-                        for (var idx=0; idx<pdsCorrente.utentiPDSstessoIndirizzo.length; idx++){
+                    $scope.swapPdsSelezionatoAltroPDS = function (pdsCorrente, nuovoPdsSelezionato) {
+                        var nuovoArrayPdsStessoIndirizzo = [];
+                        for (var idx = 0; idx < pdsCorrente.utentiPDSstessoIndirizzo.length; idx++) {
                             /* prepara il nuovo array utenti collegati */
-                            if(pdsCorrente.utentiPDSstessoIndirizzo[idx]._id != nuovoPdsSelezionato._id){
+                            if (pdsCorrente.utentiPDSstessoIndirizzo[idx]._id != nuovoPdsSelezionato._id) {
                                 nuovoArrayPdsStessoIndirizzo.push(pdsCorrente.utentiPDSstessoIndirizzo[idx]);
                             }
                         }
                         //lo inserisco direttamente nell'array dei Pds collegati
                         //privandolo del suo subArray (che darebbe errore nella visulizzazione)
-                        if(pdsCorrente.master && pdsCorrente.utentiPDSstessoIndirizzo){
+                        if (pdsCorrente.master && pdsCorrente.utentiPDSstessoIndirizzo) {
                             //se il sono in presenza del master (salvo le dipendenze iniziali nel nuovoPdsSelezionato)
-                            nuovoPdsSelezionato.pdsConnMaster= pdsCorrente.utentiPDSstessoIndirizzo;
+                            nuovoPdsSelezionato.pdsConnMaster = pdsCorrente.utentiPDSstessoIndirizzo;
                         }
-                        pdsCorrente.utentiPDSstessoIndirizzo=null;
+                        pdsCorrente.utentiPDSstessoIndirizzo = null;
                         nuovoArrayPdsStessoIndirizzo.push(pdsCorrente);/* sposto il pdsCorrente nella lista dei PDS collegati */
-                        nuovoPdsSelezionato.utentiPDSstessoIndirizzo = $filter('orderBy')(nuovoArrayPdsStessoIndirizzo, 'feedback','reverse');
+                        nuovoPdsSelezionato.utentiPDSstessoIndirizzo = $filter('orderBy')(nuovoArrayPdsStessoIndirizzo, 'feedback', 'reverse');
                         return nuovoPdsSelezionato;
-                    };                   
-                    $scope.getPosizioneRilevata();                    
+                    };
+
+                    $scope.getPosizioneRilevata();
+                    /* Ogni 8 minuti circa pingo serversocket*/
+                    var ping;
+                    $scope.jobPingSocket = function () {
+                        // non faccio partire più di un ping..
+                        if (angular.isDefined(ping)){
+                            return;
+                        }
+                        ping = $interval(function () {
+                            $scope.notificationEngine.pingWs();
+                            if (!$scope.notificationEngine.isConnected()) {
+                                $interval.cancel(ping);
+                                ping = undefined;
+                            }
+                        }, 480000);
+                    };
                 }]);
 }());
