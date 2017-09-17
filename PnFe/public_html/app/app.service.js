@@ -85,7 +85,6 @@
                     var mittente = messaggio.substring(0, end);
                     var msgUtente = messaggio.substring(end+1);
                     if (mittente){
-                        console.log(mittente);
                         if(msgUtente === COSTANTI.RICHIESTA_STAMPA && 
                                 listaRichiesteStampaIN && 
                                 listaRichiesteStampaIN.length<COSTANTI.NUM_RICHIESTE_STAMPA_IN){
@@ -93,8 +92,8 @@
                             //verifico che mittente non abbia gia fatto richiesta precedentemente..
                             var richiestaPrecEsistente=false;
                             for (var c = 0; c < listaRichiesteStampaIN.length; c++) {
-                                if(listaRichiesteStampaIN[i].mittente === mittente &&
-                                        listaRichiesteStampaIN[i].stato === COSTANTI.RICHIESTA_STAMPA){
+                                if(listaRichiesteStampaIN[c].mittente === mittente &&
+                                        listaRichiesteStampaIN[c].stato === COSTANTI.RICHIESTA_STAMPA){
                                    richiestaPrecEsistente = true;
                                    break;
                                 }
@@ -120,7 +119,7 @@
                                             listaRichiesteStampaIN.push({mittente:mittente,stato:msgUtente});
                                         }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA && listaRichiesteStampaIN){
                                            //..ANNULLA...rimuovo dalle richieste in entrata la vecchia richiesta
-                                           for (var x = 0; x < listaRichiesteStampaIN.length; i++){
+                                           for (var x = 0; x < listaRichiesteStampaIN.length; x++){
                                                if(listaRichiesteStampaIN[x].mittente === mittente){
                                                    listaRichiesteStampaIN.splice(x, 1);
                                                    break;
@@ -134,6 +133,7 @@
                             }
                         }else{
                             // per qualunque altro messaggio..
+                            //controllo sul canale delle richieste OUT..
                             if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
                                  for (var i = 0; i < listaRichiesteStampaOUT.length; i++) {
                                      //..deve esistere uno stato precedente a "CONTRATTAZIONE"
@@ -144,6 +144,18 @@
                                      }
                                  }
                             }
+                            //se non ho trovato nulla sul canale OUT..
+                            //provo sul canale IN
+                            if (!esito && listaRichiesteStampaIN && listaRichiesteStampaIN.length>0){
+                                    for (var z = 0; z < listaRichiesteStampaOUT.length; z++) {
+                                         //..deve esistere uno stato precedente a "CONTRATTAZIONE"
+                                        if(listaRichiesteStampaIN[z].mittente === mittente &&
+                                         listaRichiesteStampaIN[z].stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
+                                         esito = true;
+                                          break;
+                                        }
+                                    }
+                            } 
                         }
                     }
                     return esito;
@@ -187,6 +199,21 @@
                     this.inviaMessaggio(destinatario, COSTANTI.RICHIESTA_STAMPA);
                     listaRichiesteStampaOUT.push({destinatario:destinatario,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA});
                 };
+                
+                this.accettaRichiestaStampa = function (destinatario) {
+                    //accettata richiesta...
+                    //aggiorno lo stato del canale IN entrata..
+                    for (var z = 0; z < listaRichiesteStampaOUT.length; z++) {
+                        //..deve esistere uno stato precedente a "CONTRATTAZIONE"
+                        if(listaRichiesteStampaIN[z].mittente === destinatario &&
+                            listaRichiesteStampaIN[z].stato === COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA){
+                            listaRichiesteStampaIN[z].stato =COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE;
+                            break;
+                        }
+                    }
+                    this.inviaMessaggio(destinatario, COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE);
+                };
+                
                 this.inviaMessaggio = function (nick, data) {
                     if (nick && data) {
                         this.connettiWS();
