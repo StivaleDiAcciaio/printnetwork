@@ -11,6 +11,9 @@
                     $scope.apriChat = function () {
                         $scope.notificationEngine.chatUtente($scope.nickDestinatario, $scope.msgUtente);
                     };
+                    $scope.inviaRichiestaStampa = function () {
+                        $scope.notificationEngine.inviaRichiestaStampa($scope.nickDestinatario);
+                    };
                     $scope.onChangeSliderFn = function (id, model) {
                         $scope.mostraPDS();
                     };

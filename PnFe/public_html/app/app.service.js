@@ -74,12 +74,12 @@
                 //da altri utenti
                 var listaRichiesteStampaIN = [];
                 var dataStream = null;
-                /**
-                 * Tenta la connessione con il WebSocket
-                 * Se il canale è stato chiuso lo riapre
-                 * @returns {undefined}
+                                /**
+                 * effettua verifiche sui messaggi in enrtata
+                 * @param {type} messaggio
+                 * @returns {Boolean}
                  */
-                this.checkMessaggioInEntrata = function (messaggio){
+                var checkMessaggioInEntrata = function (messaggio){
                     var esito=false;
                     var end = messaggio.indexOf(":");
                     var mittente = messaggio.substring(0, end);
@@ -90,19 +90,43 @@
                                 listaRichiesteStampaIN && 
                                 listaRichiesteStampaIN.length<COSTANTI.NUM_RICHIESTE_STAMPA_IN){
                             //In entrata una richiesta di stampa che non supera il limite delle richieste in entrata
-                            esito = true;
+                            //verifico che mittente non abbia gia fatto richiesta precedentemente..
+                            var richiestaPrecEsistente=false;
+                            for (var c = 0; c < listaRichiesteStampaIN.length; c++) {
+                                if(listaRichiesteStampaIN[i].mittente === mittente &&
+                                        listaRichiesteStampaIN[i].stato === COSTANTI.RICHIESTA_STAMPA){
+                                   richiestaPrecEsistente = true;
+                                   break;
+                                }
+                            }
+                            if(!richiestaPrecEsistente){
+                                listaRichiesteStampaIN.push({mittente:mittente,stato:msgUtente});
+                                esito = true;
+                            }
                         }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE ||
                                  msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA
                                 ){
-                            //In caso di contrattazione o annullamento richiesta
-                            //di stampa da parte del destinatario, Verifico
-                            //che ci sia stata una richiesta precedentemente
+                            //In entrata una contrattazione o annullamento richiesta
+                            //di stampa da parte del destinatario... verifico
+                            //che ci sia effettivamente stata una richiesta precedentemente
                             if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
                                  for (var i = 0; i < listaRichiesteStampaOUT.length; i++) {
                                      if(listaRichiesteStampaOUT[i].destinatario === mittente &&
                                         listaRichiesteStampaOUT[i].stato === COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA){
-                                        //aggiorno lo stato 
+                                        //..c'e' stata..aggiorno lo stato della richiesta
                                         listaRichiesteStampaOUT[i].stato = msgUtente;
+                                        if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
+                                            //nuova richiesta in entrata..
+                                            listaRichiesteStampaIN.push({mittente:mittente,stato:msgUtente});
+                                        }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA && listaRichiesteStampaIN){
+                                           //..ANNULLA...rimuovo dalle richieste in entrata la vecchia richiesta
+                                           for (var x = 0; x < listaRichiesteStampaIN.length; i++){
+                                               if(listaRichiesteStampaIN[x].mittente === mittente){
+                                                   listaRichiesteStampaIN.splice(x, 1);
+                                                   break;
+                                               }
+                                           }
+                                        }
                                         esito = true;
                                          break;
                                      }
@@ -124,7 +148,11 @@
                     }
                     return esito;
                 };
-
+                /**
+                 * Tenta la connessione con il WebSocket
+                 * Se il canale è stato chiuso lo riapre
+                 * @returns {undefined}
+                 */
                 this.connettiWS = function () {
                     if (!dataStream) {
                         var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
@@ -136,8 +164,11 @@
                         dataStream.onMessage(function (message) {
                             if (message.data.startsWith("SERVER")){
                                 listaNotificheServer.push(message.data);
-                            }else if(checkMessaggioInEntrata(message.data)){
-                                listaMessaggiUtenteRicevuti.push(message.data);
+                            }else{
+                                if(checkMessaggioInEntrata(message.data)){
+                                    listaMessaggiUtenteRicevuti.push(message.data);
+                                }
+                                
                             }
                         });
                         dataStream.onClose(function () {
@@ -149,11 +180,11 @@
                     }
                 };
                 this.chatUtente = function (destinatario, msg) {
-                    inviaMessaggio(destinatario, msg);
+                    this.inviaMessaggio(destinatario, msg);
                 };
                                 
                 this.inviaRichiestaStampa = function (destinatario) {
-                    inviaMessaggio(destinatario, COSTANTI.RICHIESTA_STAMPA);
+                    this.inviaMessaggio(destinatario, COSTANTI.RICHIESTA_STAMPA);
                     listaRichiesteStampaOUT.push({destinatario:destinatario,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA});
                 };
                 this.inviaMessaggio = function (nick, data) {
