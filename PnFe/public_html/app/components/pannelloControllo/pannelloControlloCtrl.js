@@ -5,7 +5,9 @@
             ['$scope', '$filter', '$state', 'serviziRest', 'CONST', 'NgMap', '$timeout', '$q', '$interval',
                 function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout, $q, $interval) {
                     /* notification engine sta nello scope del mainCtrl */
-                    $scope.listaMessaggi = $scope.notificationEngine.getMessaggi();
+                    $scope.listaMessaggiUtente = $scope.notificationEngine.getMessaggiUtente();
+                    $scope.listaNotificheServer = $scope.notificationEngine.getNotificheServer();
+                   
                     $scope.apriChat = function () {
                         $scope.notificationEngine.chatUtente($scope.nickDestinatario, $scope.msgUtente);
                     };
@@ -217,7 +219,7 @@
                         } else if ($scope.pdsSelezionato && $scope.pdsSelezionato.parent && $scope.pdsSelezionato !== utentePDS) {
                             //nel caso sto deselezionando un pds slave allora cerco il suo parent e deseleziono lui
                             for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
-                                if ($scope.arrayMarkerPDS[i]._id == $scope.pdsSelezionato.parent) {
+                                if ($scope.arrayMarkerPDS[i]._id === $scope.pdsSelezionato.parent) {
                                     $scope.arrayMarkerPDS[i].classe = 'pdsNoActive';
                                     $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo = $scope.pdsSelezionato.pdsConnMaster
                                 }
@@ -249,7 +251,7 @@
                         var nuovoArrayPdsStessoIndirizzo = [];
                         for (var idx = 0; idx < pdsCorrente.utentiPDSstessoIndirizzo.length; idx++) {
                             /* prepara il nuovo array utenti collegati */
-                            if (pdsCorrente.utentiPDSstessoIndirizzo[idx]._id != nuovoPdsSelezionato._id) {
+                            if (pdsCorrente.utentiPDSstessoIndirizzo[idx]._id !== nuovoPdsSelezionato._id) {
                                 nuovoArrayPdsStessoIndirizzo.push(pdsCorrente.utentiPDSstessoIndirizzo[idx]);
                             }
                         }
@@ -266,7 +268,7 @@
                     };
 
                     $scope.getPosizioneRilevata();
-                    /* Ogni 8 minuti circa pingo serversocket*/
+                    /* Ogni TIME_OUT_PING minuti circa pingo serversocket*/
                     var ping;
                     $scope.jobPingSocket = function () {
                         // non faccio partire più di un ping..
@@ -279,7 +281,7 @@
                                 $interval.cancel(ping);
                                 ping = undefined;
                             }
-                        }, 480000);
+                        }, COSTANTI.TIME_OUT_PING);
                     };
                 }]);
 }());

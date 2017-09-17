@@ -7,6 +7,15 @@
         //"CONTEXT_ROOT": contextRoot,
         "RICORDAMI": "ricordami",
         "KEY_GEOCOD": "AIzaSyDUgfDN2lOzsSvZkl0VNlTpq7BpAqMAO70",
+        "TIME_OUT_PING":"900000",
+        "RICHIESTA_STAMPA":"RICHIESTA_STAMPA",
+        "STATO_RICHIESTE_STAMPA":{
+          "INVIATA":"stampa_inviata",
+          "CONTRATTAZIONE":"stampa_contrattazione",
+          "CHIUSA":"stampa_chiusa",
+          "ANNULLATA":"stampa_annullata"
+        },
+        "NUM_RICHIESTE_STAMPA_IN":3,
         "MAPPA": {
             "RAGGIO_CERCHIO_DEFAULT": 500,
             "RAGGIO_CERCHIO_MIN": 100,

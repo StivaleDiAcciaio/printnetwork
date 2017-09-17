@@ -62,10 +62,69 @@
         }]);
     pnApp.factory('notificationEngine', ['$websocket', 'CONST', '$location', function ($websocket, COSTANTI, $location) {
             var NotificationEngine = function () {
-                console.log("Notification Engine");
                 var protocollo = [];
-                var listaMessaggiRicevuti = [];
+                //elenco messaggi ricevuti da Utenti
+                var listaMessaggiUtenteRicevuti = [];
+                //elenco di notifiche ricevute dal server
+                var listaNotificheServer = []; 
+                //elenco delle richieste di stampa EFFETTUATE
+                //verso altri utenti
+                var listaRichiesteStampaOUT = [];
+                //elenco delle richieste di stampa RICEVUTE
+                //da altri utenti
+                var listaRichiesteStampaIN = [];
                 var dataStream = null;
+                /**
+                 * Tenta la connessione con il WebSocket
+                 * Se il canale è stato chiuso lo riapre
+                 * @returns {undefined}
+                 */
+                this.checkMessaggioInEntrata = function (messaggio){
+                    var esito=false;
+                    var end = messaggio.indexOf(":");
+                    var mittente = messaggio.substring(0, end);
+                    var msgUtente = messaggio.substring(end+1);
+                    if (mittente){
+                        console.log(mittente);
+                        if(msgUtente === COSTANTI.RICHIESTA_STAMPA && 
+                                listaRichiesteStampaIN && 
+                                listaRichiesteStampaIN.length<COSTANTI.NUM_RICHIESTE_STAMPA_IN){
+                            //In entrata una richiesta di stampa che non supera il limite delle richieste in entrata
+                            esito = true;
+                        }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE ||
+                                 msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA
+                                ){
+                            //In caso di contrattazione o annullamento richiesta
+                            //di stampa da parte del destinatario, Verifico
+                            //che ci sia stata una richiesta precedentemente
+                            if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
+                                 for (var i = 0; i < listaRichiesteStampaOUT.length; i++) {
+                                     if(listaRichiesteStampaOUT[i].destinatario === mittente &&
+                                        listaRichiesteStampaOUT[i].stato === COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA){
+                                        //aggiorno lo stato 
+                                        listaRichiesteStampaOUT[i].stato = msgUtente;
+                                        esito = true;
+                                         break;
+                                     }
+                                 }
+                            }
+                        }else{
+                            // per qualunque altro messaggio..
+                            if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
+                                 for (var i = 0; i < listaRichiesteStampaOUT.length; i++) {
+                                     //..deve esistere uno stato precedente a "CONTRATTAZIONE"
+                                     if(listaRichiesteStampaOUT[i].destinatario === mittente &&
+                                        listaRichiesteStampaOUT[i].stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
+                                        esito = true;
+                                         break;
+                                     }
+                                 }
+                            }
+                        }
+                    }
+                    return esito;
+                };
+
                 this.connettiWS = function () {
                     if (!dataStream) {
                         var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
@@ -73,11 +132,13 @@
                         protocollo.push(localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                         // Apro connessione con il websocket in SSL
                         // (gestire i certificati self-signed)
-                        console.log("apro connessione con server socket");
                         dataStream = $websocket('wss://' + $location.host() + "/" + COSTANTI.ENDPOINT.NOTIFICHE_WSOCKET, protocollo);
                         dataStream.onMessage(function (message) {
-                            listaMessaggiRicevuti.push(message);
-                            console.log(message.data);
+                            if (message.data.startsWith("SERVER")){
+                                listaNotificheServer.push(message.data);
+                            }else if(checkMessaggioInEntrata(message.data)){
+                                listaMessaggiUtenteRicevuti.push(message.data);
+                            }
                         });
                         dataStream.onClose(function () {
                             console.log("connessione chiusa con il server");
@@ -87,24 +148,32 @@
                         dataStream.reconnect();
                     }
                 };
-                this.chatUtente = function (utente, msg) {
-                    if (utente && msg) {
+                this.chatUtente = function (destinatario, msg) {
+                    inviaMessaggio(destinatario, msg);
+                };
+                                
+                this.inviaRichiestaStampa = function (destinatario) {
+                    inviaMessaggio(destinatario, COSTANTI.RICHIESTA_STAMPA);
+                    listaRichiesteStampaOUT.push({destinatario:destinatario,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA});
+                };
+                this.inviaMessaggio = function (nick, data) {
+                    if (nick && data) {
                         this.connettiWS();
-                        var messaggio = {};
-                        messaggio.nick = utente;
-                        messaggio.data = msg;
-                        dataStream.send(messaggio);
+                        dataStream.send({destinatario:nick,testo:data});
                     }
                 };
-                this.getMessaggi = function () {
-                    return listaMessaggiRicevuti;
+                this.getMessaggiUtente = function () {
+                    return listaMessaggiUtenteRicevuti;
+                };
+                this.getNotificheServer = function () {
+                    return listaNotificheServer;
                 };
                 this.pingWs = function () {
                     this.connettiWS();
-                    dataStream.send("ping");
                 };
                 this.chiudiWs = function () {
-                    dataStream.close();
+                    if (dataStream)
+                        dataStream.close();
                 };
                 this.isConnected = function () {
                     return (dataStream !== null && dataStream.readyState === 1) ? true : false;

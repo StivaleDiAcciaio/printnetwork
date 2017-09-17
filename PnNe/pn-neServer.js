@@ -38,18 +38,18 @@ var credentials = {key: privateKey, cert: certificate, passphrase: passphrase};
 //** Creo metodo REST per invio istantaneo di messaggi agli utenti (usa WEBSOCKET)
 //** utilizzato dal modulo PnBe notifiche varie
 //******************************************************************************
-var prefissoMsgServer='SERVER:';
+var mittenteServer = 'SERVER';
 appRouter.post('/sendMessageToUser', function (req, res) {
     res.header("Access-Control-Allow-Origin", "localhost");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
     var bodyReq = req.body;
-    var esito = sendMessageToUser(bodyReq.nick,prefissoMsgServer+bodyReq.msg);
+    var esito = sendMessageToUser(mittenteServer,bodyReq.destinatario, bodyReq.msg);
     res.status(200);
     res.json({
         esito: esito,
-        messaggio: esito?'OK':'KO',
-        codErr: esito?0:-1
+        messaggio: esito ? 'OK' : 'KO',
+        codErr: esito ? 0 : -1
     });
 });
 app.use('/notificationws', appRouter);
@@ -58,7 +58,7 @@ app.use('/notificationws', appRouter);
 //******************************************************************************
 var httpsServer = https.createServer(credentials, app);
 httpsServer.listen(config.portaNotificationService);
-logger.debug("httpsServer in ascolto su "+config.portaNotificationService);
+logger.debug("httpsServer in ascolto su " + config.portaNotificationService);
 //** Creo web socket server e lo aggancio all'HTTPS server sopra definito
 var WebSocketServer = require('ws');
 //*****************************************************************************
@@ -149,35 +149,33 @@ logger.debug("WebSocket server in ascolto su " + config.portaNotificationService
 // Gestione messaggi bidirezionali client-server
 //******************************************************************************
 wss.on('connection', function connection(ws, req) {
+    var listaUtentiCollegati = [];
+    ws.listaUtentiCollegati = listaUtentiCollegati;
     ws.on('message', function incoming(messaggio) {
         //se messaggio da un utente contiene prefisso server..lo elimino
-        logger.debug(messaggio);
-        if(messaggio !== "ping"){
+        try {
             var msgJson = JSON.parse(messaggio);
-            var msgUtente =ws.protocol+':'+msgJson.data.replace(prefissoMsgServer, '');
-            sendMessageToUser(msgJson.nick,msgUtente);
+            var msgUtente = msgJson.testo.replace(mittenteServer, '');
+            sendMessageToUser(ws.protocol, msgJson.destinatario, msgUtente);
+        } catch (error) {
+            logger.error("Errore @onmessage " + error);
         }
     });
     ws.on('close', function close() {
-        logger.debug('disconnected:'+ws.protocol);
+        logger.debug('disconnected:' + ws.protocol);
     });
     //un saluto al client dal server
     ws.send('connesso al server!');
 });
-/**
- * Invia messaggio ad uno specifico nick
- * @param {type} nick
- * @param {type} messaggio
- * @returns {undefined}
- */
-function sendMessageToUser(nick,messaggio) {
-    var esito=false;
-     logger.debug("cerco di inviare messaggio a "+nick+":"+messaggio);
+
+function sendMessageToUser(mittente, destinatario, messaggio) {
+    var esito = false;
+    logger.debug(mittente + ' invia messaggio a ' + destinatario + ":" + messaggio);
     //loop su tutti i client connessi..
-    wss.clients.forEach(function each(client) {
-        if (client.readyState === WebSocketServer.OPEN &&
-                client.protocol === nick) {
-            client.send(messaggio);
+    wss.clients.forEach(function each(wsDestinatario) {
+        if (wsDestinatario.readyState === WebSocketServer.OPEN &&
+                wsDestinatario.protocol === destinatario) {
+            wsDestinatario.send(mittente+':'+messaggio);
             esito = true;
         }
     });
@@ -189,28 +187,28 @@ function sendMessageToUser(nick,messaggio) {
  * es: 
  * listaMessaggi=
  * [
- *  {'nick':'RENERO','msg':'ciao renero'},
- *  {'nick':'CARMELO','msg':'ciao carmelo'},
+ *  {'destinatario':'RENERO','msg':'ciao renero'},
+ *  {'destinatario':'CARMELO','msg':'ciao carmelo'},
  * ]
  * @param {type} listaMessaggi
  * @returns {undefined}
  */
 function sendMessageToMoreUser(listaMessaggi) {
     //loop su tutti i client connessi..
-    wss.clients.forEach(function each(client) {
-        if (client.readyState === WebSocketServer.OPEN) {
-            for (var idxMsg=0;idxMsg<listaMessaggi.length;idxMsg++){
-                if (listaMessaggi[idxMsg].nick===client.protocol){
-                    client.send(listaMessaggi[idxMsg].msg);
+    wss.clients.forEach(function each(wsDestinatario) {
+        if (wsDestinatario.readyState === WebSocketServer.OPEN) {
+            for (var idxMsg = 0; idxMsg < listaMessaggi.length; idxMsg++) {
+                if (listaMessaggi[idxMsg].destinatario === wsDestinatario.protocol) {
+                    wsDestinatario.send(listaMessaggi[idxMsg].msg);
                 }
             }
         }
     });
 }
-
-/* Ogni 30 secondi saluto client*/
-/*var interval = setInterval(function ping() {
- sendMessageToUser();
- }, 30000);*/
-
-////****************************************************************************
+/* Ogni 30 secondi check client sconnessi*/
+/*var interval =
+        setInterval(
+                function ping() {
+                    checkConnessioniBroken();
+                }
+        , 30000);*/
