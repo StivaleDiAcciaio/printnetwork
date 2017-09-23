@@ -54,6 +54,30 @@
     "BTN_ACCEDI": "Accedi",
     "BTN_SALVA": "Salva",
     
+    "PC":{
+      "ITEM":{
+          "":"",
+          "RICHIESTE_EFFETTUATE":"Richieste effettuate",
+          "RISPOSTE_RICEVUTE":"Risposte",
+          "NOTIFICHE":"Notifiche"
+      },
+      "LABEL":{
+          "TIPOUTENTE":"tipo utente",
+          "UT_ATTIVITA":"attivita' commerciale",
+          "UT_PRIVATO":"privato",
+          "STMP3D_MATERIALE":"materiale",
+          "STMP3D":"stampa 3d",
+          "STMP2D":"stampa 2d",
+          "INDIRIZZO":"indirizzo",
+          "NICK":"nick",
+          "NO_POS_RILEVATA":"nessuna posizione rilevata"
+      },
+      "BTN":{
+          "RICHIEDI_STMP":"richiedi stampa",
+          "CALCOLA_PERCORSO":"calcola percorso"
+      }
+    },
+    
     "ERR_GENERICO_MSG":"errore imprevisto",
     "BOX_CAPTCHA_NON_TROVATO":"captcha non caricato!",
     "SERVER_COD_0":"operazione completata",

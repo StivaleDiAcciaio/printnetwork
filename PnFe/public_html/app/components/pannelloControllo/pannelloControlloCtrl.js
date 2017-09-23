@@ -2,13 +2,16 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('pannelloControlloCtrl',
-            ['$scope', '$filter', '$state', 'serviziRest', 'CONST', 'NgMap', '$timeout', '$q', '$interval',
-                function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout, $q, $interval) {
+            ['$scope', '$filter', '$state', 'serviziRest', 'CONST', 'NgMap', '$timeout', '$q', '$interval','$translate',
+                function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout, $q, $interval,$translate) {
                     /* notification engine sta nello scope del mainCtrl */
                     $scope.listaMessaggiUtente = $scope.notificationEngine.getMessaggiUtente();
                     $scope.listaNotificheServer = $scope.notificationEngine.getNotificheServer();
                     $scope.listaRichiesteStampaEntrata = $scope.notificationEngine.getRichiesteStampaEntrata();
                     $scope.listaRichiesteStampaUscita = $scope.notificationEngine.getRichiesteStampaUscita();
+                    $scope.numeroRichiesteEffettuate=0;
+                    $scope.numeroRisposteRicevute=0;
+                    $scope.numeroNotifiche=0;
                     $scope.apriChat = function () {
                         $scope.notificationEngine.chatUtente($scope.nickDestinatario, $scope.msgUtente);
                     };
@@ -19,6 +22,7 @@
                         $scope.notificationEngine.accettaRichiestaStampa(destinatario);
                     };
                     $scope.inviaRichiestaStampa = function () {
+                        $scope.numeroRichiesteEffettuate++;
                         $scope.notificationEngine.inviaRichiestaStampa($scope.nickDestinatario);
                     };
                     $scope.onChangeSliderFn = function (id, model) {

@@ -175,3 +175,6 @@ ul.listaVociDesktop li.active a{
    transform-origin: right;
    transition: all 0.5s ease;
 }
+ul.nav-sidebar li a span{
+    float:right;
+}

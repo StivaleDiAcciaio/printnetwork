@@ -85,7 +85,7 @@
                     var end = messaggio.indexOf(":");
                     var mittente = messaggio.substring(0, end);
                     var msgUtente = messaggio.substring(end+1);
-                    if (mittente && mittente != utl.nick){
+                    if (mittente && mittente !== utl.nick){//mittente deve essere diverso da utente loggato
                         if(msgUtente === COSTANTI.RICHIESTA_STAMPA && 
                                 listaRichiesteStampaIN && 
                                 listaRichiesteStampaIN.length<COSTANTI.NUM_RICHIESTE_STAMPA_IN){

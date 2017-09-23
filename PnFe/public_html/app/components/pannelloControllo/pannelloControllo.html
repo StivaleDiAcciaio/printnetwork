@@ -33,13 +33,13 @@
                     <a href="javascript:void(0)" ng-click="centraMappa()">{{indirizzoRilevato}}</a>
                 </div>
                 <div ng-if="!posizioneRilevata" class="linkPosizione">
-                    <a href="javascript:void(0)">nessuna posizione rilevata</a>
+                    <a href="javascript:void(0)">{{"PC.LABEL.NO_POS_RILEVATA"| translate}}</a>
                 </div>
             </div>
-            <ul class="listaVociMobile nav nav-sidebar">             
-                <li class="active"><a href="#pannelloControllo">Voce 1-mobile</a></li>             
-                <li><a href="#pannelloControllo">Voce 2-mobile</a></li>             
-                <li><a href="#pannelloControllo">Voce 3-mobile</a></li>          
+            <ul class="listaVociMobile nav nav-sidebar">
+                <li class="active"><a href="#pannelloControllo">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{numeroRichiesteEffettuate}})</span></a></li>             
+                <li><a href="#pannelloControllo">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute}})</span></a></li>             
+                <li><a href="#pannelloControllo">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche}})</span></a></li>          
             </ul>      
         </nav> 
     </aside>
@@ -75,13 +75,13 @@
                     <a href="javascript:void(0)" ng-click="centraMappa()">{{indirizzoRilevato}}</a>
                 </div>
                 <div ng-if="!posizioneRilevata" class="linkPosizione">
-                    <a href="javascript:void(0)">nessuna posizione rilevata</a>
+                    <a href="javascript:void(0)">{{"PC.LABEL.NO_POS_RILEVATA"| translate}}</a>
                 </div>
             </div>
-            <ul class="listaVociDesktop nav nav-sidebar">             
-                <li class="active"><a href="#pannelloControllo">Voce 1-desktop</a></li>
-                <li><a href="#pannelloControllo">Voce 2-desktop</a></li>             
-                <li><a href="#pannelloControllo">Voce 3-desktop</a></li>          
+            <ul class="listaVociDesktop nav nav-sidebar">
+                <li class="active"><a href="#pannelloControllo">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{numeroRichiesteEffettuate}})</span></a></li>
+                <li><a href="#pannelloControllo">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute}})</span></a></li>             
+                <li><a href="#pannelloControllo">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche}})</span></a></li>          
             </ul>      
         </nav>
     </aside> 
@@ -140,14 +140,14 @@
                 </div>
             </ng-map>
             <div ng-show="pdsSelezionato" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS" ng-class="pdsSelezionato?'boxInfoPdsActive':'boxInfoPdsNoActive'">
-                <div class="col-xs-12"><span class="label">Nick: {{pdsSelezionato.nick}}</span><span class="close" type="button" ng-click="infoPDScancel()">×</span></div>
-                <div class="col-xs-12"><span class="label">Indirizzo: {{pdsSelezionato.indirizzo.descrizione}}</span></div>
-                <div class="col-xs-12"><div ng-if="pdsSelezionato.tipologiaStampa.stampa2D.formato.length>0"><span class="label">Stampa2D: {{pdsSelezionato.tipologiaStampa.stampa2D.colore=='C'?'a colori':'bianco&nero'}}, formati:<span ng-repeat="frmt in pdsSelezionato.tipologiaStampa.stampa2D.formato">{{frmt.value}} </span></span></div>  
-                                       <div ng-if="pdsSelezionato.tipologiaStampa.stampa3D"><span class="label">Stampa3D: materiale {{pdsSelezionato.tipologiaStampa.stampa3D.materiale}}-H.{{pdsSelezionato.tipologiaStampa.stampa3D.altezza}},L.{{pdsSelezionato.tipologiaStampa.stampa3D.larghezza}},P.{{pdsSelezionato.tipologiaStampa.stampa3D.profondita}}</span></div>  
+                <div class="col-xs-12"><span class="label">{{"PC.LABEL.NICK"| translate}}: {{pdsSelezionato.nick}}</span><span class="close" type="button" ng-click="infoPDScancel()">×</span></div>
+                <div class="col-xs-12"><span class="label">{{"PC.LABEL.INDIRIZZO"| translate}}: {{pdsSelezionato.indirizzo.descrizione}}</span></div>
+                <div class="col-xs-12"><div ng-if="pdsSelezionato.tipologiaStampa.stampa2D.formato.length>0"><span class="label">{{"PC.LABEL.STMP2D"| translate}}: {{pdsSelezionato.tipologiaStampa.stampa2D.colore=='C'?'a colori':'bianco&nero'}}, formati:<span ng-repeat="frmt in pdsSelezionato.tipologiaStampa.stampa2D.formato">{{frmt.value}} </span></span></div>  
+                                       <div ng-if="pdsSelezionato.tipologiaStampa.stampa3D"><span class="label">{{"PC.LABEL.STMP3D"| translate}}: {{"PC.LABEL.STMP3D_MATERIALE"| translate}} {{pdsSelezionato.tipologiaStampa.stampa3D.materiale}}-H.{{pdsSelezionato.tipologiaStampa.stampa3D.altezza}},L.{{pdsSelezionato.tipologiaStampa.stampa3D.larghezza}},P.{{pdsSelezionato.tipologiaStampa.stampa3D.profondita}}</span></div>  
                 </div>
                 <div class="col-xs-12">
-                    <div ng-if="pdsSelezionato.tipologiaUtente=='P'"><span class="label">tipo utente: Privato</span></div>
-                    <div ng-if="pdsSelezionato.tipologiaUtente=='A'"><span class="label">tipo utente: Attivita' commerciale</span></div>
+                    <div ng-if="pdsSelezionato.tipologiaUtente=='P'"><span class="label">{{"PC.LABEL.TIPOUTENTE"| translate}}: {{"PC.LABEL.UT_PRIVATO"| translate}}</span></div>
+                    <div ng-if="pdsSelezionato.tipologiaUtente=='A'"><span class="label">{{"PC.LABEL.TIPOUTENTE"| translate}}: {{"PC.LABEL.UT_ATTIVITA"| translate}}</span></div>
                                             
                 </div>
                 <div class="col-md-6 col-xs-12">
@@ -159,8 +159,8 @@
                     <span ng-class="pdsSelezionato.feedback==5?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
                 </div>
                 <div class="col-md-6 col-xs-12">
-                    <button class="btn btn-xs btn-primary">richiedi stampa</button> 
-                    <button class="btn btn-xs btn-primary">calcola percorso</button> 
+                    <button class="btn btn-xs btn-primary">{{"PC.BTN.RICHIEDI_STMP"| translate}}</button> 
+                    <button class="btn btn-xs btn-primary">{{"PC.BTN.CALCOLA_PERCORSO"| translate}}</button> 
                 </div>
             </div>
             <!-- Box in alto contenente gli altri utenti Pds collegati allo stesso indirizzo -->
