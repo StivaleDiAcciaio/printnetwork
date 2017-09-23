@@ -102,7 +102,16 @@
        <div class="row">
             Messaggi utente:
            <div class="col-xs-12" ng-repeat="messaggio in listaMessaggiUtente track by $index">
-               <div class="col-xs-12">{{messaggio}}</div>
+               <div class="col-xs-12">{{messaggio.msg}}</div>
+           </div>
+        </div>
+        <div class="row">
+            Richieste stampa:
+           <div class="col-xs-12" ng-repeat="richiesteStampaRicevute in listaRichiesteStampaEntrata track by $index">
+               <div class="col-xs-12">
+                    <label>{{richiesteStampaRicevute.mittente}}:{{richiesteStampaRicevute.stato}}</label>
+                    <button ng-if="isRichiestaStampa(richiesteStampaRicevute.stato)" class="btn btn-default" ng-click="accettaRichiestaStampa(richiesteStampaRicevute.mittente)">accetta</button>                    
+               </div>
            </div>
         </div>
         <div class="row">

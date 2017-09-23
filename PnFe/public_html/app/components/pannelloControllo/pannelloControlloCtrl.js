@@ -7,9 +7,16 @@
                     /* notification engine sta nello scope del mainCtrl */
                     $scope.listaMessaggiUtente = $scope.notificationEngine.getMessaggiUtente();
                     $scope.listaNotificheServer = $scope.notificationEngine.getNotificheServer();
-                   
+                    $scope.listaRichiesteStampaEntrata = $scope.notificationEngine.getRichiesteStampaEntrata();
+                    $scope.listaRichiesteStampaUscita = $scope.notificationEngine.getRichiesteStampaUscita();
                     $scope.apriChat = function () {
                         $scope.notificationEngine.chatUtente($scope.nickDestinatario, $scope.msgUtente);
+                    };
+                    $scope.isRichiestaStampa = function(stato){
+                        return $scope.notificationEngine.isRichiestaStampa(stato);
+                    };
+                    $scope.accettaRichiestaStampa = function(destinatario){
+                        $scope.notificationEngine.accettaRichiestaStampa(destinatario);
                     };
                     $scope.inviaRichiestaStampa = function () {
                         $scope.notificationEngine.inviaRichiestaStampa($scope.nickDestinatario);

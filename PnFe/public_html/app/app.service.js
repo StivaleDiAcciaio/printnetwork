@@ -63,6 +63,7 @@
     pnApp.factory('notificationEngine', ['$websocket', 'CONST', '$location', function ($websocket, COSTANTI, $location) {
             var NotificationEngine = function () {
                 var protocollo = [];
+                var utl;//Utente loggato;
                 //elenco messaggi ricevuti da Utenti
                 var listaMessaggiUtenteRicevuti = [];
                 //elenco di notifiche ricevute dal server
@@ -84,7 +85,7 @@
                     var end = messaggio.indexOf(":");
                     var mittente = messaggio.substring(0, end);
                     var msgUtente = messaggio.substring(end+1);
-                    if (mittente){
+                    if (mittente && mittente != utl.nick){
                         if(msgUtente === COSTANTI.RICHIESTA_STAMPA && 
                                 listaRichiesteStampaIN && 
                                 listaRichiesteStampaIN.length<COSTANTI.NUM_RICHIESTE_STAMPA_IN){
@@ -100,12 +101,13 @@
                             }
                             if(!richiestaPrecEsistente){
                                 listaRichiesteStampaIN.push({mittente:mittente,stato:msgUtente});
-                                esito = true;
+                                esito = false; //non e' un messaggio da visualizzare a console Ma una richiesta di stampa in entrata
                             }
                         }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE ||
                                  msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA
                                 ){
-                            //In entrata una contrattazione o annullamento richiesta
+                            //In entrata una contrattazione (destinatario ha accettato una mia richiesta)
+                            // o annullamento richiesta
                             //di stampa da parte del destinatario... verifico
                             //che ci sia effettivamente stata una richiesta precedentemente
                             if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
@@ -115,7 +117,7 @@
                                         //..c'e' stata..aggiorno lo stato della richiesta
                                         listaRichiesteStampaOUT[i].stato = msgUtente;
                                         if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
-                                            //nuova richiesta in entrata..
+                                            //richiesta di stampa accettata ...
                                             listaRichiesteStampaIN.push({mittente:mittente,stato:msgUtente});
                                         }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA && listaRichiesteStampaIN){
                                            //..ANNULLA...rimuovo dalle richieste in entrata la vecchia richiesta
@@ -126,7 +128,8 @@
                                                }
                                            }
                                         }
-                                        esito = true;
+                                        //non e' un messaggio da mostrare a console ma una Accettazzione/Annullamento di richiesta di stampa in uscita
+                                        esito = false;
                                          break;
                                      }
                                  }
@@ -147,7 +150,7 @@
                             //se non ho trovato nulla sul canale OUT..
                             //provo sul canale IN
                             if (!esito && listaRichiesteStampaIN && listaRichiesteStampaIN.length>0){
-                                    for (var z = 0; z < listaRichiesteStampaOUT.length; z++) {
+                                    for (var z = 0; z < listaRichiesteStampaIN.length; z++) {
                                          //..deve esistere uno stato precedente a "CONTRATTAZIONE"
                                         if(listaRichiesteStampaIN[z].mittente === mittente &&
                                          listaRichiesteStampaIN[z].stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
@@ -167,7 +170,7 @@
                  */
                 this.connettiWS = function () {
                     if (!dataStream) {
-                        var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
+                        utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
                         protocollo.push(utl.nick);
                         protocollo.push(localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                         // Apro connessione con il websocket in SSL
@@ -178,9 +181,10 @@
                                 listaNotificheServer.push(message.data);
                             }else{
                                 if(checkMessaggioInEntrata(message.data)){
-                                    listaMessaggiUtenteRicevuti.push(message.data);
+                                    var end = message.data.indexOf(":");
+                                    var mittente = message.data.substring(0, end);
+                                    listaMessaggiUtenteRicevuti.push({mittente:mittente,msg:message.data});
                                 }
-                                
                             }
                         });
                         dataStream.onClose(function () {
@@ -201,12 +205,14 @@
                 };
                 
                 this.accettaRichiestaStampa = function (destinatario) {
+                    console.log("accetto la richiesta stampa di "+destinatario);
                     //accettata richiesta...
                     //aggiorno lo stato del canale IN entrata..
-                    for (var z = 0; z < listaRichiesteStampaOUT.length; z++) {
+                    for (var z = 0; z < listaRichiesteStampaIN.length; z++) {
                         //..deve esistere uno stato precedente a "CONTRATTAZIONE"
                         if(listaRichiesteStampaIN[z].mittente === destinatario &&
-                            listaRichiesteStampaIN[z].stato === COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA){
+                            listaRichiesteStampaIN[z].stato === COSTANTI.RICHIESTA_STAMPA){
+                        
                             listaRichiesteStampaIN[z].stato =COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE;
                             break;
                         }
@@ -226,6 +232,12 @@
                 this.getNotificheServer = function () {
                     return listaNotificheServer;
                 };
+                this.getRichiesteStampaEntrata = function () {
+                    return listaRichiesteStampaIN;
+                };
+                this.getRichiesteStampaUscita = function () {
+                    return listaRichiesteStampaOUT;
+                };
                 this.pingWs = function () {
                     this.connettiWS();
                 };
@@ -235,6 +247,9 @@
                 };
                 this.isConnected = function () {
                     return (dataStream !== null && dataStream.readyState === 1) ? true : false;
+                };
+                this.isRichiestaStampa = function(stato){
+                  return stato===COSTANTI.RICHIESTA_STAMPA?true:false;
                 };
             };
             return new NotificationEngine();
