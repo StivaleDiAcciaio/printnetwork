@@ -290,7 +290,22 @@
                         nuovoPdsSelezionato.utentiPDSstessoIndirizzo = $filter('orderBy')(nuovoArrayPdsStessoIndirizzo, 'feedback', 'reverse');
                         return nuovoPdsSelezionato;
                     };
-
+                    $scope.toggleSubMenuSecondario=function(parentItem){
+                        if(parentItem === 'RichiesteEffettuate'){
+                            $scope.toggleMenuRichiesteEffettuate=!$scope.toggleMenuRichiesteEffettuate;
+                            $scope.toggleMenuRisposte=false;
+                            $scope.toggleMenuNotifiche=false;
+                        }else if(parentItem === 'Risposte'){
+                            $scope.toggleMenuRisposte=!$scope.toggleMenuRisposte;
+                            $scope.toggleMenuRichiesteEffettuate=false;
+                            $scope.toggleMenuNotifiche=false;
+                            
+                        }else if(parentItem === 'Notifiche'){
+                            $scope.toggleMenuNotifiche=!$scope.toggleMenuNotifiche;
+                            $scope.toggleMenuRichiesteEffettuate=false;
+                            $scope.toggleMenuRisposte=false;
+                        }
+                    };
                     $scope.getPosizioneRilevata();
                     /* Ogni TIME_OUT_PING minuti circa pingo serversocket*/
                     var ping;

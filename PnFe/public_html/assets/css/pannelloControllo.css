@@ -41,6 +41,7 @@
 ul.listaVociMobile,
 ul.listaVociDesktop{
     background-color:  #f5f5f5;
+    margin-top: 12px;
 }
 ul.listaVociMobile li a,
 ul.listaVociDesktop li a{
@@ -86,6 +87,8 @@ ul.listaVociDesktop li.active a{
     color: green;
     border: 1px solid green;
     background: whitesmoke;
+    border: 1px solid #333;
+    box-shadow: 10px 10px 5px #888888;    
 }
 .indirizzoTrovato.ng-hide-add {
     transform: rotateZ(0);
@@ -107,6 +110,9 @@ ul.listaVociDesktop li.active a{
     width: 100%;
     display: inline-flex;
     background: whitesmoke;
+    border: 1px solid #333;
+    box-shadow: 10px 10px 5px #888888;
+    margin-top: 2px;
 }
 
 .gps{
@@ -187,4 +193,7 @@ ul.listaVociDesktop li.active a{
 
 ul.nav-sidebar li a span{
     float:right;
+}
+ul.submenuActiveNoActive,ul.submenuActiveNoActive li a {
+    background:#7ca0bf !important;
 }

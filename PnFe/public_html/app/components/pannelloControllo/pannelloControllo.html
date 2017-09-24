@@ -37,7 +37,7 @@
                 </div>
             </div>
             <ul class="listaVociMobile nav nav-sidebar">
-                <li class="active"><a href="#pannelloControllo">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{listaRichiesteStampaUscita.lenght==null?0:listaRichiesteStampaUscita.lenght}})</span></a></li>             
+                <li class="active"><a href="#pannelloControllo">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{listaRichiesteStampaUscita.length==null?0:listaRichiesteStampaUscita.length}})</span></a></li>             
                 <li><a href="#pannelloControllo">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute()}})</span></a></li>             
                 <li><a href="#pannelloControllo">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche()}})</span></a></li>          
             </ul>      
@@ -79,19 +79,35 @@
                 </div>
             </div>
             <ul class="listaVociDesktop nav nav-sidebar">
-                <li ng-init="toggleMenuRichiesteEffettuate=false" class="active">
-                    <a href="#pannelloControllo" ng-click="toggleMenuRichiesteEffettuate=!toggleMenuRichiesteEffettuate">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{listaRichiesteStampaUscita.lenght==null?0:listaRichiesteStampaUscita.lenght}})</span></a>
-                    <ul  ng-show="toggleMenuRichiesteEffettuate" class="submenuActiveNoActive">
+                <li ng-init="toggleMenuRichiesteEffettuate=false" ng-class="toggleMenuRichiesteEffettuate?'active':''">
+                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('RichiesteEffettuate')">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{listaRichiesteStampaUscita.length==null?0:listaRichiesteStampaUscita.length}})</span></a>
+                    <ul  ng-show="toggleMenuRichiesteEffettuate" class="submenuActiveNoActive" ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita track by $index">
                        <li>
-                           <a href="#pannelloControllo">Sotto Item</a>     
+                           <a href="#pannelloControllo">{{richiesteStampaEffettuate.destinatario}}:{{richiesteStampaEffettuate.stato}}</a>     
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#pannelloControllo">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute()}})</span></a>
+                <li ng-init="toggleMenuRisposte=false" ng-class="toggleMenuRisposte?'active':''">
+                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Risposte')">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute()}})</span></a>
+                    <ul  ng-show="toggleMenuRisposte" class="submenuActiveNoActive" ng-repeat="risposte in listaRichiesteStampaUscita|filter:{stato:'stampa_contrattazione'} track by $index">
+                       <li>
+                           <a href="#pannelloControllo">{{risposte.destinatario}}:{{risposte.stato}}</a>     
+                        </li>
+                    </ul>                    
                 </li>
-                <li>
-                    <a href="#pannelloControllo">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche()}})</span></a>
+                <li ng-init="toggleMenuNotifiche=false" ng-class="toggleMenuNotifiche?'active':''">
+                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Notifiche')">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche()}})</span></a>
+                    <ul  ng-show="toggleMenuNotifiche" class="submenuActiveNoActive" ng-repeat="richiesteStampaEntrata in listaRichiesteStampaEntrata track by $index">
+                       <li>
+                           <a href="#pannelloControllo">{{richiesteStampaEntrata.mittente}}:{{richiesteStampaEntrata.stato}}</a>
+                            <button class="btn btn-small" ng-click="accettaRichiestaStampa(richiesteStampaEntrata.mittente)">accetta</button> 
+                        </li>
+                    </ul>                    
+                    <ul  ng-show="toggleMenuNotifiche" class="submenuActiveNoActive" ng-repeat="notificheServer in listaNotificheServer track by $index">
+                       <li>
+                           <a href="#pannelloControllo">SERVER:{{notificheServer}}</a>     
+                        </li>
+                    </ul>                                        
                 </li>
             </ul>      
         </nav>
@@ -111,24 +127,8 @@
        </div>
        <!-- GESTIONE MESSAGGI WSOCKET-->
        <div class="row">
-            Messaggi utente:
            <div class="col-xs-12" ng-repeat="messaggio in listaMessaggiUtente track by $index">
                <div class="col-xs-12">{{messaggio.msg}}</div>
-           </div>
-        </div>
-        <div class="row">
-            Richieste stampa:
-           <div class="col-xs-12" ng-repeat="richiesteStampaRicevute in listaRichiesteStampaEntrata track by $index">
-               <div class="col-xs-12">
-                    <label>{{richiesteStampaRicevute.mittente}}:{{richiesteStampaRicevute.stato}}</label>
-                    <button ng-if="isRichiestaStampa(richiesteStampaRicevute.stato)" class="btn btn-default" ng-click="accettaRichiestaStampa(richiesteStampaRicevute.mittente)">accetta</button>                    
-               </div>
-           </div>
-        </div>
-        <div class="row">
-            Notifiche dal Server:
-           <div class="col-xs-12" ng-repeat="notifica in listaNotificheServer track by $index">
-               <div class="col-xs-12">{{notifica}}</div>
            </div>
         </div>
         <!-- GESTIONE MESSAGGI WSOCKET-->      
