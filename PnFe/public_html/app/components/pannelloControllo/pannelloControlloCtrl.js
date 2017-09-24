@@ -9,9 +9,20 @@
                     $scope.listaNotificheServer = $scope.notificationEngine.getNotificheServer();
                     $scope.listaRichiesteStampaEntrata = $scope.notificationEngine.getRichiesteStampaEntrata();
                     $scope.listaRichiesteStampaUscita = $scope.notificationEngine.getRichiesteStampaUscita();
-                    $scope.numeroRichiesteEffettuate=0;
-                    $scope.numeroRisposteRicevute=0;
-                    $scope.numeroNotifiche=0;
+                    $scope.numeroNotifiche = function(){
+                      var numeroNotificheServer=$scope.listaNotificheServer.length===null?0:$scope.listaNotificheServer.length;
+                      var numeroRichiesteStampaEntrata=$scope.listaRichiesteStampaEntrata.length===null?0:$scope.listaRichiesteStampaEntrata.length;
+                      return numeroNotificheServer+numeroRichiesteStampaEntrata;
+                    };
+                    $scope.numeroRisposteRicevute = function(){
+                      var numRisposte=0;
+                      $scope.listaRichiesteStampaUscita.forEach(function(richiestaUscita) {
+                            if(richiestaUscita.stato !== COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA){
+                                numRisposte++;
+                            }
+                      });
+                      return numRisposte;
+                    };
                     $scope.apriChat = function () {
                         $scope.notificationEngine.chatUtente($scope.nickDestinatario, $scope.msgUtente);
                     };
@@ -22,7 +33,6 @@
                         $scope.notificationEngine.accettaRichiestaStampa(destinatario);
                     };
                     $scope.inviaRichiestaStampa = function () {
-                        $scope.numeroRichiesteEffettuate++;
                         $scope.notificationEngine.inviaRichiestaStampa($scope.nickDestinatario);
                     };
                     $scope.onChangeSliderFn = function (id, model) {

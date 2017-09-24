@@ -77,10 +77,12 @@
                 var dataStream = null;
                                 /**
                  * effettua verifiche sui messaggi in enrtata
+                 * filtrando le particolari richieste di stampa/annulla/accetta
+                 * dai messaggi da visualizzare a console
                  * @param {type} messaggio
                  * @returns {Boolean}
                  */
-                var checkMessaggioInEntrata = function (messaggio){
+                var filtraMessaggioInEntrata = function (messaggio){
                     var esito=false;
                     var end = messaggio.indexOf(":");
                     var mittente = messaggio.substring(0, end);
@@ -106,33 +108,35 @@
                         }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE ||
                                  msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA
                                 ){
-                            //In entrata una contrattazione (destinatario ha accettato una mia richiesta)
-                            // o annullamento richiesta
+                            //In entrata una contrattazione (Si tratta di una Risposta ad una mia richiesta,
+                            //                                  destinatario ha accettato una mia richiesta)
+                            // o annullamento richiesta     (non ha accettato)
                             //di stampa da parte del destinatario... verifico
-                            //che ci sia effettivamente stata una richiesta precedentemente
+                            //che ci sia stata effettivamente una richiesta precedentemente da parte mia
                             if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
                                  for (var i = 0; i < listaRichiesteStampaOUT.length; i++) {
                                      if(listaRichiesteStampaOUT[i].destinatario === mittente &&
                                         listaRichiesteStampaOUT[i].stato === COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA){
                                         //..c'e' stata..aggiorno lo stato della richiesta
                                         listaRichiesteStampaOUT[i].stato = msgUtente;
-                                        if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
-                                            //richiesta di stampa accettata ...
-                                            listaRichiesteStampaIN.push({mittente:mittente,stato:msgUtente});
-                                        }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA && listaRichiesteStampaIN){
-                                           //..ANNULLA...rimuovo dalle richieste in entrata la vecchia richiesta
-                                           for (var x = 0; x < listaRichiesteStampaIN.length; x++){
-                                               if(listaRichiesteStampaIN[x].mittente === mittente){
-                                                   listaRichiesteStampaIN.splice(x, 1);
-                                                   break;
-                                               }
-                                           }
-                                        }
                                         //non e' un messaggio da mostrare a console ma una Accettazzione/Annullamento di richiesta di stampa in uscita
                                         esito = false;
                                          break;
                                      }
                                  }
+                            }
+                            //verifico anche se eventuale "ANNULLA" da parte del mittente si riferisca ad una sua precedente 
+                            //richiesta in Entrata..
+                            if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA && listaRichiesteStampaIN){
+                               //..ANNULLA...rimuovo dalle richieste in entrata la vecchia richiesta
+                               for (var x = 0; x < listaRichiesteStampaIN.length; x++){
+                                   if(listaRichiesteStampaIN[x].mittente === mittente){
+                                       listaRichiesteStampaIN.splice(x, 1);
+                                       //non e' un messaggio da mostrare a console ma un Annullamento di richiesta di stampa in entrata
+                                       esito = false;
+                                       break;
+                                   }
+                               }
                             }
                         }else{
                             // per qualunque altro messaggio..
@@ -180,7 +184,7 @@
                             if (message.data.startsWith("SERVER")){
                                 listaNotificheServer.push(message.data);
                             }else{
-                                if(checkMessaggioInEntrata(message.data)){
+                                if(filtraMessaggioInEntrata(message.data)){
                                     var end = message.data.indexOf(":");
                                     var mittente = message.data.substring(0, end);
                                     listaMessaggiUtenteRicevuti.push({mittente:mittente,msg:message.data});

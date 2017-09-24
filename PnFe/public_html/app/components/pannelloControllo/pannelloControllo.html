@@ -37,9 +37,9 @@
                 </div>
             </div>
             <ul class="listaVociMobile nav nav-sidebar">
-                <li class="active"><a href="#pannelloControllo">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{numeroRichiesteEffettuate}})</span></a></li>             
-                <li><a href="#pannelloControllo">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute}})</span></a></li>             
-                <li><a href="#pannelloControllo">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche}})</span></a></li>          
+                <li class="active"><a href="#pannelloControllo">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{listaRichiesteStampaUscita.lenght==null?0:listaRichiesteStampaUscita.lenght}})</span></a></li>             
+                <li><a href="#pannelloControllo">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute()}})</span></a></li>             
+                <li><a href="#pannelloControllo">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche()}})</span></a></li>          
             </ul>      
         </nav> 
     </aside>
@@ -79,9 +79,20 @@
                 </div>
             </div>
             <ul class="listaVociDesktop nav nav-sidebar">
-                <li class="active"><a href="#pannelloControllo">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{numeroRichiesteEffettuate}})</span></a></li>
-                <li><a href="#pannelloControllo">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute}})</span></a></li>             
-                <li><a href="#pannelloControllo">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche}})</span></a></li>          
+                <li ng-init="toggleMenuRichiesteEffettuate=false" class="active">
+                    <a href="#pannelloControllo" ng-click="toggleMenuRichiesteEffettuate=!toggleMenuRichiesteEffettuate">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{listaRichiesteStampaUscita.lenght==null?0:listaRichiesteStampaUscita.lenght}})</span></a>
+                    <ul  ng-show="toggleMenuRichiesteEffettuate" class="submenuActiveNoActive">
+                       <li>
+                           <a href="#pannelloControllo">Sotto Item</a>     
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pannelloControllo">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute()}})</span></a>
+                </li>
+                <li>
+                    <a href="#pannelloControllo">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche()}})</span></a>
+                </li>
             </ul>      
         </nav>
     </aside> 
