@@ -81,31 +81,31 @@
             <ul class="listaVociDesktop nav nav-sidebar">
                 <li ng-init="toggleMenuRichiesteEffettuate=false" ng-class="toggleMenuRichiesteEffettuate?'active':''">
                     <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('RichiesteEffettuate')">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{listaRichiesteStampaUscita.length==null?0:listaRichiesteStampaUscita.length}})</span></a>
-                    <ul  ng-show="toggleMenuRichiesteEffettuate" class="submenuActiveNoActive" ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita track by $index">
-                       <li>
-                           <a href="#pannelloControllo">{{richiesteStampaEffettuate.destinatario}}:{{richiesteStampaEffettuate.stato}}</a>     
-                        </li>
-                    </ul>
+                        <ul ng-show="toggleMenuRichiesteEffettuate" class="submenuActiveNoActive">
+                           <li ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita track by $index">
+                               <button class="btn btn-link" href="#pannelloControllo">{{richiesteStampaEffettuate.destinatario}}:{{richiesteStampaEffettuate.stato}}</button>     
+                            </li>
+                        </ul>
                 </li>
                 <li ng-init="toggleMenuRisposte=false" ng-class="toggleMenuRisposte?'active':''">
                     <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Risposte')">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute()}})</span></a>
-                    <ul  ng-show="toggleMenuRisposte" class="submenuActiveNoActive" ng-repeat="risposte in listaRichiesteStampaUscita|filter:{stato:'stampa_contrattazione'} track by $index">
-                       <li>
-                           <a href="#pannelloControllo">{{risposte.destinatario}}:{{risposte.stato}}</a>     
+                    <ul  ng-show="toggleMenuRisposte" class="submenuActiveNoActive">
+                       <li ng-repeat="risposte in listaRichiesteStampaUscita|filter:{stato:'stampa_contrattazione'} track by $index">
+                           <button class="btn btn-link" href="#pannelloControllo">{{risposte.destinatario}}:{{risposte.stato}}</button>     
                         </li>
                     </ul>                    
                 </li>
                 <li ng-init="toggleMenuNotifiche=false" ng-class="toggleMenuNotifiche?'active':''">
                     <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Notifiche')">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche()}})</span></a>
-                    <ul  ng-show="toggleMenuNotifiche" class="submenuActiveNoActive" ng-repeat="richiesteStampaEntrata in listaRichiesteStampaEntrata track by $index">
-                       <li>
-                           <a href="#pannelloControllo">{{richiesteStampaEntrata.mittente}}:{{richiesteStampaEntrata.stato}}</a>
-                            <button class="btn btn-small" ng-click="accettaRichiestaStampa(richiesteStampaEntrata.mittente)">accetta</button> 
+                    <ul  ng-show="toggleMenuNotifiche" class="submenuActiveNoActive">
+                       <li ng-repeat="richiesteStampaEntrata in listaRichiesteStampaEntrata track by $index">
+                           <button class="btn btn-link" href="#pannelloControllo">{{richiesteStampaEntrata.mittente}}:{{richiesteStampaEntrata.stato}}</button>
+                           <button class="btn btn-small" ng-click="accettaRichiestaStampa(richiesteStampaEntrata.mittente)">accetta</button> 
                         </li>
                     </ul>                    
-                    <ul  ng-show="toggleMenuNotifiche" class="submenuActiveNoActive" ng-repeat="notificheServer in listaNotificheServer track by $index">
-                       <li>
-                           <a href="#pannelloControllo">SERVER:{{notificheServer}}</a>     
+                    <ul  ng-show="toggleMenuNotifiche" class="submenuActiveNoActive">
+                       <li ng-repeat="notificheServer in listaNotificheServer track by $index" >
+                           <button class="btn btn-link" href="#pannelloControllo">SERVER:{{notificheServer}}</button>     
                         </li>
                     </ul>                                        
                 </li>

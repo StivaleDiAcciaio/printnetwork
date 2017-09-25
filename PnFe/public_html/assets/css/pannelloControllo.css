@@ -182,18 +182,28 @@ ul.listaVociDesktop li.active a{
    transition: all 0.5s ease;
 }
 .submenuActiveNoActive.ng-hide {
-    transform: rotateY(90deg);
+    transform: rotateX(90deg);
 }
 
 .submenuActiveNoActive.ng-hide-add,
 .submenuActiveNoActive.ng-hide-remove {
   transition: all 0.5s ease;
-   transform-origin: left;
+   transform-origin: top;
 }
 
 ul.nav-sidebar li a span{
     float:right;
 }
-ul.submenuActiveNoActive,ul.submenuActiveNoActive li a {
-    background:#7ca0bf !important;
+ 
+ul.submenuActiveNoActive li { background: #98aab9; }
+ul.submenuActiveNoActive li:nth-child(odd),ul.submenuActiveNoActive li a
+ { background: #879eb1;}
+
+ul.submenuActiveNoActive { 
+  list-style-type: none;
+  padding:2px;
 }
+ul.submenuActiveNoActive button{
+    width:100%;
+    text-align:left;
+} 
