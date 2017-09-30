@@ -202,12 +202,24 @@
                 this.chatUtente = function (destinatario, msg) {
                     this.inviaMessaggio(destinatario, msg);
                 };
-                                
+
                 this.inviaRichiestaStampa = function (destinatario) {
-                    this.inviaMessaggio(destinatario, COSTANTI.RICHIESTA_STAMPA);
-                    listaRichiesteStampaOUT.push({destinatario:destinatario,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA});
+                    var inviato = false;
+                    if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
+                        for (var lrs = 0; lrs < listaRichiesteStampaOUT.length; lrs++) {
+                            //verifico che non sia gia stata inviata richiesta stampa al destinatario
+                            if(listaRichiesteStampaOUT[lrs].destinatario === destinatario){
+                                inviato=true;
+                                break;
+                            }
+                        }
+                    }
+                    if(!inviato){
+                       this.inviaMessaggio(destinatario, COSTANTI.RICHIESTA_STAMPA);
+                       listaRichiesteStampaOUT.push({destinatario:destinatario,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA});   
+                    }
                 };
-                
+
                 this.accettaRichiestaStampa = function (destinatario) {
                     console.log("accetto la richiesta stampa di "+destinatario);
                     //accettata richiesta...
@@ -216,14 +228,14 @@
                         //..deve esistere uno stato precedente a "CONTRATTAZIONE"
                         if(listaRichiesteStampaIN[z].mittente === destinatario &&
                             listaRichiesteStampaIN[z].stato === COSTANTI.RICHIESTA_STAMPA){
-                        
+
                             listaRichiesteStampaIN[z].stato =COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE;
                             break;
                         }
                     }
                     this.inviaMessaggio(destinatario, COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE);
                 };
-                
+
                 this.inviaMessaggio = function (nick, data) {
                     if (nick && data) {
                         this.connettiWS();
