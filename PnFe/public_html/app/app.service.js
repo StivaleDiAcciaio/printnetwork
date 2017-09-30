@@ -208,15 +208,16 @@
                     if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
                         for (var lrs = 0; lrs < listaRichiesteStampaOUT.length; lrs++) {
                             //verifico che non sia gia stata inviata richiesta stampa al destinatario
-                            if(listaRichiesteStampaOUT[lrs].destinatario === destinatario){
+                            if(listaRichiesteStampaOUT[lrs].destinatario === destinatario.nick){
                                 inviato=true;
                                 break;
                             }
                         }
                     }
-                    if(!inviato){
-                       this.inviaMessaggio(destinatario, COSTANTI.RICHIESTA_STAMPA);
-                       listaRichiesteStampaOUT.push({destinatario:destinatario,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA});   
+                    if(destinatario.nick !== utl.nick && !inviato){
+                       //memorizzo alcune info nell'array delle richieste (coordinates[0] ->longitudine coordinates[1] ->latitudine)
+                        this.inviaMessaggio(destinatario.nick, COSTANTI.RICHIESTA_STAMPA);
+                       listaRichiesteStampaOUT.push({destinatario:destinatario.nick,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA,destinatarioPos:destinatario.location.coordinates,indirizzoDestinatario:destinatario.indirizzo.descrizione,feedback:destinatario.feedback});   
                     }
                 };
 

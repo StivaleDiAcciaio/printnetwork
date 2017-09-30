@@ -138,21 +138,22 @@ ul.listaVociDesktop li.active a{
     font-size: 30px;
 }
 .markerWrapper i{
-    color:greenyellow;
-    text-shadow: 2px 0 black;
+    color:#d0d6c8;
+    text-shadow: 2px 0 #222;
 }
 .markerWrapper i.pdsActive{
-    color:blue;
-    text-shadow: 2px 0 greenyellow;
+    color:#ff9b00;
+    text-shadow: 2px 0 #d0d6c8;
 }
 .markerWrapper i.pdsNoActive{
-    color:greenyellow;
-    text-shadow: 2px 0 black;
+    color:#c5d2b3;
+    text-shadow: 2px 0 #222;
 }
 .infoPDS{
-    background-color: #a8a69f;
-    border:2px solid blue;
-    box-shadow: 3px 0 greenyellow;
+    opacity:0.9;
+    background-color: #222;
+    border:2px solid #ff9b00;
+    box-shadow: 3px 0 #c3882c;
     position: absolute;
     bottom: 15px;
 }
@@ -161,11 +162,13 @@ ul.listaVociDesktop li.active a{
     margin:2px;
 }
 .infoMorePDS{
-    background-color: #a8a69f;
-    border:1px solid blue;
-    box-shadow: 2px 0 greenyellow;
+    opacity:0.8;
+    background-color: #8c8b86;
+    border:2px solid #eab86a;
+    box-shadow: 2px 0 #171717;
     position: absolute;
     top: 60px;
+    
 }
 .colorStar{
    color:yellow;
@@ -207,3 +210,14 @@ ul.submenuActiveNoActive button{
     width:100%;
     text-align:left;
 } 
+
+.mappaPannelloControllo{
+    border: 2px solid #f7f6f0;
+    border-radius: 7px;
+    box-shadow: 10px 10px 5px #888888;
+}
+
+
+.btnCloseX{
+    color: white;
+}

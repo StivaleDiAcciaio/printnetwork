@@ -32,8 +32,8 @@
                     $scope.accettaRichiestaStampa = function(destinatario){
                         $scope.notificationEngine.accettaRichiestaStampa(destinatario);
                     };
-                    $scope.inviaRichiestaStampa = function () {
-                        $scope.notificationEngine.inviaRichiestaStampa($scope.nickDestinatario);
+                    $scope.inviaRichiestaStampa = function (pdsSelezionato) {
+                        $scope.notificationEngine.inviaRichiestaStampa(pdsSelezionato);
                     };
                     $scope.onChangeSliderFn = function (id, model) {
                         $scope.mostraPDS();
