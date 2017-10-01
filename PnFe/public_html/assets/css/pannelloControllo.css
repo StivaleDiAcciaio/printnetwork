@@ -206,10 +206,6 @@ ul.submenuActiveNoActive {
   list-style-type: none;
   padding:2px;
 }
-ul.submenuActiveNoActive button{
-    width:100%;
-    text-align:left;
-} 
 
 .mappaPannelloControllo{
     border: 2px solid #f7f6f0;
@@ -217,7 +213,16 @@ ul.submenuActiveNoActive button{
     box-shadow: 10px 10px 5px #888888;
 }
 
-
+.subMenuBtnAuto,.subMenuBtnPiede{
+    float: right;
+    padding: 5px;
+}
+.subMenuBtnAuto img{
+    width: 20px;
+}
+.subMenuBtnPiede img{
+    height: 16px;
+}
 .btnCloseX{
     color: white;
 }

@@ -86,6 +86,8 @@
                 <ul ng-show="toggleMenuRichiesteEffettuate" class="submenuActiveNoActive">
                     <li ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita track by $index">
                         <button class="btn btn-link" href="#pannelloControllo">{{richiesteStampaEffettuate.destinatario}}</button>
+                        <button class="btn btn-link subMenuBtnAuto" href="#pannelloControllo"><img src="assets/img/auto.svg"></button>
+                        <button class="btn btn-link subMenuBtnPiede" href="#pannelloControllo"><img src="assets/img/piede.svg"></button>
                     </li>
                 </ul>
                 <!-- /Submenu Richieste-->
