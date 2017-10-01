@@ -85,7 +85,12 @@
                 <!-- Submenu Richieste-->
                 <ul ng-show="toggleMenuRichiesteEffettuate" class="submenuActiveNoActive">
                     <li ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita track by $index">
-                        <button class="btn btn-link" href="#pannelloControllo">{{richiesteStampaEffettuate.destinatario}}</button>
+                        <button class="btn btn-link" href="#pannelloControllo">{{richiesteStampaEffettuate.destinatario.nick}}</button>
+                        <span ng-class="richiesteStampaEffettuate.destinatario.feedback==0?'glyphicon glyphicon-star-empty':'glyphicon glyphicon-star colorStar'"></span>
+                        <span ng-class="(richiesteStampaEffettuate.destinatario.feedback==2 || richiesteStampaEffettuate.destinatario.feedback>2)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                        <span ng-class="(richiesteStampaEffettuate.destinatario.feedback==3 || richiesteStampaEffettuate.destinatario.feedback>3)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                        <span ng-class="(richiesteStampaEffettuate.destinatario.feedback==4 || richiesteStampaEffettuate.destinatario.feedback>4)?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
+                        <span ng-class="richiesteStampaEffettuate.destinatario.feedback==5?'glyphicon glyphicon-star colorStar':'glyphicon glyphicon-star-empty'"></span>
                         <button class="btn btn-link subMenuBtnAuto" href="#pannelloControllo"><img src="assets/img/auto.svg"></button>
                         <button class="btn btn-link subMenuBtnPiede" href="#pannelloControllo"><img src="assets/img/piede.svg"></button>
                     </li>

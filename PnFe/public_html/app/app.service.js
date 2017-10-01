@@ -60,7 +60,7 @@
             };
             return new ServiziRest();
         }]);
-    pnApp.factory('notificationEngine', ['$websocket', 'CONST', '$location', function ($websocket, COSTANTI, $location) {
+    pnApp.factory('notificationEngine', ['$websocket', 'CONST', '$location','serviziRest', function ($websocket, COSTANTI, $location,serviziRest) {
             var NotificationEngine = function () {
                 var protocollo = [];
                 var utl;//Utente loggato;
@@ -115,7 +115,7 @@
                             //che ci sia stata effettivamente una richiesta precedentemente da parte mia
                             if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
                                  for (var i = 0; i < listaRichiesteStampaOUT.length; i++) {
-                                     if(listaRichiesteStampaOUT[i].destinatario === mittente &&
+                                     if(listaRichiesteStampaOUT[i].destinatario.nick === mittente &&
                                         listaRichiesteStampaOUT[i].stato === COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA){
                                         //..c'e' stata..aggiorno lo stato della richiesta
                                         listaRichiesteStampaOUT[i].stato = msgUtente;
@@ -144,7 +144,7 @@
                             if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
                                  for (var i = 0; i < listaRichiesteStampaOUT.length; i++) {
                                      //..deve esistere uno stato precedente a "CONTRATTAZIONE"
-                                     if(listaRichiesteStampaOUT[i].destinatario === mittente &&
+                                     if(listaRichiesteStampaOUT[i].destinatario.nick === mittente &&
                                         listaRichiesteStampaOUT[i].stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
                                         esito = true;
                                          break;
@@ -208,7 +208,7 @@
                     if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
                         for (var lrs = 0; lrs < listaRichiesteStampaOUT.length; lrs++) {
                             //verifico che non sia gia stata inviata richiesta stampa al destinatario
-                            if(listaRichiesteStampaOUT[lrs].destinatario === destinatario.nick){
+                            if(listaRichiesteStampaOUT[lrs].destinatario.nick === destinatario.nick){
                                 inviato=true;
                                 break;
                             }
@@ -217,7 +217,8 @@
                     if(destinatario.nick !== utl.nick && !inviato){
                        //memorizzo alcune info nell'array delle richieste (coordinates[0] ->longitudine coordinates[1] ->latitudine)
                         this.inviaMessaggio(destinatario.nick, COSTANTI.RICHIESTA_STAMPA);
-                       listaRichiesteStampaOUT.push({destinatario:destinatario.nick,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA,destinatarioPos:destinatario.location.coordinates,indirizzoDestinatario:destinatario.indirizzo.descrizione,feedback:destinatario.feedback});   
+                       //listaRichiesteStampaOUT.push({destinatario:destinatario.nick,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA,destinatarioPos:destinatario.location.coordinates,indirizzoDestinatario:destinatario.indirizzo.descrizione,feedback:destinatario.feedback});   
+                       listaRichiesteStampaOUT.push({destinatario:destinatario,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA});   
                     }
                 };
 

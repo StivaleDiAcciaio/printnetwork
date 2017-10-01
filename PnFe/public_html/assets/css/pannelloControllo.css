@@ -198,9 +198,9 @@ ul.nav-sidebar li a span{
     float:right;
 }
  
-ul.submenuActiveNoActive li { background: #98aab9; }
+ul.submenuActiveNoActive li { background: #b9b778; border:1px solid #222; margin-bottom:1px;}
 ul.submenuActiveNoActive li:nth-child(odd),ul.submenuActiveNoActive li a
- { background: #879eb1;}
+ { background: #e0c293;}
 
 ul.submenuActiveNoActive { 
   list-style-type: none;
