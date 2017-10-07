@@ -245,13 +245,13 @@ appRouter.post('/2D', function (req, res) {
     req.accepts('application/json');
     res.json({data: 'stampa 2D avviata!', token: req.decoded});
 });
-
+/**
+ * Trova i Punti di stampa (PDS) data una geoposizione in input
+ */
 appRouter.post('/pds', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST");
-    var esito = null;
-    var token = null;
     //logger.debug("metodo trovaPDS (post) : ip client=" + req.headers["x-forwarded-proto"]);
     if (req.body.paramRicercaPDS) {
         //logger.debug("-->email utente " + req.body.utente.email);
@@ -279,6 +279,41 @@ appRouter.post('/pds', function (req, res) {
         res.status(500);
         res.json({esito: false,
             messaggio: 'parametri PDS mancanti',
+            codErr: 500,
+            utenti: {}});
+    }
+});
+/**
+ * Restituisce le info dell'utente passato in input tramite nick
+ */
+appRouter.post('/infonick', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, token, Content-Type, X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "POST");
+     if (req.body.nick) {
+        moduloDbUtente.infoNick(req.body.nick, function (risultato) {
+            if (!risultato.esito) {
+                //logger.debug(risultato.messaggio);
+                res.json({
+                    esito: risultato.esito,
+                    codErr: risultato.codErr,
+                    messaggio: risultato.messaggio
+                });
+            } else {
+                //logger.debug('utente loggato');
+                res.json({
+                    esito: risultato.esito,
+                    messaggio: risultato.messaggio,
+                    codErr: risultato.codErr,
+                    utente: risultato.utente
+                });
+            }
+        });
+     } else {
+        //In caso di parametri vuoti
+        res.status(500);
+        res.json({esito: false,
+            messaggio: 'fornire un nick valido',
             codErr: 500,
             utenti: {}});
     }

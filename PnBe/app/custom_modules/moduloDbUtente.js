@@ -107,7 +107,29 @@ module.exports = {
             }
             callback(data);
         });
-    }, trovaPDS: function (paramRicercaPDS, callback) {
+    },infoNick: function (utenteReq, callback) {
+        // ricerca Utente
+        Utente.findOne({
+            nick: utenteReq.nick
+        },{ nick: 1,tipologiaUtente: 1,indirizzo: 1,tipologiaStampa: 1,feedback: 1, location: 1}, function (err, utente) {
+            var data = {};
+            if (err) {
+                data.esito = false;
+                data.codErr = 500;
+                data.messaggio = err;
+            } else if (!utente) {
+                data.esito = false;
+                data.codErr = 3;
+                data.messaggio = 'Utente non trovato.';
+            } else if (utente) {
+                data.esito = true;
+                data.codErr = 0;
+                data.messaggio = 'utente trovato';
+                data.utente = utente;
+            }
+            callback(data);
+        });
+    },trovaPDS: function (paramRicercaPDS, callback) {
         // ricerca Utenti PDS nel raggio di 5 km
         Utente.find({
             location: {$near:

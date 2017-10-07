@@ -21,6 +21,9 @@
                 this.geoCodificaIndirizzo = function (indirizzo) {
                     return this.get(COSTANTI.ENDPOINT.GOOGLE_GEOCOD + indirizzo + '&key=' + COSTANTI.KEY_GEOCOD);
                 };
+                this.infonick = function (utente) {
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.INFO_NICK, utente, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                };
 
                 this.post = function (url, data, token, config) {
                     if (token) {
@@ -60,7 +63,7 @@
             };
             return new ServiziRest();
         }]);
-    pnApp.factory('notificationEngine', ['$websocket', 'CONST', '$location','serviziRest', function ($websocket, COSTANTI, $location,serviziRest) {
+    pnApp.factory('notificationEngine', ['$websocket', 'CONST', '$location', function ($websocket, COSTANTI, $location) {
             var NotificationEngine = function () {
                 var protocollo = [];
                 var utl;//Utente loggato;
@@ -256,6 +259,7 @@
                 this.getRichiesteStampaUscita = function () {
                     return listaRichiesteStampaOUT;
                 };
+                               
                 this.pingWs = function () {
                     this.connettiWS();
                 };

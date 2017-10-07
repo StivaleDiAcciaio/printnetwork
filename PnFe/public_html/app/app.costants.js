@@ -40,6 +40,7 @@
                     "LOGIN": "printnetwork/apinode/login",
                     "STAMPA_2D": "printnetwork/apinode/2d",
                     "TROVA_PDS": "printnetwork/apinode/pds",
+                    "INFO_NICK": "printnetwork/apinode/infonick",
                     "GOOGLE_GEOCOD": "https://maps.googleapis.com/maps/api/geocode/json?address=",
                     "NOTIFICHE_WSOCKET": "printnetwork/notification"
                 },

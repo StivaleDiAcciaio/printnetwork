@@ -156,7 +156,9 @@ angular.module('printNetworkApp')
 		}
 	};
 });
-
+/**
+ * Direttiva attributo "conferma-password"
+ * */
 angular.module('printNetworkApp')
         .directive('confermaPassword', function (){
     return {
@@ -176,7 +178,10 @@ angular.module('printNetworkApp')
         }
     };
 });
-
+/**
+ * tramite la direttiva formati-2d-min
+   capiamo se è stato scelto almeno un formato stampa2d.
+ */
 angular.module('printNetworkApp')
         .directive('formati2dMin', function (){
     return {
@@ -194,5 +199,19 @@ angular.module('printNetworkApp')
                 ngModel.$validate();
             });
         }
+    };
+});
+/**
+ * Direttiva per disegnare  Stelle colorate del feedback utente
+ */
+angular.module('printNetworkApp')
+        .directive('stelleFeedback', function (){
+    return {
+        require: "ngModel",
+        restrict : "E",
+        scope: {
+            feedback: "=feedback"
+        },
+        templateUrl : "app/components/templates/stelleFeedback.html"
     };
 });
