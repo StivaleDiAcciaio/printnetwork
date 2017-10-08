@@ -15,7 +15,7 @@
           "CHIUSA":"stampa_chiusa",
           "ANNULLATA":"stampa_annullata"
         },
-        "NUM_RICHIESTE_STAMPA_IN":3,
+        "NUM_RICHIESTE_STAMPA_IN":4,
         "MAPPA": {
             "RAGGIO_CERCHIO_DEFAULT": 500,
             "RAGGIO_CERCHIO_MIN": 100,

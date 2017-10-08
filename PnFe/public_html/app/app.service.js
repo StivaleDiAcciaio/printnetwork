@@ -21,8 +21,8 @@
                 this.geoCodificaIndirizzo = function (indirizzo) {
                     return this.get(COSTANTI.ENDPOINT.GOOGLE_GEOCOD + indirizzo + '&key=' + COSTANTI.KEY_GEOCOD);
                 };
-                this.infonick = function (utente) {
-                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.INFO_NICK, utente, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                this.infonick = function (nick) {
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.INFO_NICK, nick, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 };
 
                 this.post = function (url, data, token, config) {
@@ -63,7 +63,7 @@
             };
             return new ServiziRest();
         }]);
-    pnApp.factory('notificationEngine', ['$websocket', 'CONST', '$location', function ($websocket, COSTANTI, $location) {
+    pnApp.factory('notificationEngine', ['$websocket', 'CONST', '$location', 'serviziRest',function ($websocket, COSTANTI, $location,serviziRest) {
             var NotificationEngine = function () {
                 var protocollo = [];
                 var utl;//Utente loggato;
@@ -78,7 +78,26 @@
                 //da altri utenti
                 var listaRichiesteStampaIN = [];
                 var dataStream = null;
-                                /**
+                
+                /**
+                 * Acquisisce le info del mittente che richiede una stampa
+                 * e popola il relativo elenco delle richiesta in entrata
+                 * @param {type} nick
+                 * @param {type} statoRichiesta
+                 * @returns {undefined}
+                 */
+                this.getInfoMittente = function (nick,statoRichiesta){
+                    serviziRest.infonick(nick).then(function (response) {
+                        if (response.esito) {
+                            if (response.utente) {
+                              listaRichiesteStampaIN.push({mittente:response.utente,stato:statoRichiesta}); 
+                            }
+                        } 
+                    }, function (err) {
+                        console.log(err);
+                    });                    
+                };
+                /**
                  * effettua verifiche sui messaggi in enrtata
                  * filtrando le particolari richieste di stampa/annulla/accetta
                  * dai messaggi da visualizzare a console
@@ -94,18 +113,27 @@
                         if(msgUtente === COSTANTI.RICHIESTA_STAMPA && 
                                 listaRichiesteStampaIN && 
                                 listaRichiesteStampaIN.length<COSTANTI.NUM_RICHIESTE_STAMPA_IN){
-                            //In entrata una richiesta di stampa che non supera il limite delle richieste in entrata
+                            //In entrata una richiesta di stampa che non supera il limite delle richieste (contemporanee) in entrata 
                             //verifico che mittente non abbia gia fatto richiesta precedentemente..
                             var richiestaPrecEsistente=false;
                             for (var c = 0; c < listaRichiesteStampaIN.length; c++) {
-                                if(listaRichiesteStampaIN[c].mittente === mittente &&
+                                if(listaRichiesteStampaIN[c].mittente.nick === mittente &&
                                         listaRichiesteStampaIN[c].stato === COSTANTI.RICHIESTA_STAMPA){
                                    richiestaPrecEsistente = true;
                                    break;
                                 }
                             }
                             if(!richiestaPrecEsistente){
-                                listaRichiesteStampaIN.push({mittente:mittente,stato:msgUtente});
+                                serviziRest.infonick({nick:mittente}).then(function (response) {
+                                    if (response.esito) {
+                                        if (response.utente) {
+                                          listaRichiesteStampaIN.push({mittente:response.utente,stato:COSTANTI.RICHIESTA_STAMPA}); 
+                                        }
+                                    } 
+                                }, function (err) {
+                                    console.log(err);
+                                });                               
+                                //listaRichiesteStampaIN.push({mittente:mittente,stato:msgUtente});
                                 esito = false; //non e' un messaggio da visualizzare a console Ma una richiesta di stampa in entrata
                             }
                         }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE ||
@@ -133,7 +161,7 @@
                             if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA && listaRichiesteStampaIN){
                                //..ANNULLA...rimuovo dalle richieste in entrata la vecchia richiesta
                                for (var x = 0; x < listaRichiesteStampaIN.length; x++){
-                                   if(listaRichiesteStampaIN[x].mittente === mittente){
+                                   if(listaRichiesteStampaIN[x].mittente.nick === mittente){
                                        listaRichiesteStampaIN.splice(x, 1);
                                        //non e' un messaggio da mostrare a console ma un Annullamento di richiesta di stampa in entrata
                                        esito = false;
@@ -159,7 +187,7 @@
                             if (!esito && listaRichiesteStampaIN && listaRichiesteStampaIN.length>0){
                                     for (var z = 0; z < listaRichiesteStampaIN.length; z++) {
                                          //..deve esistere uno stato precedente a "CONTRATTAZIONE"
-                                        if(listaRichiesteStampaIN[z].mittente === mittente &&
+                                        if(listaRichiesteStampaIN[z].mittente.nick === mittente &&
                                          listaRichiesteStampaIN[z].stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
                                          esito = true;
                                           break;
@@ -224,23 +252,30 @@
                        listaRichiesteStampaOUT.push({destinatario:destinatario,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA});   
                     }
                 };
-
-                this.accettaRichiestaStampa = function (destinatario) {
-                    console.log("accetto la richiesta stampa di "+destinatario);
-                    //accettata richiesta...
+                /**
+                 * Accetta/Rifiuta richiesta di stampa in entrata 
+                 * @param {type} nickDestinatario
+                 * @param {type} azione
+                 * @returns {undefined}
+                 */
+                this.richiestaStampaInEntrata = function (nickDestinatario,azione) {
+                    var invio = false;
+                    //accettata/rifiutata richiesta...
                     //aggiorno lo stato del canale IN entrata..
                     for (var z = 0; z < listaRichiesteStampaIN.length; z++) {
                         //..deve esistere uno stato precedente a "CONTRATTAZIONE"
-                        if(listaRichiesteStampaIN[z].mittente === destinatario &&
+                        if(listaRichiesteStampaIN[z].mittente.nick === nickDestinatario &&
                             listaRichiesteStampaIN[z].stato === COSTANTI.RICHIESTA_STAMPA){
-
-                            listaRichiesteStampaIN[z].stato =COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE;
+                            listaRichiesteStampaIN[z].stato= (azione==='accetta'?COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE:COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA);
+                            invio = true;
                             break;
                         }
                     }
-                    this.inviaMessaggio(destinatario, COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE);
+                    if(invio){
+                      this.inviaMessaggio(nickDestinatario,(azione==='accetta'?COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE:COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA));
+                    }
                 };
-
+                
                 this.inviaMessaggio = function (nick, data) {
                     if (nick && data) {
                         this.connettiWS();

@@ -29,8 +29,11 @@
                     $scope.isRichiestaStampa = function(stato){
                         return $scope.notificationEngine.isRichiestaStampa(stato);
                     };
-                    $scope.accettaRichiestaStampa = function(destinatario){
-                        $scope.notificationEngine.accettaRichiestaStampa(destinatario);
+                    $scope.accettaRichiestaStampa = function(nickDestinatario){
+                        $scope.notificationEngine.richiestaStampaInEntrata(nickDestinatario,'accetta');  
+                    };
+                    $scope.rifiutaRichiestaStampa = function(nickDestinatario){
+                        $scope.notificationEngine.richiestaStampaInEntrata(nickDestinatario,'rifiuta');  
                     };
                     $scope.inviaRichiestaStampa = function (pdsSelezionato) {
                         $scope.notificationEngine.inviaRichiestaStampa(pdsSelezionato);

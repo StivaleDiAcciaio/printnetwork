@@ -107,10 +107,10 @@ module.exports = {
             }
             callback(data);
         });
-    },infoNick: function (utenteReq, callback) {
+    },infoNick: function (nickUtente, callback) {
         // ricerca Utente
         Utente.findOne({
-            nick: utenteReq.nick
+            nick: nickUtente
         },{ nick: 1,tipologiaUtente: 1,indirizzo: 1,tipologiaStampa: 1,feedback: 1, location: 1}, function (err, utente) {
             var data = {};
             if (err) {

@@ -213,7 +213,7 @@ ul.submenuActiveNoActive {
     box-shadow: 10px 10px 5px #888888;
 }
 
-.subMenuBtnAuto,.subMenuBtnPiede{
+.subMenuBtnAuto,.subMenuBtnPiede,subMenuBtnRifiuta,subMenuBtnAccetta{
     float: right;
     padding: 5px;
 }
@@ -222,6 +222,12 @@ ul.submenuActiveNoActive {
 }
 .subMenuBtnPiede img{
     height: 16px;
+}
+.subMenuBtnRifiuta{
+    color:gray
+}
+.subMenuBtnAccetta{
+    color:green;
 }
 .btnCloseX{
     color: white;
