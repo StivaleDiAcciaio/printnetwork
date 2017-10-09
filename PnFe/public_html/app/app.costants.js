@@ -6,7 +6,7 @@
     angular.module('printNetworkApp').constant('CONST', {
         //"CONTEXT_ROOT": contextRoot,
         "RICORDAMI": "ricordami",
-        "KEY_GEOCOD": "AIzaSyDUgfDN2lOzsSvZkl0VNlTpq7BpAqMAO70",
+        "KEY_GEOCOD": "AIzaSyC0zdkb44Ng_ArbP2GdAOu7RbZt9b8wIn0",
         "TIME_OUT_PING":"900000",
         "RICHIESTA_STAMPA":"RICHIESTA_STAMPA",
         "STATO_RICHIESTE_STAMPA":{

@@ -266,7 +266,11 @@
                         //..deve esistere uno stato precedente a "CONTRATTAZIONE"
                         if(listaRichiesteStampaIN[z].mittente.nick === nickDestinatario &&
                             listaRichiesteStampaIN[z].stato === COSTANTI.RICHIESTA_STAMPA){
-                            listaRichiesteStampaIN[z].stato= (azione==='accetta'?COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE:COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA);
+                            if(azione==='accetta'){
+                               listaRichiesteStampaIN[z].stato=COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE;
+                            }else{
+                               listaRichiesteStampaIN.splice(z, 1);//se rifiuto la richiesta in entrata..la elimino dall'elenco
+                            }
                             invio = true;
                             break;
                         }
