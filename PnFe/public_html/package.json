@@ -21,6 +21,7 @@
     "angular-translate": "2.9.0",
     "angular-ui-bootstrap": "2.3.1",
     "angular-ui-router": "0.2.17",
+    "angular-websocket": "^2.0.1",
     "angularjs-slider": "^6.2.2",
     "bootstrap": "3.3.6",
     "ng-animated-scroll": "^1.5.0",
