@@ -160,8 +160,7 @@
                     </li>
                 </ul>
                 <!-- /Submenu Notifiche-->
-            </ul>
-            <div id="directions-panel" style="height: 100%; overflow: auto; padding: 0px 5px"></div>
+            </ul>  
         </nav>
     </aside> 
     <!-- /Sezione visibile solo in DESKTOP -->
@@ -194,21 +193,26 @@
                            center="{{slider.posizioneCerchio.lat()}},{{slider.posizioneCerchio.lng()}}" radius="{{slider.raggioCerchio}}" editable="false" ></shape>
                     <custom-marker  ng-repeat="utPds in arrayMarkerPDS|filter:{mostra:true} track by $index" 
                                     id="pds-marker-{{$index}}"
-                                    position="{{utPds.geoposizione.lat()}},{{utPds.geoposizione.lng()}}">
+                                    position={{utPds.indirizzo.descrizione}}>
                         <div class="markerWrapper" ng-click="markerPDSonClick(utPds)">
                             <i class="glyphicon glyphicon-map-marker {{utPds.classe}}"></i>
                         </div>
                     </custom-marker>
                     <directions 
                         draggable="true"
-                        panel="directions-panel"
                         travel-mode="DRIVING"
                         suppress-markers="true"
-                        origin="{{geoPartenza}}"
-                        destination="{{geoArrivo}}">
+                        origin={{geoPartenza}}
+                        destination={{geoArrivo}}>
                     </directions>                    
                 </div>
             </ng-map>
+            <pannello-direzione partenza=map.directionsRenderers[0].directions.routes[0].legs[0].start_address 
+                                arrivo=map.directionsRenderers[0].directions.routes[0].legs[0].end_address
+                                distanza-totale=map.directionsRenderers[0].directions.routes[0].legs[0].distance.text
+                                tempo-totale=map.directionsRenderers[0].directions.routes[0].legs[0].duration.text
+                                passi=map.directionsRenderers[0].directions.routes[0].legs[0].steps>    
+            </pannello-direzione>
             <!-- Box con info PDS selezionato -->
             <div ng-show="pdsSelezionato" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS" ng-class="pdsSelezionato?'boxInfoPdsActive':'boxInfoPdsNoActive'">
                 <div class="col-xs-12"><span class="label">{{"PC.LABEL.NICK"| translate}}: {{pdsSelezionato.nick===getUtenteLoggato().nick?'(IO)':pdsSelezionato.nick}}</span><span class="close btnCloseX" type="button" ng-click="infoPDScancel()">×</span></div>

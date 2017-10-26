@@ -12,6 +12,7 @@
                     $scope.COSTANTI=COSTANTI;
                     $scope.geoPartenza=null;
                     $scope.geoArrivo=null;
+
                     $scope.numeroNotifiche = function(){
                       var numeroNotificheServer=$scope.listaNotificheServer.length===null?0:$scope.listaNotificheServer.length;
                       var numeroRichiesteStampaEntrata=$scope.listaRichiesteStampaEntrata.length===null?0:$scope.listaRichiesteStampaEntrata.length;
@@ -42,13 +43,14 @@
                         $scope.notificationEngine.inviaRichiestaStampa(pdsSelezionato);
                     };
                     $scope.calcolaPercorso = function(pdsSelezionato){
-                        $scope.geoPartenza = new google.maps.LatLng(pdsSelezionato.geoposizione.lat(),pdsSelezionato.geoposizione.lng());
-                        if($scope.locationTrovata && $scope.locationTrovata.lat()){
-                            $scope.geoArrivo = new google.maps.LatLng($scope.locationTrovata.lat(),$scope.locationTrovata.lng());
-                        }else{
-                            $scope.geoArrivo = new google.maps.LatLng($scope.posizioneRilevata.lat(),$scope.posizioneRilevata.lng());
+                        $scope.geoArrivo = pdsSelezionato.indirizzo.descrizione;
+                        if($scope.indirizzoTrovato){
+                            $scope.geoPartenza = $scope.indirizzoTrovato;
+                        }else if($scope.posizioneRilevata){
+                            $scope.geoPartenza = new google.maps.LatLng($scope.posizioneRilevata.lat(),$scope.posizioneRilevata.lng());
                         }
                     };
+                  
                     $scope.onChangeSliderFn = function (id, model) {
                         $scope.mostraPDS();
                     };

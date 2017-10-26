@@ -215,3 +215,20 @@ angular.module('printNetworkApp')
         templateUrl : "app/components/templates/stelleFeedback.html"
     };
 });
+
+angular.module('printNetworkApp')
+        .directive('pannelloDirezione', function (){
+    return {
+        require: "ngModel",
+        restrict : "E",
+        scope: {
+            partenza:"=partenza",
+            arrivo:"=arrivo",
+            distanzaTotale:"=distanzaTotale",
+            tempoTotale:"=tempoTotale",
+            passi: "=passi"
+        },
+        templateUrl : "app/components/templates/pannelloDirezione.html",
+        controller:'pannelloDirezioneCtrl'
+    };
+});

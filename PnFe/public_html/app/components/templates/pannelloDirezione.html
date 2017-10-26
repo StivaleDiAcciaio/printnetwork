@@ -1,0 +1,7 @@
+Percorso:
+<p>durata:{{tempoTotale}} distanza:{{distanzaTotale}}</p>
+<p>{{partenza}}</p>
+<div ng-repeat="passo in passi track by $index">
+    <p>{{passo.distance}}</p><button type="button" class="btn btn-info" ng-click="getInfoPasso(passo)">info</button>
+</div>
+<p>{{arrivo}}</p>
