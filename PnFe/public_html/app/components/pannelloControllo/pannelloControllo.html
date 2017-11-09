@@ -182,7 +182,7 @@
            </div>
         </div>
         <!-- GESTIONE MESSAGGI WSOCKET-->      
-        <div>
+        <div id="wrapperMappaPC">
             <ng-map id="mappaPannelloControllo" class="mappaPannelloControllo"
                     zoom="{{zoomCalcolato}}" 
                     default-style="false" 
@@ -207,12 +207,6 @@
                     </directions>                    
                 </div>
             </ng-map>
-            <pannello-direzione partenza=map.directionsRenderers[0].directions.routes[0].legs[0].start_address 
-                                arrivo=map.directionsRenderers[0].directions.routes[0].legs[0].end_address
-                                distanza-totale=map.directionsRenderers[0].directions.routes[0].legs[0].distance.text
-                                tempo-totale=map.directionsRenderers[0].directions.routes[0].legs[0].duration.text
-                                passi=map.directionsRenderers[0].directions.routes[0].legs[0].steps>    
-            </pannello-direzione>
             <!-- Box con info PDS selezionato -->
             <div ng-show="pdsSelezionato" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS" ng-class="pdsSelezionato?'boxInfoPdsActive':'boxInfoPdsNoActive'">
                 <div class="col-xs-12"><span class="label">{{"PC.LABEL.NICK"| translate}}: {{pdsSelezionato.nick===getUtenteLoggato().nick?'(IO)':pdsSelezionato.nick}}</span><span class="close btnCloseX" type="button" ng-click="infoPDScancel()">×</span></div>
@@ -243,6 +237,12 @@
                 </div>   
             </div>
             <div id="infoPDSscroll"></div>
+            <pannello-direzione partenza=map.directionsRenderers[0].directions.routes[0].legs[0].start_address 
+                arrivo=map.directionsRenderers[0].directions.routes[0].legs[0].end_address
+                distanza-totale=map.directionsRenderers[0].directions.routes[0].legs[0].distance.text
+                tempo-totale=map.directionsRenderers[0].directions.routes[0].legs[0].duration.text
+                passi=map.directionsRenderers[0].directions.routes[0].legs[0].steps>    
+            </pannello-direzione>
         </div>
     </section>
 </div>

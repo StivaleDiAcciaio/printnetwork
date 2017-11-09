@@ -232,3 +232,11 @@ ul.submenuActiveNoActive {
 .btnCloseX{
     color: white;
 }
+div#wrapperMappaPC{
+    position: relative;
+}
+.pannelloDirezione{
+ background-color: greenyellow;
+    position: absolute;
+    top: 120px;
+}
