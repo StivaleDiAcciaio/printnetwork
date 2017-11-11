@@ -32,15 +32,12 @@
 .bodyMain {
     width: 100%;
     padding-top: 90px;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-attachment: fixed;
-    background-image:url(../img/sfondoPN.png);
-    color:#666666;
+    background-image: url(../img/sfondoPN.jpg);
     font-family: 'Roboto';
-    font-weight:400;
-    background-size: 800px;
-    background-position-x: 375px;
-    background-position-y: 29px;
+    font-weight: 300;
+    background-size: 300px;
 }
 /* css per boxerare immagini */
 .box > .icon { 

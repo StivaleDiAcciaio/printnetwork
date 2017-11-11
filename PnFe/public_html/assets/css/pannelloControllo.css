@@ -29,7 +29,16 @@
     left: -25px;
     width: 100%;
 } 
+.menuLateraleSinistroDesktop{
 
+}
+span.rz-bubble {
+    font-weight: 500;
+    font-style: italic;
+    color: #428bca!important;
+    background-color: whitesmoke;
+    border-radius: 12px;
+}
 .nickNameLoggato{ 
     position: fixed;
     top:50px;
@@ -42,6 +51,7 @@ ul.listaVociMobile,
 ul.listaVociDesktop{
     background-color:  #f5f5f5;
     margin-top: 12px;
+    border: 1px solid #428bca;
 }
 ul.listaVociMobile li a,
 ul.listaVociDesktop li a{
@@ -110,7 +120,7 @@ ul.listaVociDesktop li.active a{
     width: 100%;
     display: inline-flex;
     background: whitesmoke;
-    border: 1px solid #333;
+    border: 1px solid #428bca;
     box-shadow: 10px 10px 5px #888888;
     margin-top: 2px;
 }
@@ -168,10 +178,10 @@ ul.listaVociDesktop li.active a{
     box-shadow: 2px 0 #171717;
     position: absolute;
     top: 60px;
-    
+
 }
 .colorStar{
-   color:yellow;
+    color:yellow;
 }
 
 .boxInfoPdsNoActive{
@@ -180,9 +190,9 @@ ul.listaVociDesktop li.active a{
     transition: all 0.5s ease;
 }
 .boxInfoPdsActive{
-   transform: rotateZ(360deg);
-   transform-origin: right;
-   transition: all 0.5s ease;
+    transform: rotateZ(360deg);
+    transform-origin: right;
+    transition: all 0.5s ease;
 }
 .submenuActiveNoActive.ng-hide {
     transform: rotateX(90deg);
@@ -190,26 +200,26 @@ ul.listaVociDesktop li.active a{
 
 .submenuActiveNoActive.ng-hide-add,
 .submenuActiveNoActive.ng-hide-remove {
-  transition: all 0.5s ease;
-   transform-origin: top;
+    transition: all 0.5s ease;
+    transform-origin: top;
 }
 
 ul.nav-sidebar li a span{
     float:right;
 }
- 
+
 ul.submenuActiveNoActive li { background: #b9b778; border:1px solid #222; margin-bottom:1px;}
 ul.submenuActiveNoActive li:nth-child(odd),ul.submenuActiveNoActive li a
- { background: #e0c293;}
+{ background: #e0c293;}
 
 ul.submenuActiveNoActive { 
-  list-style-type: none;
-  padding:2px;
+    list-style-type: none;
+    padding:2px;
 }
 
 .mappaPannelloControllo{
-    border: 2px solid #f7f6f0;
-    border-radius: 7px;
+    border: 1px solid #428bca;
+    border-radius: 4px;
     box-shadow: 10px 10px 5px #888888;
 }
 
@@ -236,7 +246,15 @@ div#wrapperMappaPC{
     position: relative;
 }
 .pannelloDirezione{
- background-color: greenyellow;
+    opacity: 0.9;
+    background-color: #222;
+    border: 2px solid #ff9b00;
+    box-shadow: 3px 0 #c3882c;
     position: absolute;
     top: 120px;
 }
+
+.labelDirezionale{
+    font-size: 100%;
+    font-weight: 400;
+}    
