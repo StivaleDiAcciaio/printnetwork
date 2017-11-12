@@ -222,6 +222,7 @@ angular.module('printNetworkApp')
         require: "ngModel",
         restrict : "E",
         scope: {
+            mostra:"=mostra",
             partenza:"=partenza",
             arrivo:"=arrivo",
             distanzaTotale:"=distanzaTotale",

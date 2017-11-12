@@ -1,9 +1,22 @@
-<div class="col-xs-12 pannelloDirezione">
-    <span class="label labelDirezionale">Percorso:</span>
-    <span class="label labelDirezionale">durata:{{tempoTotale}} distanza:{{distanzaTotale}}</span><span class="close btnCloseX" type="button" ng-click="infoPDScancel()">×</span>
-    <span class="label labelDirezionale">{{partenza}}</span>
-    <div ng-repeat="passo in passi track by $index">
-        <span class="label labelDirezionale">{{passo.distance}}</span><button type="button" class="btn btn-info" ng-click="getInfoPasso(passo)">info</button>
+<div class="col-xs-12 pannelloDirezione" ng-show="mostra">
+    <div class="col-xs-12 titoloDirezione">
+        <span class="label">{{tempoTotale}} ({{distanzaTotale}})</span>
+        <span class="close" type="button" ng-click="mostra = !mostra">×</span>
+    </div> 
+    <div class="col-xs-12 titoloDirezione">
+        <span class="label">{{partenza}}</span>
     </div>
-    <span class="label labelDirezionale">{{arrivo}}</span>
+    <div class="col-xs-12 descDirezione" ng-repeat="passo in passi track by $index">
+        <div class="col-xs-12">
+            <div ng-bind-html="passo.instructions"></div>
+           <!-- <span class="label">{{passo.instructions}}</span>-->
+        </div>
+        <div class="col-xs-12 wrappDistanza">
+            <span class="label">{{passo.distance.text}}</span>
+        </div>
+       <!-- <button type="button" class="btn btn-info" ng-click="getInfoPasso(passo)">info</button>-->
+    </div>
+    <div class="col-xs-12 footerDirezione">
+        <span class="label">{{arrivo}}</span>
+    </div>
 </div>

@@ -32,6 +32,7 @@
 .menuLateraleSinistroDesktop{
 
 }
+/* START personalizzazioni css dello sliderbar */
 span.rz-bubble {
     font-weight: 500;
     font-style: italic;
@@ -39,6 +40,10 @@ span.rz-bubble {
     background-color: whitesmoke;
     border-radius: 12px;
 }
+.rzslider .rz-bar{
+    background: #337ab7!important;
+}
+/* END personalizzazioni css dello sliderbar */
 .nickNameLoggato{ 
     position: fixed;
     top:50px;
@@ -51,7 +56,7 @@ ul.listaVociMobile,
 ul.listaVociDesktop{
     background-color:  #f5f5f5;
     margin-top: 12px;
-    border: 1px solid #428bca;
+    border: 1px solid #101010;
 }
 ul.listaVociMobile li a,
 ul.listaVociDesktop li a{
@@ -96,9 +101,9 @@ ul.listaVociDesktop li.active a{
 .indirizzoTrovato{
     color: green;
     border: 1px solid green;
-    background: whitesmoke;
+    background: #f5f5f5;
     border: 1px solid #333;
-    box-shadow: 10px 10px 5px #888888;    
+    box-shadow: 10px 10px 5px #888888;
 }
 .indirizzoTrovato.ng-hide-add {
     transform: rotateZ(0);
@@ -120,7 +125,7 @@ ul.listaVociDesktop li.active a{
     width: 100%;
     display: inline-flex;
     background: whitesmoke;
-    border: 1px solid #428bca;
+    border: 1px solid #101010;
     box-shadow: 10px 10px 5px #888888;
     margin-top: 2px;
 }
@@ -160,12 +165,16 @@ ul.listaVociDesktop li.active a{
     text-shadow: 2px 0 #222;
 }
 .infoPDS{
-    opacity:0.9;
+    opacity: 0.9;
     background-color: #222;
-    border:2px solid #ff9b00;
-    box-shadow: 3px 0 #c3882c;
+    border: 1px solid #2d8a2b;
     position: absolute;
     bottom: 15px;
+}
+.infoPDS span{
+   font-size: 85%;
+   font-weight: 400;
+   color:#d0d6c8; 
 }
 .infoPDS button{
     float: right;
@@ -218,7 +227,7 @@ ul.submenuActiveNoActive {
 }
 
 .mappaPannelloControllo{
-    border: 1px solid #428bca;
+    border: 1px solid #101010;
     border-radius: 4px;
     box-shadow: 10px 10px 5px #888888;
 }
@@ -239,22 +248,40 @@ ul.submenuActiveNoActive {
 .subMenuBtnAccetta{
     color:green;
 }
-.btnCloseX{
-    color: white;
-}
 div#wrapperMappaPC{
     position: relative;
 }
 .pannelloDirezione{
-    opacity: 0.9;
-    background-color: #222;
-    border: 2px solid #ff9b00;
-    box-shadow: 3px 0 #c3882c;
     position: absolute;
     top: 120px;
+    opacity: 0.9;
+    background-color: whitesmoke;
+    border: 1px solid #101010;
+    box-shadow: 20px 20px 8px #88888A;
 }
-
-.labelDirezionale{
+ 
+div.titoloDirezione{
+   padding-top:10px;
+    padding-bottom:10px;
+    border-bottom: 1px solid #9d9d9d;
+}
+div.footerDirezione{
+    padding-top:10px;
+    padding-bottom:10px;
+    border-top: 1px solid #9d9d9d;
+}
+div.descDirezione{}  
+div.titoloDirezione span.label,
+div.footerDirezione span.label{
     font-size: 100%;
+    font-weight: bold;
+    color:#000000;
+}   
+div.descDirezione span.label{
+    font-size: 85%;
     font-weight: 400;
-}    
+    color:#000000;
+}
+div.wrappDistanza{
+    border-bottom: 1px solid #e6e6e6;
+}
