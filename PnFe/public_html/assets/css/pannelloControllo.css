@@ -296,3 +296,9 @@ div.wrappDistanza{
     text-shadow: 2px 0 #000000;
     font-size: 20px;
 }
+div.wrapperInfoPartenza div{
+    text-align: center;
+}
+div.wrapperInfoPartenza span.label{
+    text-transform: uppercase;
+}

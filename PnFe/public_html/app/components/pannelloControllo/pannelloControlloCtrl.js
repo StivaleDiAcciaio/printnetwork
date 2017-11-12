@@ -13,9 +13,7 @@
                     $scope.geoPartenza=null;
                     $scope.geoArrivo=null;
                     $scope.mostraPannelloDirezione=false;
-                    $scope.markerPartenzaClick = function(partenza){
-                      console.log(partenza);  
-                    };
+
                     $scope.numeroNotifiche = function(){
                       var numeroNotificheServer=$scope.listaNotificheServer.length===null?0:$scope.listaNotificheServer.length;
                       var numeroRichiesteStampaEntrata=$scope.listaRichiesteStampaEntrata.length===null?0:$scope.listaRichiesteStampaEntrata.length;
@@ -90,6 +88,7 @@
                             $scope.map.panTo($scope.locationTrovata);
                             $scope.slider.posizioneCerchio = $scope.locationTrovata;
                             $scope.indirizzoTrovato = $scope.place.formatted_address;
+                            $scope.geoPartenza = $scope.indirizzoTrovato;
                             $scope.zoomCalcolato = COSTANTI.MAPPA.DEFAULT_ZOOM;
                             $scope.trovaPDS($scope.locationTrovata);
                         }

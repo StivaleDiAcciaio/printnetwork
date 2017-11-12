@@ -182,7 +182,7 @@
            </div>
         </div>
         <!-- GESTIONE MESSAGGI WSOCKET-->      
-        <div id="wrapperMappaPC">
+        <div id="wrapperMappaPC">             
             <ng-map id="mappaPannelloControllo" class="mappaPannelloControllo"
                     zoom="{{zoomCalcolato}}" 
                     default-style="false" 
@@ -207,12 +207,21 @@
                     </directions>      
                 </div>
                 <custom-marker id="idMarkerPartenza" position={{geoPartenza}}>
-                    <div ng-click="markerPartenzaClick(geoPartenza)">
+                    <div ng-click="infoWindowsPartenza = !infoWindowsPartenza">
                        <i class="glyphicon glyphicon-pushpin markerPartenza"></i>
-                    </div>
+                    </div>                    
                 </custom-marker>
             </ng-map>
-            
+             <!-- Box con info posizione di partenza -->
+            <div ng-init="infoWindowsPartenza=false" 
+                 ng-show="infoWindowsPartenza" 
+                 class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS wrapperInfoPartenza"
+                 ng-class="infoWindowsPartenza?'boxInfoPdsActive':'boxInfoPdsNoActive'">
+                <div class="col-xs-12">
+                    <span class="label">Partenza: {{geoPartenza}}</span>
+                    <span class="close" type="button" ng-click="infoWindowsPartenza=false">×</span>
+                </div>    
+            </div>            
             <!-- Box con info PDS selezionato -->
             <div ng-show="pdsSelezionato" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS" ng-class="pdsSelezionato?'boxInfoPdsActive':'boxInfoPdsNoActive'">
                 <div class="col-xs-12"><span class="label">{{"PC.LABEL.NICK"| translate}}: {{pdsSelezionato.nick===getUtenteLoggato().nick?'(IO)':pdsSelezionato.nick}}</span><span class="close" type="button" ng-click="infoPDScancel()">×</span></div>
