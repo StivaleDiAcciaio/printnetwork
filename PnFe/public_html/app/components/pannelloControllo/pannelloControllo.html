@@ -206,11 +206,8 @@
                         destination={{geoArrivo}}>
                     </directions>      
                 </div>
-                <custom-marker id="idMarkerPartenza" position={{geoPartenza}}>
-                    <div ng-click="infoWindowsPartenza = !infoWindowsPartenza">
-                       <i class="glyphicon glyphicon-pushpin markerPartenza"></i>
-                    </div>                    
-                </custom-marker>
+                <marker id="idMarkerPartenza" position={{geoPartenza}} on-click="mostraInfoPartenza()">                    
+                </marker>
             </ng-map>
              <!-- Box con info posizione di partenza -->
             <div ng-init="infoWindowsPartenza=false" 

@@ -13,7 +13,9 @@
                     $scope.geoPartenza=null;
                     $scope.geoArrivo=null;
                     $scope.mostraPannelloDirezione=false;
-
+                    $scope.mostraInfoPartenza = function(){
+                        $scope.infoWindowsPartenza = !$scope.infoWindowsPartenza;
+                    };
                     $scope.numeroNotifiche = function(){
                       var numeroNotificheServer=$scope.listaNotificheServer.length===null?0:$scope.listaNotificheServer.length;
                       var numeroRichiesteStampaEntrata=$scope.listaRichiesteStampaEntrata.length===null?0:$scope.listaRichiesteStampaEntrata.length;
