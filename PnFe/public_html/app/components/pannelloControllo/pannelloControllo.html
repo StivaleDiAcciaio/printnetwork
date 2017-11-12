@@ -204,9 +204,15 @@
                         suppress-markers="true"
                         origin={{geoPartenza}}
                         destination={{geoArrivo}}>
-                    </directions>                    
+                    </directions>      
                 </div>
+                <custom-marker id="idMarkerPartenza" position={{geoPartenza}}>
+                    <div ng-click="markerPartenzaClick(geoPartenza)">
+                       <i class="glyphicon glyphicon-pushpin markerPartenza"></i>
+                    </div>
+                </custom-marker>
             </ng-map>
+            
             <!-- Box con info PDS selezionato -->
             <div ng-show="pdsSelezionato" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS" ng-class="pdsSelezionato?'boxInfoPdsActive':'boxInfoPdsNoActive'">
                 <div class="col-xs-12"><span class="label">{{"PC.LABEL.NICK"| translate}}: {{pdsSelezionato.nick===getUtenteLoggato().nick?'(IO)':pdsSelezionato.nick}}</span><span class="close" type="button" ng-click="infoPDScancel()">×</span></div>

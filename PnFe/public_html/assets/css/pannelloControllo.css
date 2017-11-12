@@ -285,3 +285,14 @@ div.descDirezione span.label{
 div.wrappDistanza{
     border-bottom: 1px solid #e6e6e6;
 }
+.markerPartenza{
+    color: #27ca15;
+    text-shadow: 2px 0 #000000;
+    font-size: 20px;
+}
+.markerArrivo{
+    color:#ff9b00;
+    text-shadow: 2px 0 #d0d6c8;
+    text-shadow: 2px 0 #000000;
+    font-size: 20px;
+}
