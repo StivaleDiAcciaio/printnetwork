@@ -15,6 +15,7 @@
                     $scope.mostraPannelloDirezione=false;
                     $scope.mostraInfoPartenza = function(){
                         $scope.infoWindowsPartenza = !$scope.infoWindowsPartenza;
+                        $scope.scrollTo('infoPDSscroll');
                     };
                     $scope.numeroNotifiche = function(){
                       var numeroNotificheServer=$scope.listaNotificheServer.length===null?0:$scope.listaNotificheServer.length;
@@ -53,6 +54,7 @@
                         }else if($scope.posizioneRilevata){
                             $scope.geoPartenza = new google.maps.LatLng($scope.posizioneRilevata.lat(),$scope.posizioneRilevata.lng());
                         }
+                        $scope.map.directionsRenderers[0].setMap(this.map);
                     };
                   
                     $scope.onChangeSliderFn = function (id, model) {
@@ -162,6 +164,9 @@
                     };
 
                     $scope.resetCercaIndirizzo = function () {
+                        if($scope.map.directionsRenderers[0] !== null){
+                           $scope.map.directionsRenderers[0].setMap(null);
+                        }
                         if ($scope.indirizzo && $scope.indirizzo.cercato) {
                             $scope.arrayMarkerPDS = [];
                             $scope.locationTrovata = null;
@@ -169,11 +174,18 @@
                             $scope.indirizzo.cercato = null;
                             $scope.map.panTo($scope.googleFallBackPosition);
                             $scope.zoomCalcolato = COSTANTI.MAPPA.FALL_GEO_ZOOM;
-
                         }
                     };
                     $scope.infoPDScancel = function () {
                         $scope.pdsSelezionato.classe = 'pdsNoActive';
+                        if($scope.pdsSelezionato.parent){
+                            for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
+                                if ($scope.arrayMarkerPDS[i]._id === $scope.pdsSelezionato.parent) {
+                                    $scope.arrayMarkerPDS[i].classe = 'pdsNoActive';
+                                    $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo = $scope.pdsSelezionato.pdsConnMaster;
+                                }
+                            }                             
+                        }
                         $scope.pdsSelezionato = null;
                     };
                     /**
@@ -267,7 +279,7 @@
                             for (var i = 0; i < $scope.arrayMarkerPDS.length; i++) {
                                 if ($scope.arrayMarkerPDS[i]._id === $scope.pdsSelezionato.parent) {
                                     $scope.arrayMarkerPDS[i].classe = 'pdsNoActive';
-                                    $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo = $scope.pdsSelezionato.pdsConnMaster
+                                    $scope.arrayMarkerPDS[i].utentiPDSstessoIndirizzo = $scope.pdsSelezionato.pdsConnMaster;
                                 }
                             }
                         }
