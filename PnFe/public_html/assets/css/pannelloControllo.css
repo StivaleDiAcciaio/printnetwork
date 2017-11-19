@@ -273,7 +273,9 @@ div.footerDirezione{
     padding-bottom:10px;
     border-top: 1px solid #9d9d9d;
 }
-div.descDirezione{}  
+div.descDirezione{
+   position: relative;
+}  
 div.titoloDirezione span.label,
 div.footerDirezione span.label{
     font-size: 100%;
@@ -285,8 +287,16 @@ div.descDirezione span.label{
     font-weight: 400;
     color:#000000;
 }
+div.descDirezione .iconaDirezione{
+  position: absolute;
+}
+div.descDirezione .wrappIstruzioni{
+  padding-left: 20px;
+}
+
 div.wrappDistanza{
     border-bottom: 1px solid #e6e6e6;
+    padding-left: 25px;
 }
 .markerPartenza{
     color: #f7584c;

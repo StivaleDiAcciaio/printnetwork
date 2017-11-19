@@ -227,7 +227,8 @@ angular.module('printNetworkApp')
             arrivo:"=arrivo",
             distanzaTotale:"=distanzaTotale",
             tempoTotale:"=tempoTotale",
-            passi: "=passi"
+            passi: "=passi",
+            vettore:"=vettore"
         },
         templateUrl : "app/components/templates/pannelloDirezione.html",
         controller:'pannelloDirezioneCtrl'

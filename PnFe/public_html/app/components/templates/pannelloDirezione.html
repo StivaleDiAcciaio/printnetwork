@@ -1,6 +1,8 @@
 <div class="col-xs-12 pannelloDirezione" ng-show="mostra">
     <div class="col-xs-12 titoloDirezione">
         <span class="label">{{tempoTotale}} ({{distanzaTotale}})</span>
+        <img ng-if="vettore==='DRIVING'" src="assets/img/auto.svg" style="width: 30px;">
+        <img ng-if="vettore==='WALKING'" src="assets/img/piede.svg" style="width: 30px;">
         <span class="close" type="button" ng-click="mostra = !mostra">×</span>
     </div> 
     <div class="col-xs-12 titoloDirezione">
@@ -8,9 +10,12 @@
         <span class="label">{{partenza}}</span>
     </div>
     <div class="col-xs-12 descDirezione" ng-repeat="passo in passi track by $index">
-        <div class="col-xs-12">
+        <div ng-if="passo.maneuver !== ''" class="iconaDirezione">
+            <i ng-if="passo.maneuver === 'turn-right' || passo.maneuver === 'turn-sharp-right' || passo.maneuver ==='ramp-right' ||  passo.maneuver ==='fork-right'" class="glyphicon glyphicon-share-alt"></i>
+            <i ng-if="passo.maneuver === 'turn-left' || passo.maneuver === 'turn-sharp-left' || passo.maneuver ==='ramp-left' ||  passo.maneuver ==='fork-left'" class="glyphicon glyphicon-share-alt specchia"></i>
+        </div>
+        <div class="col-xs-12 wrappIstruzioni">
             <div ng-bind-html="passo.instructions"></div>
-           <!-- <span class="label">{{passo.instructions}}</span>-->
         </div>
         <div class="col-xs-12 wrappDistanza">
             <span class="label">{{passo.distance.text}}</span>
