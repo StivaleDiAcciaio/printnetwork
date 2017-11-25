@@ -58,6 +58,9 @@ ul.listaVociDesktop{
     margin-top: 12px;
     border: 1px solid #101010;
 }
+ul.listaVociDesktop li{
+    padding:1px;
+}
 ul.listaVociMobile li a,
 ul.listaVociDesktop li a{
     color :#9d9d9d;
@@ -253,6 +256,7 @@ ul.submenuActiveNoActive {
 }
 div#wrapperMappaPC{
     position: relative;
+    padding: 1px;
 }
 .pannelloDirezione{
     position: absolute;
@@ -317,4 +321,25 @@ div.wrapperInfoPartenza span.label{
 }
 span.close{
     color:#2d8a2b !important;
+}
+.wrappBtnBoxInfoPds{
+    position:absolute;
+    top:50%;
+    right:0;   
+}
+.wrappBtnBoxInfoPds button i{
+    font-size:25px;
+}
+.wrappBtnBoxInfoPds button.subMenuBtnAuto img{
+    width:40px;
+}
+.wrappBtnBoxInfoPds button.subMenuBtnPiede img{
+    height:30px;
+}
+.wrappBtnBoxInfoPds button.subMenuBtnAuto img:hover,
+.wrappBtnBoxInfoPds button.subMenuBtnPiede img:hover,
+.wrappBtnBoxInfoPds button.subMenuBtnAuto img:focus,
+.wrappBtnBoxInfoPds button.subMenuBtnPiede img:focus
+{
+    opacity:0.5;
 }
