@@ -199,7 +199,7 @@
                     </custom-marker>
                     <directions 
                         draggable="true"
-                        travel-mode="DRIVING"
+                        travel-mode={{mezzoTrasporto}}
                         suppress-markers="true"
                         origin={{geoPartenza}}
                         destination={{geoArrivo}}>
@@ -235,8 +235,8 @@
                 </div>
                 <div class="col-md-6 col-xs-12 wrappBtnBoxInfoPds" ng-class="pdsSelezionato.nick===getUtenteLoggato().nick?'hide':''">
                     <button class="btn btn-link" ng-click="inviaRichiestaStampa(pdsSelezionato)" title="invia richiesta stampa"><i class="glyphicon glyphicon-envelope"></i></button> 
-                    <button class="btn btn-link subMenuBtnAuto" ng-click="calcolaPercorso(pdsSelezionato)" href="#pannelloControllo" title="calcola percorso in auto"><img src="assets/img/auto.svg"></button>
-                    <button class="btn btn-link subMenuBtnPiede" ng-click="calcolaPercorso(pdsSelezionato)" href="#pannelloControllo" title="calcola percorso a piedi"><img src="assets/img/piede.svg"></button>
+                    <button class="btn btn-link subMenuBtnAuto" ng-click="calcolaPercorso(pdsSelezionato,'DRIVING')" href="#pannelloControllo" title="calcola percorso in auto"><img src="assets/img/auto.svg"></button>
+                    <button class="btn btn-link subMenuBtnPiede" ng-click="calcolaPercorso(pdsSelezionato,'WALKING')" href="#pannelloControllo" title="calcola percorso a piedi"><img src="assets/img/piede.svg"></button>
                 </div>
             </div>
             <!-- Box in alto contenente gli altri utenti Pds collegati allo stesso indirizzo -->
@@ -256,7 +256,7 @@
                 distanza-totale=map.directionsRenderers[0].directions.routes[0].legs[0].distance.text
                 tempo-totale=map.directionsRenderers[0].directions.routes[0].legs[0].duration.text
                 passi=map.directionsRenderers[0].directions.routes[0].legs[0].steps
-                vettore=map.directionsRenderers[0].travelMode>    
+                vettore="mezzoTrasporto">    
             </pannello-direzione>
         </div>
     </section>

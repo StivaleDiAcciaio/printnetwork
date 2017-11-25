@@ -12,6 +12,7 @@
                     $scope.COSTANTI=COSTANTI;
                     $scope.geoPartenza=null;
                     $scope.geoArrivo=null;
+                    $scope.mezzoTrasporto=null;
                     $scope.mostraPannelloDirezione=false;
                     $scope.mostraInfoPartenza = function(){
                         $scope.infoWindowsPartenza = !$scope.infoWindowsPartenza;
@@ -46,8 +47,9 @@
                     $scope.inviaRichiestaStampa = function (pdsSelezionato) {
                         $scope.notificationEngine.inviaRichiestaStampa(pdsSelezionato);
                     };
-                    $scope.calcolaPercorso = function(pdsSelezionato){
+                    $scope.calcolaPercorso = function(pdsSelezionato,tipoTrasporto){
                         $scope.geoArrivo = pdsSelezionato.indirizzo.descrizione;
+                        $scope.mezzoTrasporto = tipoTrasporto;
                         $scope.mostraPannelloDirezione=true;
                         if($scope.indirizzoTrovato){
                             $scope.geoPartenza = $scope.indirizzoTrovato;
