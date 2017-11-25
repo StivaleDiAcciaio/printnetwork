@@ -136,7 +136,7 @@
                 <!-- Submenu Risposte-->
                 <ul  ng-show="toggleMenuRisposte" class="submenuActiveNoActive">
                   <li ng-repeat="risposte in listaRichiesteStampaUscita|filter:{stato:COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE||COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA} track by $index">
-                        <button class="btn btn-link" href="#pannelloControllo">{{risposte.destinatario}}:{{risposte.stato}}</button>
+                        <button class="btn btn-link" ng-class="risposte.stato==COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE?'':'disabled'" href="#pannelloControllo" ng-click="apriChat(risposte)">{{risposte.destinatario.nick}}:{{risposte.stato}}</button>
                   </li>
                 </ul>
                 <!-- /Submenu Risposte-->
@@ -172,13 +172,13 @@
        <div class="col-xs-12">
            <input type="text" ng-model="nickDestinatario" placeholder="nome destinatario"/>
            <input type="text" ng-model="msgUtente" placeholder="messaggio"/>
-           <button class="btn btn-default" ng-click="apriChat()">Invia Messaggio</button>
+           <button class="btn btn-default" ng-click="invioMessaggio()">apri chat</button>
        </div>
        <!-- GESTIONE MESSAGGI WSOCKET-->
        <div class="row">
-           <div class="col-xs-12" ng-repeat="messaggio in listaMessaggiUtente track by $index">
+           <!--<div class="col-xs-12" ng-repeat="messaggio in listaMessaggiUtente track by $index">
                <div class="col-xs-12">{{messaggio.msg}}</div>
-           </div>
+           </div>-->
         </div>
         <!-- GESTIONE MESSAGGI WSOCKET-->      
         <div id="wrapperMappaPC">             
@@ -258,6 +258,12 @@
                 passi=map.directionsRenderers[0].directions.routes[0].legs[0].steps
                 vettore="mezzoTrasporto">    
             </pannello-direzione>
+            <pannello-chat
+                mostra-chat="mostraChat"
+                lista-messaggi-utente="listaMessaggiUtente"
+                destinatario="destinatarioChat"
+                >  
+            </pannello-chat>
         </div>
     </section>
 </div>

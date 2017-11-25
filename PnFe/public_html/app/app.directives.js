@@ -215,7 +215,9 @@ angular.module('printNetworkApp')
         templateUrl : "app/components/templates/stelleFeedback.html"
     };
 });
-
+/**
+ * Direttiva per disegnare pannello direzione
+ */
 angular.module('printNetworkApp')
         .directive('pannelloDirezione', function (){
     return {
@@ -232,5 +234,20 @@ angular.module('printNetworkApp')
         },
         templateUrl : "app/components/templates/pannelloDirezione.html",
         controller:'pannelloDirezioneCtrl'
+    };
+});
+
+angular.module('printNetworkApp')
+        .directive('pannelloChat', function (){
+    return {
+        require: "ngModel",
+        restrict : "E",
+        scope: {
+            mostraChat:"=mostraChat",
+            listaMessaggiUtente:"=listaMessaggiUtente",
+            destinatario:"=destinatario"
+        },
+        templateUrl : "app/components/templates/pannelloChat.html",
+        controller:'pannelloChatCtrl'
     };
 });

@@ -1,0 +1,44 @@
+.pannelloDirezione{
+    position: absolute;
+    top: 120px;
+    opacity: 0.9;
+    background-color: whitesmoke;
+    border: 1px solid #101010;
+    box-shadow: 20px 20px 8px #88888A;
+}
+ 
+div.titoloDirezione{
+   padding-top:10px;
+    padding-bottom:10px;
+    border-bottom: 1px solid #9d9d9d;
+}
+div.footerDirezione{
+    padding-top:10px;
+    padding-bottom:10px;
+    border-top: 1px solid #9d9d9d;
+}
+div.descDirezione{
+   position: relative;
+}  
+div.titoloDirezione span.label,
+div.footerDirezione span.label{
+    font-size: 100%;
+    font-weight: bold;
+    color:#000000;
+}   
+div.descDirezione span.label{
+    font-size: 85%;
+    font-weight: 400;
+    color:#000000;
+}
+div.descDirezione .iconaDirezione{
+  position: absolute;
+}
+div.descDirezione .wrappIstruzioni{
+  padding-left: 20px;
+}
+
+div.wrappDistanza{
+    border-bottom: 1px solid #e6e6e6;
+    padding-left: 25px;
+}

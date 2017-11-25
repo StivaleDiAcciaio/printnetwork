@@ -14,6 +14,8 @@
                     $scope.geoArrivo=null;
                     $scope.mezzoTrasporto=null;
                     $scope.mostraPannelloDirezione=false;
+                    $scope.mostraChat=false;
+                    $scope.destinatarioChat=null;
                     $scope.mostraInfoPartenza = function(){
                         $scope.infoWindowsPartenza = !$scope.infoWindowsPartenza;
                         $scope.scrollTo('infoPDSscroll');
@@ -32,8 +34,14 @@
                       });
                       return numRisposte;
                     };
-                    $scope.apriChat = function () {
+                    $scope.invioMessaggio = function(){
                         $scope.notificationEngine.chatUtente($scope.nickDestinatario, $scope.msgUtente);
+                    };
+                    $scope.apriChat = function (risposte) {
+                        if(risposte.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
+                            $scope.destinatarioChat=risposte.destinatario;
+                            $scope.mostraChat = !$scope.mostraChat;                            
+                        }
                     };
                     $scope.isRichiestaStampa = function(stato){
                         return $scope.notificationEngine.isRichiestaStampa(stato);
