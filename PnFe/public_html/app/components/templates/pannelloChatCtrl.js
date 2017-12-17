@@ -13,6 +13,8 @@
                     };
                     $scope.invioMessaggio = function(){
                         $scope.inviaMessaggioFn({nickDestinatario:$scope.getDestinatarioNick(), msgDaInviare:$scope.msgDaInviare});
+                        $scope.listaMessaggiUtente.push({mittente:'io',msg:'io: '+$scope.msgDaInviare+'\t('+new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')+')'});
+                        $scope.msgDaInviare='';
                     };
                 }]);
 }());

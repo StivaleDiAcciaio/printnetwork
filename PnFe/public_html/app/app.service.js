@@ -78,6 +78,8 @@
                 //da altri utenti
                 var listaRichiesteStampaIN = [];
                 var dataStream = null;
+                var MAX_SIZE_MESSAGGI_UTENTE=1000;//capienza massima del buffer dei messaggi utente
+                var NUM_MESSAGGI_UTENTE_DA_SFOLTIRE=200;//numero messaggi eliminati appena superata la capienza del buffer
                 
                 /**
                  * Acquisisce le info del mittente che richiede una stampa
@@ -218,6 +220,9 @@
                                 if(filtraMessaggioInEntrata(message.data)){
                                     var end = message.data.indexOf(":");
                                     var mittente = message.data.substring(0, end);
+                                    if(listaMessaggiUtenteRicevuti.length>=MAX_SIZE_MESSAGGI_UTENTE){
+                                        listaMessaggiUtenteRicevuti.splice(0, NUM_MESSAGGI_UTENTE_DA_SFOLTIRE);
+                                    }
                                     listaMessaggiUtenteRicevuti.push({mittente:mittente,msg:message.data});
                                 }
                             }

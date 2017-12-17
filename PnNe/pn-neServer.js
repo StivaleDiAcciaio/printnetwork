@@ -175,7 +175,17 @@ function sendMessageToUser(mittente, destinatario, messaggio) {
     wss.clients.forEach(function each(wsDestinatario) {
         if (wsDestinatario.readyState === WebSocketServer.OPEN &&
                 wsDestinatario.protocol === destinatario) {
-            wsDestinatario.send(mittente+':'+messaggio);
+            var msgDaInviare;
+            if(messaggio !== 'RICHIESTA_STAMPA' &&
+               messaggio !== 'stampa_inviata' &&
+               messaggio !== 'stampa_contrattazione' &&
+               messaggio !== 'stampa_chiusa' &&
+               messaggio !== 'stampa_annullata'){
+                msgDaInviare=mittente+': '+messaggio+'\t('+new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')+')';
+            }else{
+                msgDaInviare=mittente+':'+messaggio;
+            }
+            wsDestinatario.send(msgDaInviare);
             esito = true;
         }
     });
