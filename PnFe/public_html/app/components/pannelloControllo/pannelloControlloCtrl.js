@@ -34,8 +34,9 @@
                       });
                       return numRisposte;
                     };
-                    $scope.invioMessaggio = function(){
-                        $scope.notificationEngine.chatUtente($scope.nickDestinatario, $scope.msgUtente);
+                   
+                    $scope.invioMessaggio = function(nickDestinatario,messaggioDaInviare){
+                        $scope.notificationEngine.chatUtente(nickDestinatario, messaggioDaInviare);
                     };
                     $scope.apriChat = function (risposte) {
                         if(risposte.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
@@ -334,21 +335,23 @@
                         nuovoPdsSelezionato.utentiPDSstessoIndirizzo = $filter('orderBy')(nuovoArrayPdsStessoIndirizzo, 'feedback', 'reverse');
                         return nuovoPdsSelezionato;
                     };
-                    $scope.toggleSubMenuSecondario=function(parentItem){
-                        if(parentItem === 'RichiesteEffettuate'){
-                            $scope.toggleMenuRichiesteEffettuate=!$scope.toggleMenuRichiesteEffettuate;
-                            $scope.toggleMenuRisposte=false;
-                            $scope.toggleMenuNotifiche=false;
-                        }else if(parentItem === 'Risposte'){
-                            $scope.toggleMenuRisposte=!$scope.toggleMenuRisposte;
-                            $scope.toggleMenuRichiesteEffettuate=false;
-                            $scope.toggleMenuNotifiche=false;
-                            
-                        }else if(parentItem === 'Notifiche'){
-                            $scope.toggleMenuNotifiche=!$scope.toggleMenuNotifiche;
-                            $scope.toggleMenuRichiesteEffettuate=false;
-                            $scope.toggleMenuRisposte=false;
-                        }
+                    $scope.toggleSubMenuSecondario=function(parentItem,numSubMenuItem){
+                       if(numSubMenuItem > 0){
+                            if(parentItem === 'RichiesteEffettuate'){
+                                $scope.toggleMenuRichiesteEffettuate=!$scope.toggleMenuRichiesteEffettuate;
+                                $scope.toggleMenuRisposte=false;
+                                $scope.toggleMenuNotifiche=false;
+                            }else if(parentItem === 'Risposte'){
+                                $scope.toggleMenuRisposte=!$scope.toggleMenuRisposte;
+                                $scope.toggleMenuRichiesteEffettuate=false;
+                                $scope.toggleMenuNotifiche=false;
+
+                            }else if(parentItem === 'Notifiche'){
+                                $scope.toggleMenuNotifiche=!$scope.toggleMenuNotifiche;
+                                $scope.toggleMenuRichiesteEffettuate=false;
+                                $scope.toggleMenuRisposte=false;
+                            }                           
+                       }
                     };
                     $scope.getPosizioneRilevata();
                     /* Ogni TIME_OUT_PING minuti circa pingo serversocket*/
@@ -359,6 +362,7 @@
                             return;
                         }
                         ping = $interval(function () {
+                            console.log("eseguo ping automatico al wsChat..");
                             $scope.notificationEngine.pingWs();
                             if (!$scope.notificationEngine.isConnected()) {
                                 $interval.cancel(ping);

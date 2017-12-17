@@ -198,6 +198,9 @@ div.infoMorePDS div a.label{
 .colorStar{
     color: yellow;
 }
+.colorStarEmpty {
+    color: #9a9a91;
+}
 
 .boxInfoPdsNoActive{
     transform: rotateY(90deg);
@@ -216,7 +219,7 @@ div.infoMorePDS div a.label{
 .submenuActiveNoActive.ng-hide-add,
 .submenuActiveNoActive.ng-hide-remove {
     transition: all 0.5s ease;
-    transform-origin: top;
+    transform-origin: center;
 }
 
 ul.nav-sidebar li a span{

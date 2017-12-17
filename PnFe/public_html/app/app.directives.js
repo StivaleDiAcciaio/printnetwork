@@ -245,7 +245,8 @@ angular.module('printNetworkApp')
         scope: {
             mostraChat:"=mostraChat",
             listaMessaggiUtente:"=listaMessaggiUtente",
-            destinatario:"=destinatario"
+            destinatario:"=destinatario",
+            inviaMessaggioFn: '&'
         },
         templateUrl : "app/components/templates/pannelloChat.html",
         controller:'pannelloChatCtrl'
