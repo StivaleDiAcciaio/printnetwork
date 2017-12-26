@@ -16,6 +16,12 @@
                     $scope.mostraPannelloDirezione=false;
                     $scope.mostraChat=false;
                     $scope.destinatarioChat=null;
+                   
+                    $scope.$on("messaggio_in_entrata", function(event, message){
+                         if(message==="apri-pannello-chat" && $scope.listaMessaggiUtente && $scope.listaMessaggiUtente.length>0){
+                             $scope.mostraChat=!$scope.mostraChat;
+                         }
+                    });
                     $scope.mostraInfoPartenza = function(){
                         $scope.infoWindowsPartenza = !$scope.infoWindowsPartenza;
                         $scope.scrollTo('infoPDSscroll');

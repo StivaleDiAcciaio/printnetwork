@@ -99,6 +99,9 @@
                         console.log(err);
                     });                    
                 };
+                var getIstante = function(){
+                  return new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');  
+                };
                 /**
                  * effettua verifiche sui messaggi in enrtata
                  * filtrando le particolari richieste di stampa/annulla/accetta
@@ -223,7 +226,7 @@
                                     if(listaMessaggiUtenteRicevuti.length>=MAX_SIZE_MESSAGGI_UTENTE){
                                         listaMessaggiUtenteRicevuti.splice(0, NUM_MESSAGGI_UTENTE_DA_SFOLTIRE);
                                     }
-                                    listaMessaggiUtenteRicevuti.push({mittente:mittente,msg:message.data});
+                                    listaMessaggiUtenteRicevuti.push({mittente:mittente,msg:message.data,istante:getIstante()});
                                 }
                             }
                         });

@@ -16,6 +16,11 @@
                     $scope.dominioFormati2D[3] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A1;
                     $scope.dominioFormati2D[4] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A0;
                     $scope.formatiStampa2DScelti = [];
+                    
+                    $scope.segnalaMessaggioInEntrata = function(){
+                      $scope.$broadcast('messaggio_in_entrata', "apri-pannello-chat");  
+                    };
+                    
                     $scope.togglePageLoading = function () {
                         $scope.showLoading = !$scope.showLoading;
                     };

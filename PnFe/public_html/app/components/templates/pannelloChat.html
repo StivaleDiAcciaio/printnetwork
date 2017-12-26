@@ -1,12 +1,16 @@
-<div class="col-xs-offset-3 col-xs-6 col-xs-offset-3 pannelloChat" ng-show="mostraChat||listaMessaggiUtente.length>0">
-    <div class="col-xs-12 titolo"><h4>Chat con {{getDestinatarioNick()}}</h4></div>
+<div class="col-xs-offset-3 col-xs-6 col-xs-offset-3 pannelloChat" ng-show="mostraChat">
+    <div class="col-xs-12 titolo">
+       <div class="col-xs-10"><h4>Chat con {{getDestinatarioNick()}}</h4></div>
+       <div class="col-xs-2"><span class="close" type="button" ng-click="togglePannelloChat()">×</span></div>
+    </div>
     <div class="col-xs-12 messaggi">
            <div class="col-xs-12" ng-repeat="messaggio in listaMessaggiUtente track by $index">
-               <div class="col-xs-12">{{messaggio.msg}}</div>
+               <div class="col-xs-6">{{messaggio.msg}}</div>
+               <div class="col-xs-pull-6" style="float: right;">{{messaggio.istante}}</div>
            </div>
     </div>
 </div>
-<div class="col-xs-offset-3 col-xs-6 col-xs-offset-3 inputChat" ng-show="mostraChat||listaMessaggiUtente.length>0">
+<div class="col-xs-offset-3 col-xs-6 col-xs-offset-3 inputChat" ng-show="mostraChat">
     <div class="input-group">
       <input type="text" ng-model="msgDaInviare" class="form-control" placeholder="scrivi qui">
       <span class="input-group-btn">

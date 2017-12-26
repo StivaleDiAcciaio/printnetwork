@@ -176,15 +176,7 @@ function sendMessageToUser(mittente, destinatario, messaggio) {
         if (wsDestinatario.readyState === WebSocketServer.OPEN &&
                 wsDestinatario.protocol === destinatario) {
             var msgDaInviare;
-            if(messaggio !== 'RICHIESTA_STAMPA' &&
-               messaggio !== 'stampa_inviata' &&
-               messaggio !== 'stampa_contrattazione' &&
-               messaggio !== 'stampa_chiusa' &&
-               messaggio !== 'stampa_annullata'){
-                msgDaInviare=mittente+': '+messaggio+'\t('+new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')+')';
-            }else{
-                msgDaInviare=mittente+':'+messaggio;
-            }
+            msgDaInviare=mittente+':'+messaggio;
             wsDestinatario.send(msgDaInviare);
             esito = true;
         }

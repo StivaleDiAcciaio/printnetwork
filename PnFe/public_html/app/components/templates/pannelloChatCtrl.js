@@ -13,8 +13,17 @@
                     };
                     $scope.invioMessaggio = function(){
                         $scope.inviaMessaggioFn({nickDestinatario:$scope.getDestinatarioNick(), msgDaInviare:$scope.msgDaInviare});
-                        $scope.listaMessaggiUtente.push({mittente:'io',msg:'io: '+$scope.msgDaInviare+'\t('+new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')+')'});
+                        //$scope.listaMessaggiUtente.push({mittente:'io',msg:'io: '+$scope.msgDaInviare+'\t('+new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')+')'});
+                        $scope.listaMessaggiUtente.push({mittente:'io',msg:'io: '+$scope.msgDaInviare,istante:$scope.getIstante()});
                         $scope.msgDaInviare='';
                     };
+                    
+                    $scope.getIstante = function(){
+                      return new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');  
+                    };
+                    $scope.togglePannelloChat = function(){
+                      $scope.mostraChat=!$scope.mostraChat;    
+                    };
+                     
                 }]);
 }());
