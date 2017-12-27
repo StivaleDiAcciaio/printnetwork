@@ -13,7 +13,8 @@
           "INVIATA":"stampa_inviata",
           "CONTRATTAZIONE":"stampa_contrattazione",
           "CHIUSA":"stampa_chiusa",
-          "ANNULLATA":"stampa_annullata"
+          "ANNULLATA":"stampa_annullata",
+          "ACCETTATA":"richiesta_inentrata_accettata"
         },
         "NUM_RICHIESTE_STAMPA_IN":4,
         "MAPPA": {

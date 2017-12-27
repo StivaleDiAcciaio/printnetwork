@@ -17,11 +17,15 @@
                     $scope.mostraChat=false;
                     $scope.destinatarioChat=null;
                    
-                    $scope.$on("messaggio_in_entrata", function(event, message){
+                    /*$scope.$on("messaggio_in_entrata", function(event, message){
                          if(message==="apri-pannello-chat" && $scope.listaMessaggiUtente && $scope.listaMessaggiUtente.length>0){
                              $scope.mostraChat=!$scope.mostraChat;
                          }
-                    });
+                    });*/
+                    
+                    $scope.segnalaMessaggioInEntrata = function(){
+                      $scope.$emit('messaggio_in', "nuovo-messaggio");  
+                    };
                     $scope.mostraInfoPartenza = function(){
                         $scope.infoWindowsPartenza = !$scope.infoWindowsPartenza;
                         $scope.scrollTo('infoPDSscroll');
@@ -29,23 +33,38 @@
                     $scope.numeroNotifiche = function(){
                       var numeroNotificheServer=$scope.listaNotificheServer.length===null?0:$scope.listaNotificheServer.length;
                       var numeroRichiesteStampaEntrata=$scope.listaRichiesteStampaEntrata.length===null?0:$scope.listaRichiesteStampaEntrata.length;
+                      if(numeroNotificheServer+numeroRichiesteStampaEntrata>0){
+                          $scope.segnalaMessaggioInEntrata();
+                      }
                       return numeroNotificheServer+numeroRichiesteStampaEntrata;
                     };
                     $scope.numeroRisposteRicevute = function(){
                       var numRisposte=0;
                       $scope.listaRichiesteStampaUscita.forEach(function(richiestaUscita) {
-                            if(richiestaUscita.stato !== COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA){
+                            if(richiestaUscita.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || 
+                                    richiestaUscita.stato === COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA){
                                 numRisposte++;
+                                $scope.segnalaMessaggioInEntrata();
                             }
                       });
                       return numRisposte;
                     };
-                   
+                    $scope.numeroRichiestaStampaEffettuate = function(){
+                        var numeroRichiesteEffettuate=0;
+                        if ($scope.listaRichiesteStampaUscita){
+                            $scope.listaRichiesteStampaUscita.forEach(function(richiestaUscita,idx) {
+                            if(richiestaUscita.stato === COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA){
+                               numeroRichiesteEffettuate++;
+                             }
+                         });
+                        }
+                        return numeroRichiesteEffettuate;
+                    };
                     $scope.invioMessaggio = function(nickDestinatario,messaggioDaInviare){
                         $scope.notificationEngine.chatUtente(nickDestinatario, messaggioDaInviare);
                     };
                     $scope.apriChat = function (risposte) {
-                        if(risposte.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
+                        if(risposte.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || risposte.stato === COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA){
                             $scope.destinatarioChat=risposte.destinatario;
                             $scope.mostraChat = !$scope.mostraChat;                            
                         }
@@ -54,7 +73,25 @@
                         return $scope.notificationEngine.isRichiestaStampa(stato);
                     };
                     $scope.accettaRichiestaStampa = function(nickDestinatario){
+                        //notifico al mittente la mia decisione
                         $scope.notificationEngine.richiestaStampaInEntrata(nickDestinatario,'accetta');  
+                        //se accetto la richiesta di stampa in entrata..
+                        //aggiungo il nuovo contatto..
+                        $scope.aggiungiContatto(nickDestinatario);
+                    };
+                    /**
+                     * Aggiunge un nuovo contatto.
+                     * lo aggiunge alla lista delle richiestaStampaUscita(rappresenta la lista contatti)
+                     * @param {type} nickDestinatario
+                     * @returns {undefined}
+                     */
+                    $scope.aggiungiContatto = function(nickDestinatario){
+                         $scope.listaRichiesteStampaEntrata.forEach(function(richiestaEntrata,idx) {
+                            if(richiestaEntrata.mittente.nick === nickDestinatario){
+                               $scope.listaRichiesteStampaUscita.push({destinatario:richiestaEntrata.mittente,stato:COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA}); 
+                               $scope.listaRichiesteStampaEntrata.splice(idx, 1);
+                             }
+                         });
                     };
                     $scope.rifiutaRichiestaStampa = function(nickDestinatario){
                         $scope.notificationEngine.richiestaStampaInEntrata(nickDestinatario,'rifiuta');  

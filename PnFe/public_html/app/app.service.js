@@ -179,9 +179,10 @@
                             //controllo sul canale delle richieste OUT..
                             if (listaRichiesteStampaOUT && listaRichiesteStampaOUT.length>0){
                                  for (var i = 0; i < listaRichiesteStampaOUT.length; i++) {
-                                     //..deve esistere uno stato precedente a "CONTRATTAZIONE"
+                                     //..deve esistere uno stato precedente a "CONTRATTAZIONE" oppure "ACCETTATA"
                                      if(listaRichiesteStampaOUT[i].destinatario.nick === mittente &&
-                                        listaRichiesteStampaOUT[i].stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE){
+                                        (listaRichiesteStampaOUT[i].stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE ||
+                                        listaRichiesteStampaOUT[i].stato === COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA)){
                                         esito = true;
                                          break;
                                      }

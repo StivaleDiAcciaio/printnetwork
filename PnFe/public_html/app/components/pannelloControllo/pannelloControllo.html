@@ -38,11 +38,11 @@
             </div>
             <ul class="listaVociMobile nav nav-sidebar">
                 <li ng-init="toggleMenuRichiesteEffettuate=false" ng-class="toggleMenuRichiesteEffettuate?'active':''">
-                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('RichiesteEffettuate',listaRichiesteStampaUscita.length)">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{listaRichiesteStampaUscita.length==null?0:listaRichiesteStampaUscita.length}})</span></a>
+                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('RichiesteEffettuate',listaRichiesteStampaUscita.length)">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span class="badge">{{numeroRichiestaStampaEffettuate()}}</span></a>
                 </li>
                 <!-- Submenu Richieste-->
                 <ul ng-show="toggleMenuRichiesteEffettuate" class="submenuActiveNoActive">
-                    <li ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita track by $index">
+                    <li ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita |filter:{stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA} track by $index">
                         <button class="btn btn-link" href="#pannelloControllo">{{richiesteStampaEffettuate.destinatario.nick}}</button>
                         <stelle-feedback feedback="richiesteStampaEffettuate.destinatario.feedback"></stelle-feedback>
                         <button class="btn btn-link subMenuBtnAuto" href="#pannelloControllo"><img src="assets/img/auto.svg"></button>
@@ -51,17 +51,17 @@
                 </ul>
                 <!-- /Submenu Richieste-->
                 <li ng-init="toggleMenuRisposte=false" ng-class="toggleMenuRisposte?'active':''">
-                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Risposte',numeroRisposteRicevute())">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute()}})</span></a>
+                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Risposte',numeroRisposteRicevute())">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span class="badge">{{numeroRisposteRicevute()}}</span></a>
                 </li>
                 <!-- Submenu Risposte-->
                 <ul  ng-show="toggleMenuRisposte" class="submenuActiveNoActive">
-                  <li ng-repeat="risposte in listaRichiesteStampaUscita|filter:{stato:'stampa_contrattazione'} track by $index">
-                        <button class="btn btn-link" href="#pannelloControllo">{{risposte.destinatario}}:{{risposte.stato}}</button>
+                  <li ng-repeat="risposte in listaRichiesteStampaUscita track by $index">
+                      <button class="btn btn-link" ng-class="(risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA)?'':'disabled'" href="#pannelloControllo" ng-click="apriChat(risposte)">{{risposte.destinatario.nick}}:{{risposte.stato}}</button> 
                   </li>
                 </ul>
                 <!-- /Submenu Risposte-->
                 <li ng-init="toggleMenuNotifiche=false" ng-class="toggleMenuNotifiche?'active':''">
-                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Notifiche',numeroNotifiche())">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche()}})</span></a>
+                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Notifiche',numeroNotifiche())">{{"PC.ITEM.NOTIFICHE"| translate}}<span class="badge">{{numeroNotifiche()}}</span></a>
  
                 </li>
                 <!-- Submenu Notifiche-->
@@ -118,11 +118,11 @@
             </div>
             <ul class="listaVociDesktop nav nav-sidebar">
                 <li ng-init="toggleMenuRichiesteEffettuate=false" ng-class="toggleMenuRichiesteEffettuate?'active':''">
-                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('RichiesteEffettuate',listaRichiesteStampaUscita.length)">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span>({{listaRichiesteStampaUscita.length==null?0:listaRichiesteStampaUscita.length}})</span></a>
+                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('RichiesteEffettuate',listaRichiesteStampaUscita.length)">{{"PC.ITEM.RICHIESTE_EFFETTUATE"| translate}}<span class="badge">{{numeroRichiestaStampaEffettuate()}}</span></a>
                 </li>
                 <!-- Submenu Richieste-->
                 <ul ng-show="toggleMenuRichiesteEffettuate" class="submenuActiveNoActive">
-                    <li ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita track by $index">
+                    <li ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita |filter:{stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA} track by $index">
                         <button class="btn btn-link" href="#pannelloControllo">{{richiesteStampaEffettuate.destinatario.nick}}</button>
                         <stelle-feedback feedback="richiesteStampaEffettuate.destinatario.feedback"></stelle-feedback>
                         <button class="btn btn-link subMenuBtnAuto" href="#pannelloControllo"><img src="assets/img/auto.svg"></button>
@@ -131,17 +131,17 @@
                 </ul>
                 <!-- /Submenu Richieste-->
                 <li ng-init="toggleMenuRisposte=false" ng-class="toggleMenuRisposte?'active':''">
-                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Risposte',numeroRisposteRicevute())">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span>({{numeroRisposteRicevute()}})</span></a>
+                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Risposte',numeroRisposteRicevute())">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span class="badge">{{numeroRisposteRicevute()}}</span></a>
                 </li>
                 <!-- Submenu Risposte-->
                 <ul  ng-show="toggleMenuRisposte" class="submenuActiveNoActive">
-                  <li ng-repeat="risposte in listaRichiesteStampaUscita|filter:{stato:COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE||COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA} track by $index">
-                        <button class="btn btn-link" ng-class="risposte.stato==COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE?'':'disabled'" href="#pannelloControllo" ng-click="apriChat(risposte)">{{risposte.destinatario.nick}}:{{risposte.stato}}</button>
+                  <li ng-repeat="risposte in listaRichiesteStampaUscita track by $index">
+                        <button class="btn btn-link" ng-class="(risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA)?'':'disabled'" href="#pannelloControllo" ng-click="apriChat(risposte)">{{risposte.destinatario.nick}}:{{risposte.stato}}</button>
                   </li>
                 </ul>
                 <!-- /Submenu Risposte-->
                 <li ng-init="toggleMenuNotifiche=false" ng-class="toggleMenuNotifiche?'active':''">
-                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Notifiche',numeroNotifiche())">{{"PC.ITEM.NOTIFICHE"| translate}}<span>({{numeroNotifiche()}})</span></a>
+                    <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Notifiche',numeroNotifiche())">{{"PC.ITEM.NOTIFICHE"| translate}}<span class="badge">{{numeroNotifiche()}}</span></a>
  
                 </li>
                 <!-- Submenu Notifiche-->

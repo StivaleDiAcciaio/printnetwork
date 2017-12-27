@@ -16,11 +16,18 @@
                     $scope.dominioFormati2D[3] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A1;
                     $scope.dominioFormati2D[4] = COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A0;
                     $scope.formatiStampa2DScelti = [];
+                    $scope.msgIN="";
                     
-                    $scope.segnalaMessaggioInEntrata = function(){
+                   /* $scope.segnalaMessaggioInEntrata = function(){
                       $scope.$broadcast('messaggio_in_entrata', "apri-pannello-chat");  
-                    };
-                    
+                    };*/
+                    $scope.$on("messaggio_in", function(event, message){
+                         if(message==="nuovo-messaggio"){
+                             $scope.msgIN="!";
+                         }else{
+                             $scope.msgIN="";
+                         }
+                    });
                     $scope.togglePageLoading = function () {
                         $scope.showLoading = !$scope.showLoading;
                     };
