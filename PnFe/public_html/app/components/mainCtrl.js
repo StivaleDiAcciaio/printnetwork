@@ -21,7 +21,7 @@
                    /* $scope.segnalaMessaggioInEntrata = function(){
                       $scope.$broadcast('messaggio_in_entrata', "apri-pannello-chat");  
                     };*/
-                    $scope.$on("messaggio_in", function(event, message){
+                    $scope.$on("messaggio", function(event, message){
                          if(message==="nuovo-messaggio"){
                              $scope.msgIN="!";
                          }else{

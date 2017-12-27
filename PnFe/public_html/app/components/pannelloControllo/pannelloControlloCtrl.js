@@ -23,8 +23,8 @@
                          }
                     });*/
                     
-                    $scope.segnalaMessaggioInEntrata = function(){
-                      $scope.$emit('messaggio_in', "nuovo-messaggio");  
+                    $scope.segnalaMessaggioInEntrata = function(flagSegnale){
+                      $scope.$emit('messaggio', (flagSegnale||flagSegnale===undefined)?"nuovo-messaggio":"");  
                     };
                     $scope.mostraInfoPartenza = function(){
                         $scope.infoWindowsPartenza = !$scope.infoWindowsPartenza;
@@ -34,17 +34,21 @@
                       var numeroNotificheServer=$scope.listaNotificheServer.length===null?0:$scope.listaNotificheServer.length;
                       var numeroRichiesteStampaEntrata=$scope.listaRichiesteStampaEntrata.length===null?0:$scope.listaRichiesteStampaEntrata.length;
                       if(numeroNotificheServer+numeroRichiesteStampaEntrata>0){
-                          $scope.segnalaMessaggioInEntrata();
+                          $scope.segnalaMessaggioInEntrata(true);
                       }
                       return numeroNotificheServer+numeroRichiesteStampaEntrata;
                     };
+                    /**
+                     * conta il numero dei contatti con cui si puo chattare
+                     * @returns {Number}
+                     */
                     $scope.numeroRisposteRicevute = function(){
                       var numRisposte=0;
                       $scope.listaRichiesteStampaUscita.forEach(function(richiestaUscita) {
                             if(richiestaUscita.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || 
                                     richiestaUscita.stato === COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA){
                                 numRisposte++;
-                                $scope.segnalaMessaggioInEntrata();
+                                $scope.segnalaMessaggioInEntrata(!richiestaUscita.visualizzata);
                             }
                       });
                       return numRisposte;
@@ -65,9 +69,21 @@
                     };
                     $scope.apriChat = function (risposte) {
                         if(risposte.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || risposte.stato === COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA){
+                            risposte.visualizzata=true;
+                            $scope.verificaContattiNuovi();
                             $scope.destinatarioChat=risposte.destinatario;
                             $scope.mostraChat = !$scope.mostraChat;                            
                         }
+                    };
+                    $scope.verificaContattiNuovi = function(){
+                        var segnalaNotifica=false;
+                        $scope.listaRichiesteStampaUscita.forEach(function(richiestaUscita) {
+                            if(!richiestaUscita.visualizzata){
+                                //se esiste anche una sola voce sotto il menu Contatti non letta...
+                                segnalaNotifica=true;
+                            }
+                      });
+                      $scope.segnalaMessaggioInEntrata(segnalaNotifica);
                     };
                     $scope.isRichiestaStampa = function(stato){
                         return $scope.notificationEngine.isRichiestaStampa(stato);
