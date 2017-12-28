@@ -6,6 +6,12 @@
                 function ($scope, $filter, $state, serviziRest, COSTANTI, NgMap, $timeout, $q, $interval,$translate) {
                     /* notification engine sta nello scope del mainCtrl */
                     $scope.listaMessaggiUtente = $scope.notificationEngine.getMessaggiUtente();
+                    $scope.$watch('listaMessaggiUtente.length', function() {
+                       var ultimoMsgIdx=($scope.listaMessaggiUtente.length) -1;
+                        if($scope.listaMessaggiUtente.length>0 && $scope.listaMessaggiUtente[ultimoMsgIdx].mittente!=='io'){
+                           $scope.segnalaMessaggioInEntrata(true);
+                       }
+                    });
                     $scope.listaNotificheServer = $scope.notificationEngine.getNotificheServer();
                     $scope.listaRichiesteStampaEntrata = $scope.notificationEngine.getRichiesteStampaEntrata();
                     $scope.listaRichiesteStampaUscita = $scope.notificationEngine.getRichiesteStampaUscita();
@@ -16,6 +22,7 @@
                     $scope.mostraPannelloDirezione=false;
                     $scope.mostraChat=false;
                     $scope.destinatarioChat=null;
+                    $scope.numeroContatti=0;
                    
                     /*$scope.$on("messaggio_in_entrata", function(event, message){
                          if(message==="apri-pannello-chat" && $scope.listaMessaggiUtente && $scope.listaMessaggiUtente.length>0){
@@ -31,12 +38,10 @@
                         $scope.scrollTo('infoPDSscroll');
                     };
                     $scope.numeroNotifiche = function(){
-                      var numeroNotificheServer=$scope.listaNotificheServer.length===null?0:$scope.listaNotificheServer.length;
-                      var numeroRichiesteStampaEntrata=$scope.listaRichiesteStampaEntrata.length===null?0:$scope.listaRichiesteStampaEntrata.length;
-                      if(numeroNotificheServer+numeroRichiesteStampaEntrata>0){
-                          $scope.segnalaMessaggioInEntrata(true);
-                      }
-                      return numeroNotificheServer+numeroRichiesteStampaEntrata;
+                      $scope.numeroNotificheServer=$scope.listaNotificheServer.length===null?0:$scope.listaNotificheServer.length;
+                      $scope.numeroRichiesteStampaEntrata=$scope.listaRichiesteStampaEntrata.length===null?0:$scope.listaRichiesteStampaEntrata.length;
+                      $scope.verificaNuoviMessaggi();
+                      return $scope.numeroNotificheServer+$scope.numeroRichiesteStampaEntrata;
                     };
                     /**
                      * conta il numero dei contatti con cui si puo chattare
@@ -48,9 +53,10 @@
                             if(richiestaUscita.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || 
                                     richiestaUscita.stato === COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA){
                                 numRisposte++;
-                                $scope.segnalaMessaggioInEntrata(!richiestaUscita.visualizzata);
                             }
                       });
+                      $scope.numeroContatti=numRisposte;
+                      $scope.verificaNuoviMessaggi();
                       return numRisposte;
                     };
                     $scope.numeroRichiestaStampaEffettuate = function(){
@@ -67,22 +73,43 @@
                     $scope.invioMessaggio = function(nickDestinatario,messaggioDaInviare){
                         $scope.notificationEngine.chatUtente(nickDestinatario, messaggioDaInviare);
                     };
-                    $scope.apriChat = function (risposte) {
-                        if(risposte.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || risposte.stato === COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA){
-                            risposte.visualizzata=true;
-                            $scope.verificaContattiNuovi();
-                            $scope.destinatarioChat=risposte.destinatario;
+                    $scope.apriChat = function (contatti) {
+                        if(contatti.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || contatti.stato === COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA){
+                            contatti.visualizzata=true;
+                            $scope.leggoMessaggioContatto(contatti.destinatario.nick);
+                            $scope.verificaNuoviMessaggi();
+                            $scope.destinatarioChat=contatti.destinatario;
                             $scope.mostraChat = !$scope.mostraChat;                            
                         }
                     };
-                    $scope.verificaContattiNuovi = function(){
+                    $scope.leggoMessaggioContatto = function(nickContatto){
+                         $scope.listaMessaggiUtente.forEach(function(messaggiUtenteInEntrata) {
+                            if(messaggiUtenteInEntrata.mittente===nickContatto){
+                                //segno come letto il messaggio di un contatto che sto visualizzando..
+                                messaggiUtenteInEntrata.visualizzata=true;
+                            }
+                        });
+                    };
+                    $scope.verificaNuoviMessaggi = function(){
                         var segnalaNotifica=false;
+                        //verifica su contatti non letti(escludo richieste effettuate da me)
                         $scope.listaRichiesteStampaUscita.forEach(function(richiestaUscita) {
-                            if(!richiestaUscita.visualizzata){
-                                //se esiste anche una sola voce sotto il menu Contatti non letta...
+                            if(richiestaUscita.stato !== COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA && !richiestaUscita.visualizzata){
+                                //se esiste anche una sola voce sotto il menu Contatti non visualizzata...
                                 segnalaNotifica=true;
                             }
-                      });
+                        });
+                        //verifica su messaggi utente non letti(escludo richieste effettuate da me)
+                        $scope.listaMessaggiUtente.forEach(function(messaggiUtenteInEntrata) {
+                            if(messaggiUtenteInEntrata.mittente!=='io' && !messaggiUtenteInEntrata.visualizzata){
+                                //se esiste anche una solo messaggio non letto...
+                                segnalaNotifica=true;
+                            }
+                        });
+                        //verifica su notifiche non lette
+                        if($scope.numeroNotificheServer+$scope.numeroRichiesteStampaEntrata>0){
+                            segnalaNotifica=true;
+                        }
                       $scope.segnalaMessaggioInEntrata(segnalaNotifica);
                     };
                     $scope.isRichiestaStampa = function(stato){

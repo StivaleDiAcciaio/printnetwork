@@ -5,7 +5,7 @@
     </div>
     <div class="col-xs-12 messaggi">
            <div class="col-xs-12" ng-repeat="messaggio in listaMessaggiUtente track by $index">
-               <div class="col-xs-6">{{messaggio.msg}}</div>
+               <div class="col-xs-6">{{getMessaggioUtente(messaggio)}}</div>
                <div class="col-xs-pull-6" style="float: right;">{{messaggio.istante}}</div>
            </div>
     </div>

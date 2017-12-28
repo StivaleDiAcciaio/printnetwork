@@ -24,6 +24,12 @@
                     $scope.togglePannelloChat = function(){
                       $scope.mostraChat=!$scope.mostraChat;    
                     };
+                    $scope.getMessaggioUtente = function(messaggio){
+                      if($scope.mostraChat){
+                         messaggio.visualizzata=true; 
+                      }
+                      return messaggio.msg;  
+                    };
                      
                 }]);
 }());

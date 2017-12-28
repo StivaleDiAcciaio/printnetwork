@@ -227,7 +227,7 @@
                                     if(listaMessaggiUtenteRicevuti.length>=MAX_SIZE_MESSAGGI_UTENTE){
                                         listaMessaggiUtenteRicevuti.splice(0, NUM_MESSAGGI_UTENTE_DA_SFOLTIRE);
                                     }
-                                    listaMessaggiUtenteRicevuti.push({mittente:mittente,msg:message.data,istante:getIstante()});
+                                    listaMessaggiUtenteRicevuti.push({mittente:mittente,msg:message.data,istante:getIstante(),visualizzata:false});
                                 }
                             }
                         });
