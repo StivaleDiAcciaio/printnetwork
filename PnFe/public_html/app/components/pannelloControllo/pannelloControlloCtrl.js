@@ -112,6 +112,16 @@
                         }
                       $scope.segnalaMessaggioInEntrata(segnalaNotifica);
                     };
+                    $scope.checkMessaggiUtenteNonLetti = function(nickUtente){
+                        var nonLetti=false;
+                        $scope.listaMessaggiUtente.forEach(function(messaggiMittente) {
+                            if(messaggiMittente.mittente===nickUtente && !messaggiMittente.visualizzata){
+                                //se esiste anche una solo messaggio non letto...
+                                nonLetti=true;
+                            }
+                        });                 
+                        return nonLetti;
+                    };
                     $scope.isRichiestaStampa = function(stato){
                         return $scope.notificationEngine.isRichiestaStampa(stato);
                     };

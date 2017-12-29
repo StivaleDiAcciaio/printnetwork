@@ -53,10 +53,18 @@
                 <li ng-init="toggleMenuRisposte=false" ng-class="toggleMenuRisposte?'active':''">
                     <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Risposte',numeroContatti)">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span class="badge">{{numeroRisposteRicevute()}}</span></a>
                 </li>
-                <!-- Submenu Risposte-->
+                <!-- Submenu Risposte (Contatti)-->
                 <ul  ng-show="toggleMenuRisposte" class="submenuActiveNoActive">
                   <li ng-repeat="risposte in listaRichiesteStampaUscita track by $index">
-                      <button class="btn btn-link" ng-class="(risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA)?'':'disabled'" href="#pannelloControllo" ng-click="apriChat(risposte)">{{risposte.destinatario.nick}}:{{risposte.stato}}</button> 
+                      <button class="btn btn-link" ng-class="(risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA)?'':'disabled'" 
+                              href="#pannelloControllo" ng-click="apriChat(risposte)">
+                              {{risposte.destinatario.nick}}
+                      </button> 
+                      <i ng-if="checkMessaggiUtenteNonLetti(risposte.destinatario.nick)" class="glyphicon glyphicon-envelope"></i>
+                      <stelle-feedback feedback="risposte.destinatario.feedback"></stelle-feedback>
+                      <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnAuto" href="#pannelloControllo"><img src="assets/img/auto.svg"></button>
+                      <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnPiede" href="#pannelloControllo"><img src="assets/img/piede.svg"></button>
+                      <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA" class="btn btn-link subMenuBtnAccetta"><i class="glyphicon glyphicon-ok"></i></button>                     
                   </li>
                 </ul>
                 <!-- /Submenu Risposte-->
@@ -133,10 +141,20 @@
                 <li ng-init="toggleMenuRisposte=false" ng-class="toggleMenuRisposte?'active':''">
                     <a href="#pannelloControllo" ng-click="toggleSubMenuSecondario('Risposte',numeroContatti)">{{"PC.ITEM.RISPOSTE_RICEVUTE"| translate}}<span class="badge">{{numeroRisposteRicevute()}}</span></a>
                 </li>
-                <!-- Submenu Risposte-->
+                <!-- Submenu Risposte (Contatti)-->
                 <ul  ng-show="toggleMenuRisposte" class="submenuActiveNoActive">
                   <li ng-repeat="risposte in listaRichiesteStampaUscita track by $index">
-                        <button class="btn btn-link" ng-class="(risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA)?'':'disabled'" href="#pannelloControllo" ng-click="apriChat(risposte)">{{risposte.destinatario.nick}}:{{risposte.stato}}</button>
+                        <button class="btn btn-link" ng-class="(risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA)?'':'disabled'" 
+                                href="#pannelloControllo" ng-click="apriChat(risposte)">
+                            {{risposte.destinatario.nick}}
+                        </button>
+                        <button ng-if="checkMessaggiUtenteNonLetti(risposte.destinatario.nick)" class="btn btn-link" ng-click="apriChat(risposte)">
+                            <i class="glyphicon glyphicon-envelope"></i>
+                        </button>
+                        <stelle-feedback feedback="risposte.destinatario.feedback"></stelle-feedback>
+                        <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnAuto" href="#pannelloControllo"><img src="assets/img/auto.svg"></button>
+                        <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnPiede" href="#pannelloControllo"><img src="assets/img/piede.svg"></button>
+                        <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA" class="btn btn-link subMenuBtnAccetta"><i class="glyphicon glyphicon-ok"></i></button>
                   </li>
                 </ul>
                 <!-- /Submenu Risposte-->
@@ -169,18 +187,6 @@
        <div>
             <rzslider rz-slider-model="slider.raggioCerchio" rz-slider-options="slider.options"></rzslider>
        </div>
-       <!--<div class="col-xs-12">
-           <input type="text" ng-model="nickDestinatario" placeholder="nome destinatario"/>
-           <input type="text" ng-model="msgUtente" placeholder="messaggio"/>
-           <button class="btn btn-default" ng-click="invioMessaggio()">apri chat</button>
-       </div>-->
-       <!-- GESTIONE MESSAGGI WSOCKET-->
-       <!--<div class="row">
-           <div class="col-xs-12" ng-repeat="messaggio in listaMessaggiUtente track by $index">
-               <div class="col-xs-12">{{messaggio.msg}}</div>
-           </div>
-        </div>-->
-        <!-- GESTIONE MESSAGGI WSOCKET-->      
         <div id="wrapperMappaPC">             
             <ng-map id="mappaPannelloControllo" class="mappaPannelloControllo"
                     zoom="{{zoomCalcolato}}" 
@@ -226,8 +232,8 @@
                                        <div ng-if="pdsSelezionato.tipologiaStampa.stampa3D"><span class="label">{{"PC.LABEL.STMP3D"| translate}}: {{"PC.LABEL.STMP3D_MATERIALE"| translate}} {{pdsSelezionato.tipologiaStampa.stampa3D.materiale}}-H.{{pdsSelezionato.tipologiaStampa.stampa3D.altezza}},L.{{pdsSelezionato.tipologiaStampa.stampa3D.larghezza}},P.{{pdsSelezionato.tipologiaStampa.stampa3D.profondita}}</span></div>  
                 </div>
                 <div class="col-xs-12">
-                    <div ng-if="pdsSelezionato.tipologiaUtente=='P'"><span class="label">{{"PC.LABEL.TIPOUTENTE"| translate}}: {{"PC.LABEL.UT_PRIVATO"| translate}}</span></div>
-                    <div ng-if="pdsSelezionato.tipologiaUtente=='A'"><span class="label">{{"PC.LABEL.TIPOUTENTE"| translate}}: {{"PC.LABEL.UT_ATTIVITA"| translate}}</span></div>
+                    <div ng-if="pdsSelezionato.tipologiaUtente==='P'"><span class="label">{{"PC.LABEL.TIPOUTENTE"| translate}}: {{"PC.LABEL.UT_PRIVATO"| translate}}</span></div>
+                    <div ng-if="pdsSelezionato.tipologiaUtente==='A'"><span class="label">{{"PC.LABEL.TIPOUTENTE"| translate}}: {{"PC.LABEL.UT_ATTIVITA"| translate}}</span></div>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <span class="label">feedback:</span>

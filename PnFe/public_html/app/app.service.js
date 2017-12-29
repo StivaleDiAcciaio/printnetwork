@@ -102,6 +102,7 @@
                 var getIstante = function(){
                   return new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');  
                 };
+
                 /**
                  * effettua verifiche sui messaggi in enrtata
                  * filtrando le particolari richieste di stampa/annulla/accetta
@@ -119,27 +120,41 @@
                                 listaRichiesteStampaIN && 
                                 listaRichiesteStampaIN.length<COSTANTI.NUM_RICHIESTE_STAMPA_IN){
                             //In entrata una richiesta di stampa che non supera il limite delle richieste (contemporanee) in entrata 
-                            //verifico che mittente non abbia gia fatto richiesta precedentemente..
-                            var richiestaPrecEsistente=false;
-                            for (var c = 0; c < listaRichiesteStampaIN.length; c++) {
-                                if(listaRichiesteStampaIN[c].mittente.nick === mittente &&
-                                        listaRichiesteStampaIN[c].stato === COSTANTI.RICHIESTA_STAMPA){
-                                   richiestaPrecEsistente = true;
-                                   break;
+                            //verifico che mittente abbia fatto richiesta precedente e che questa sia stata gia accettata
+                            var reinvioAccetta=false;
+                            listaRichiesteStampaOUT.forEach(function(richiestaPrecAccettata) {
+                                if(richiestaPrecAccettata.destinatario.nick===mittente &&
+                                   (richiestaPrecAccettata.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE ||
+                                    richiestaPrecAccettata.stato === COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA
+                                   )
+                                ){
+                                   //in questo caso reinvio automatico al mittente dello stato di accettazione
+                                   dataStream.send({destinatario:mittente,testo:COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE});
+                                   reinvioAccetta=true;
                                 }
-                            }
-                            if(!richiestaPrecEsistente){
-                                serviziRest.infonick({nick:mittente}).then(function (response) {
-                                    if (response.esito) {
-                                        if (response.utente) {
-                                          listaRichiesteStampaIN.push({mittente:response.utente,stato:COSTANTI.RICHIESTA_STAMPA}); 
-                                        }
-                                    } 
-                                }, function (err) {
-                                    console.log(err);
-                                });                               
-                                //listaRichiesteStampaIN.push({mittente:mittente,stato:msgUtente});
-                                esito = false; //non e' un messaggio da visualizzare a console Ma una richiesta di stampa in entrata
+                            });
+                            if(!reinvioAccetta){
+                                // se non era pesente tra le richieste accettate..verifico che mittente non sia presente tra le nuove notifiche,.
+                                var richiestaPrecEsistente=false;
+                                for (var c = 0; c < listaRichiesteStampaIN.length; c++) {
+                                    if(listaRichiesteStampaIN[c].mittente.nick === mittente &&
+                                            listaRichiesteStampaIN[c].stato === COSTANTI.RICHIESTA_STAMPA){
+                                       richiestaPrecEsistente = true;
+                                       break;
+                                    }
+                                }
+                                if(!richiestaPrecEsistente){
+                                    serviziRest.infonick({nick:mittente}).then(function (response) {
+                                        if (response.esito) {
+                                            if (response.utente) {
+                                              listaRichiesteStampaIN.push({mittente:response.utente,stato:COSTANTI.RICHIESTA_STAMPA}); 
+                                            }
+                                        } 
+                                    }, function (err) {
+                                        console.log(err);
+                                    });                               
+                                    esito = false; //non e' un messaggio da visualizzare a console Ma una richiesta di stampa in entrata
+                                }                                
                             }
                         }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE ||
                                  msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA
@@ -261,7 +276,7 @@
                        listaRichiesteStampaOUT.push({destinatario:destinatario,stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA});   
                     }
                 };
-                /**
+               /**
                  * Accetta/Rifiuta richiesta di stampa in entrata 
                  * @param {type} nickDestinatario
                  * @param {type} azione
@@ -287,8 +302,7 @@
                     if(invio){
                       this.inviaMessaggio(nickDestinatario,(azione==='accetta'?COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE:COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA));
                     }
-                };
-                
+                };              
                 this.inviaMessaggio = function (nick, data) {
                     if (nick && data) {
                         this.connettiWS();
