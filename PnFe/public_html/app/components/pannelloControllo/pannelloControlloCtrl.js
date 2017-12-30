@@ -150,6 +150,7 @@
                         $scope.notificationEngine.richiestaStampaInEntrata(nickDestinatario,'rifiuta');  
                     };
                     $scope.inviaRichiestaStampa = function (pdsSelezionato) {
+                        $scope.alertRSE=true;
                         $scope.notificationEngine.inviaRichiestaStampa(pdsSelezionato);
                     };
                     $scope.calcolaPercorso = function(pdsSelezionato,tipoTrasporto){

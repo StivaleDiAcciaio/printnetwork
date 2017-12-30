@@ -75,9 +75,12 @@
       "BTN":{
           "RICHIEDI_STMP":"richiedi stampa",
           "CALCOLA_PERCORSO":"calcola percorso"
+      },
+      "ALERT":{
+            "OK":"OK",
+            "RICHIESTA_STAMPA_INVIATA":"Richiesta stampa inviata. tieni d'occhio la busta in alto delle notifiche"
       }
     },
-    
     "ERR_GENERICO_MSG":"errore imprevisto",
     "BOX_CAPTCHA_NON_TROVATO":"captcha non caricato!",
     "SERVER_COD_0":"operazione completata",

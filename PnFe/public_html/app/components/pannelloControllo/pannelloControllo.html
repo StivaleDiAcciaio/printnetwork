@@ -187,7 +187,11 @@
        <div>
             <rzslider rz-slider-model="slider.raggioCerchio" rz-slider-options="slider.options"></rzslider>
        </div>
-        <div id="wrapperMappaPC">             
+        <div id="wrapperMappaPC">       
+            <div ng-show="alertRSE" class="col-xs-offset-3 col-xs-6 col-xs-offset-3 alert alert-info alertRSE">
+              <button type="button" ng-click="alertRSE=!alertRSE" class="close"><span aria-hidden="true">×</span></button>
+              <strong>{{"PC.ALERT.OK"| translate}}</strong> {{"PC.ALERT.RICHIESTA_STAMPA_INVIATA"| translate}}
+            </div>
             <ng-map id="mappaPannelloControllo" class="mappaPannelloControllo"
                     zoom="{{zoomCalcolato}}" 
                     default-style="false" 

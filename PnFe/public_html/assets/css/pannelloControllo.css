@@ -306,3 +306,6 @@ span.close{
 .evidenzia{
     color:wheat;
 }
+.alertRSE{
+    position:absolute;top:30%;z-index:1;
+}
