@@ -72,6 +72,14 @@
                     };
                     $scope.invioMessaggio = function(nickDestinatario,messaggioDaInviare){
                         $scope.notificationEngine.chatUtente(nickDestinatario, messaggioDaInviare);
+                        if(messaggioDaInviare===COSTANTI.STATO_RICHIESTE_STAMPA.CHIUSA){
+                          for (var x = 0; x < $scope.listaRichiesteStampaUscita.length; x++){
+                            if($scope.listaRichiesteStampaUscita[x].destinatario.nick === nickDestinatario){
+                                $scope.listaRichiesteStampaUscita.splice(x, 1);
+                                break;
+                            }
+                          } 
+                        }
                     };
                     $scope.apriChat = function (contatti) {
                         if(contatti.stato === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE || contatti.stato === COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA){

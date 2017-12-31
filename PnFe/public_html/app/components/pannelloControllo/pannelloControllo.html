@@ -45,8 +45,8 @@
                     <li ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita |filter:{stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA} track by $index">
                         <button class="btn btn-link" href="#pannelloControllo">{{richiesteStampaEffettuate.destinatario.nick}}</button>
                         <stelle-feedback feedback="richiesteStampaEffettuate.destinatario.feedback"></stelle-feedback>
-                        <button class="btn btn-link subMenuBtnAuto" href="#pannelloControllo"><img src="assets/img/auto.svg"></button>
-                        <button class="btn btn-link subMenuBtnPiede" href="#pannelloControllo"><img src="assets/img/piede.svg"></button>
+                        <button class="btn btn-link subMenuBtnAuto" ng-click="calcolaPercorso(risposte.destinatario,'DRIVING')" href="javascript:void(0)"><img src="assets/img/auto.svg"></button>
+                        <button class="btn btn-link subMenuBtnPiede" ng-click="calcolaPercorso(risposte.destinatario,'WALKING')" href="javascript:void(0)"><img src="assets/img/piede.svg"></button>
                     </li>
                 </ul>
                 <!-- /Submenu Richieste-->
@@ -62,8 +62,8 @@
                       </button> 
                       <i ng-if="checkMessaggiUtenteNonLetti(risposte.destinatario.nick)" class="glyphicon glyphicon-envelope"></i>
                       <stelle-feedback feedback="risposte.destinatario.feedback"></stelle-feedback>
-                      <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnAuto" href="#pannelloControllo"><img src="assets/img/auto.svg"></button>
-                      <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnPiede" href="#pannelloControllo"><img src="assets/img/piede.svg"></button>
+                      <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnAuto" ng-click="calcolaPercorso(risposte.destinatario,'DRIVING')" href="javascript:void(0)"><img src="assets/img/auto.svg"></button>
+                      <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnPiede" ng-click="calcolaPercorso(risposte.destinatario,'WALKING')" href="javascript:void(0)"><img src="assets/img/piede.svg"></button>
                       <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA" class="btn btn-link subMenuBtnAccetta"><i class="glyphicon glyphicon-ok"></i></button>                     
                   </li>
                 </ul>
@@ -133,8 +133,8 @@
                     <li ng-repeat="richiesteStampaEffettuate in listaRichiesteStampaUscita |filter:{stato:COSTANTI.STATO_RICHIESTE_STAMPA.INVIATA} track by $index">
                         <button class="btn btn-link" href="#pannelloControllo">{{richiesteStampaEffettuate.destinatario.nick}}</button>
                         <stelle-feedback feedback="richiesteStampaEffettuate.destinatario.feedback"></stelle-feedback>
-                        <button class="btn btn-link subMenuBtnAuto" href="#pannelloControllo"><img src="assets/img/auto.svg"></button>
-                        <button class="btn btn-link subMenuBtnPiede" href="#pannelloControllo"><img src="assets/img/piede.svg"></button>
+                        <button class="btn btn-link subMenuBtnAuto" ng-click="calcolaPercorso(richiesteStampaEffettuate.destinatario,'DRIVING')" href="javascript:void(0)"><img src="assets/img/auto.svg"></button>
+                        <button class="btn btn-link subMenuBtnPiede" ng-click="calcolaPercorso(richiesteStampaEffettuate.destinatario,'WALKING')" href="javascript:void(0)"><img src="assets/img/piede.svg"></button>
                     </li>
                 </ul>
                 <!-- /Submenu Richieste-->
@@ -152,8 +152,8 @@
                             <i class="glyphicon glyphicon-envelope"></i>
                         </button>
                         <stelle-feedback feedback="risposte.destinatario.feedback"></stelle-feedback>
-                        <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnAuto" href="#pannelloControllo"><img src="assets/img/auto.svg"></button>
-                        <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnPiede" href="#pannelloControllo"><img src="assets/img/piede.svg"></button>
+                        <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnAuto" ng-click="calcolaPercorso(risposte.destinatario,'DRIVING')" href="javascript:void(0)"><img src="assets/img/auto.svg"></button>
+                        <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE" class="btn btn-link subMenuBtnPiede" ng-click="calcolaPercorso(risposte.destinatario,'WALKING')" href="javascript:void(0)"><img src="assets/img/piede.svg"></button>
                         <button ng-if="risposte.stato===COSTANTI.STATO_RICHIESTE_STAMPA.ACCETTATA" class="btn btn-link subMenuBtnAccetta"><i class="glyphicon glyphicon-ok"></i></button>
                   </li>
                 </ul>
@@ -245,8 +245,8 @@
                 </div>
                 <div class="col-md-6 col-xs-12 wrappBtnBoxInfoPds" ng-class="pdsSelezionato.nick===getUtenteLoggato().nick?'hide':''">
                     <button class="btn btn-link" ng-click="inviaRichiestaStampa(pdsSelezionato)" title="invia richiesta stampa"><i class="glyphicon glyphicon-envelope"></i></button> 
-                    <button class="btn btn-link subMenuBtnAuto" ng-click="calcolaPercorso(pdsSelezionato,'DRIVING')" href="#pannelloControllo" title="calcola percorso in auto"><img src="assets/img/auto.svg"></button>
-                    <button class="btn btn-link subMenuBtnPiede" ng-click="calcolaPercorso(pdsSelezionato,'WALKING')" href="#pannelloControllo" title="calcola percorso a piedi"><img src="assets/img/piede.svg"></button>
+                    <button class="btn btn-link subMenuBtnAuto" ng-click="calcolaPercorso(pdsSelezionato,'DRIVING')" href="javascript:void(0)" title="calcola percorso in auto"><img src="assets/img/auto.svg"></button>
+                    <button class="btn btn-link subMenuBtnPiede" ng-click="calcolaPercorso(pdsSelezionato,'WALKING')" href="javascript:void(0)" title="calcola percorso a piedi"><img src="assets/img/piede.svg"></button>
                 </div>
             </div>
             <!-- Box in alto contenente gli altri utenti Pds collegati allo stesso indirizzo -->

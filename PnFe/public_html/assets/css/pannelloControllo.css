@@ -273,6 +273,9 @@ div#wrapperMappaPC{
     text-shadow: 2px 0 #000000;
     font-size: 20px;
 }
+div.wrapperInfoPartenza {
+    bottom:150px;
+}
 div.wrapperInfoPartenza div{
     text-align: center;
 }

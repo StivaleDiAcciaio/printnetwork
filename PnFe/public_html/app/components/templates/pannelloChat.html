@@ -14,7 +14,8 @@
     <div class="input-group">
       <input type="text" ng-model="msgDaInviare" class="form-control" placeholder="scrivi qui">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button" ng-click="invioMessaggio()">invia</button>
+        <button class="btn btn-primary" type="button" ng-click="invioMessaggio('stampa_contrattazione')">invia</button>
       </span>
     </div><!-- /input-group -->
+    <div class="input-group" style="margin: 0 auto;"><button class=" btn btn-warning" ng-click="invioMessaggio('stampa_chiusa')">chiudi contrattazione</button></div>
 </div>

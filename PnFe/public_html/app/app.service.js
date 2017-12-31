@@ -157,7 +157,8 @@
                                 }                                
                             }
                         }else if(msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CONTRATTAZIONE ||
-                                 msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA
+                                 msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.ANNULLATA ||
+                                 msgUtente === COSTANTI.STATO_RICHIESTE_STAMPA.CHIUSA
                                 ){
                             //In entrata una contrattazione (Si tratta di una Risposta ad una mia richiesta,
                             //                                  destinatario ha accettato una mia richiesta)
@@ -188,6 +189,17 @@
                                        break;
                                    }
                                }
+                            }
+                            //Contrattazione CHIUSA
+                            if (msgUtente ===COSTANTI.STATO_RICHIESTE_STAMPA.CHIUSA){
+                                for (var x = 0; x < listaRichiesteStampaOUT.length; x++){
+                                   if(listaRichiesteStampaOUT[x].destinatario.nick === mittente){
+                                       listaRichiesteStampaOUT.splice(x, 1);
+                                       //non e' un messaggio da mostrare a console ma una CHIUSURA di richiesta di stampa 
+                                       esito = false;
+                                       break;
+                                   }
+                               }                              
                             }
                         }else{
                             // per qualunque altro messaggio..
