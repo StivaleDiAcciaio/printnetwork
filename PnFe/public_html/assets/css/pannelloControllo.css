@@ -311,4 +311,28 @@ span.close{
 }
 .alertRSE{
     position:absolute;top:30%;z-index:1;
+    box-shadow: 10px 10px 5px #888888;
+}
+.alertRSE.ng-hide-add {
+    transform: rotateZ(0);
+    transform-origin: right;
+    transition: all 0.5s ease-in-out;
+}
+.alertRSE.ng-hide-add.ng-hide-add-active {
+    transform: rotateZ(-135deg);
+}
+.alertRSE.ng-hide-remove {
+    transform: rotateY(90deg);
+    transform-origin: left;
+    transition: all 0.5s ease;
+}
+.alertRSE.ng-hide-remove.ng-hide-remove-active {
+    transform: rotateY(0);
+}
+
+.colorRed{
+  background:red !important;
+}
+.margineIconaModalConfirm{
+  padding-top:17px;
 }

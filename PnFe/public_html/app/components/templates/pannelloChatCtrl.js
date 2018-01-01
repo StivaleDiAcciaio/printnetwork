@@ -2,8 +2,33 @@
 (function () {
     'use strict';
     angular.module('printNetworkApp').controller('pannelloChatCtrl',
-            ['$scope','CONST',
-                function ($scope,COSTANTI) {
+            ['$scope','CONST','$uibModal',
+                function ($scope,COSTANTI,$uibModal) {
+                    
+                    $scope.openConfirmModal = function (size) {
+                        var modalConfirmInstance = $uibModal.open({
+                            animation: true,
+                            templateUrl: 'app/components/commonModal/confirm.html',
+                            controller: function ($scope, $uibModalInstance) {
+                                $scope.cancel = function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+                                $scope.ok = function () {
+                                    $uibModalInstance.close('ok');
+                                };
+                            },
+                            size: size
+                        });
+                        modalConfirmInstance.result.then(function (scelta) {
+                           if(scelta==='ok'){
+                            $scope.inviaMessaggioFn({nickDestinatario:$scope.getDestinatarioNick(), msgDaInviare:COSTANTI.STATO_RICHIESTE_STAMPA.CHIUSA});
+                            $scope.togglePannelloChat();                               
+                           }
+                        }, function () {
+                            //openConfirmModal chiusa
+                        });
+                    };
+                    
                     $scope.getDestinatarioNick = function(){
                         if($scope.destinatario && $scope.destinatario.nick){
                             return $scope.destinatario.nick;
@@ -17,8 +42,7 @@
                             $scope.listaMessaggiUtente.push({mittente:'io',msg:'io: '+$scope.msgDaInviare,istante:$scope.getIstante()});
                             $scope.msgDaInviare='';                            
                         }else if(tipoMessaggio===COSTANTI.STATO_RICHIESTE_STAMPA.CHIUSA){
-                            $scope.inviaMessaggioFn({nickDestinatario:$scope.getDestinatarioNick(), msgDaInviare:COSTANTI.STATO_RICHIESTE_STAMPA.CHIUSA});
-                            $scope.togglePannelloChat();
+                          $scope.openConfirmModal();                           
                         }
                     };
                     
