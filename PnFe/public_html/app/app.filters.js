@@ -40,4 +40,23 @@ angular.module('printNetworkApp')
         }
         return dominioFiltrato;
     };
-});
+}).filter('filtroChat', function () {
+        return function (listaMsgUtente, nickDestinatario) {
+            if (listaMsgUtente === null || listaMsgUtente.length === 0) {
+                return [];
+            } else {
+                var messaggiFiltrati = [];
+                //filtro i messaggi di un determinato utente
+                for (var i = 0; i < listaMsgUtente.length; i++) {
+                    //..tutti quei messaggi con mittente uguale al nick del destinatario in input
+                    //oppure quelli con mittente io ma con nickDestinatario il destinatario in input
+                    if(listaMsgUtente[i].mittente===nickDestinatario ||
+                       (listaMsgUtente[i].mittente==='io' && listaMsgUtente[i].nickDestinatario===nickDestinatario)
+                      ){
+                     messaggiFiltrati.push(listaMsgUtente[i]);   
+                    }  
+                }
+            }
+            return messaggiFiltrati;
+        };
+    });
