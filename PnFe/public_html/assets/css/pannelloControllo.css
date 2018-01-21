@@ -180,7 +180,7 @@ ul.listaVociDesktop li.active a{
    color:#d0d6c8; 
 }
 .infoPDS button{
-    float: right;
+    /*float: right;*/
     margin:2px;
 }
 .infoMorePDS{

@@ -224,7 +224,7 @@
                  class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoPDS wrapperInfoPartenza"
                  ng-class="infoWindowsPartenza?'boxInfoPdsActive':'boxInfoPdsNoActive'">
                 <div class="col-xs-12">
-                    <span class="label">Partenza: {{geoPartenza}}</span>
+                    <span class="label" style="white-space:normal;">Partenza: {{geoPartenza}}</span>
                     <span class="close" type="button" ng-click="infoWindowsPartenza=false">×</span>
                 </div>    
             </div>            
@@ -243,17 +243,17 @@
                     <span class="label">feedback:</span>
                     <stelle-feedback feedback="pdsSelezionato.feedback"></stelle-feedback>
                 </div>
-                <div class="col-md-6 col-xs-12 wrappBtnBoxInfoPds" ng-class="pdsSelezionato.nick===getUtenteLoggato().nick?'hide':''">
-                    <button class="btn btn-link" ng-click="inviaRichiestaStampa(pdsSelezionato)" title="invia richiesta stampa"><i class="glyphicon glyphicon-envelope"></i></button> 
-                    <button class="btn btn-link subMenuBtnAuto" ng-click="calcolaPercorso(pdsSelezionato,'DRIVING')" href="javascript:void(0)" title="calcola percorso in auto"><img src="assets/img/auto.svg"></button>
-                    <button class="btn btn-link subMenuBtnPiede" ng-click="calcolaPercorso(pdsSelezionato,'WALKING')" href="javascript:void(0)" title="calcola percorso a piedi"><img src="assets/img/piede.svg"></button>
+                <div class="col-md-offset-3 col-md-3 col-xs-12" ng-class="pdsSelezionato.nick===getUtenteLoggato().nick?'hide':''">
+                    <button class="btn btn-link" style="float:left;" ng-click="inviaRichiestaStampa(pdsSelezionato)" title="invia richiesta stampa"><i class="glyphicon glyphicon-envelope"></i></button> 
+                    <button class="btn btn-link subMenuBtnAuto" style="float:left;" ng-click="calcolaPercorso(pdsSelezionato,'DRIVING')" href="javascript:void(0)" title="calcola percorso in auto"><img src="assets/img/auto.svg"></button>
+                    <button class="btn btn-link subMenuBtnPiede" style="float:left;" ng-click="calcolaPercorso(pdsSelezionato,'WALKING')" href="javascript:void(0)" title="calcola percorso a piedi"><img src="assets/img/piede.svg"></button>
                 </div>
             </div>
             <!-- Box in alto contenente gli altri utenti Pds collegati allo stesso indirizzo -->
             <div ng-show="pdsSelezionato && pdsSelezionato.utentiPDSstessoIndirizzo" class="col-md-offset-2 col-md-8 col-md-offset-2 col-xs-12 row infoMorePDS" ng-class="pdsSelezionato && pdsSelezionato.utentiPDSstessoIndirizzo?'boxInfoPdsActive':'boxInfoPdsNoActive'">
                 <div ng-repeat="altroUtPds in pdsSelezionato.utentiPDSstessoIndirizzo track by $index">
-                    <div class="col-xs-8"><a ng-click="altroUtentePDSonClick(altroUtPds,pdsSelezionato)" class="label">{{altroUtPds.nick===getUtenteLoggato().nick?'(IO)':altroUtPds.nick}}</a></div>
-                    <div class="col-xs-4">
+                    <div class="col-md-8 col-xs-6"><a ng-click="altroUtentePDSonClick(altroUtPds,pdsSelezionato)" class="label">{{altroUtPds.nick===getUtenteLoggato().nick?'(IO)':altroUtPds.nick}}</a></div>
+                    <div class="col-md-4 col-xs-6">
                          <stelle-feedback feedback="altroUtPds.feedback"></stelle-feedback>
                     </div>
                 </div>   
