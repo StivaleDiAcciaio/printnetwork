@@ -20,7 +20,7 @@
                         $scope.mainAggiungiFormato2D(COSTANTI.DOMINIO_FORMATO_STAMPA_2D.FORMATO_A4);
                     };
                     $scope.resetFormLogin = function () {
-                        localStorage.removeItem(COSTANTI.RICORDAMI);
+                        sessionStorage.removeItem(COSTANTI.RICORDAMI);
                         $scope.formLoginData = null;
                         $scope.resetMessaggioUtente();
                     };

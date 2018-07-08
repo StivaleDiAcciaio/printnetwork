@@ -6,23 +6,23 @@
             var ServiziRest = function () {
 
                 this.autenticazione = function (utente) {
-                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.LOGIN, utente, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.LOGIN, utente, sessionStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 };
                 this.trovaPDS = function (paramRicercaPDS) {
-                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.TROVA_PDS, paramRicercaPDS, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.TROVA_PDS, paramRicercaPDS, sessionStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 };
                 this.registrazione = function (utente) {
-                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.REGISTRAZIONE, utente, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.REGISTRAZIONE, utente, sessionStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 };
                 this.stampa2D = function (data) {
-                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.STAMPA_2D, data, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.STAMPA_2D, data, sessionStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 };
 
                 this.geoCodificaIndirizzo = function (indirizzo) {
                     return this.get(COSTANTI.ENDPOINT.GOOGLE_GEOCOD + indirizzo + '&key=' + COSTANTI.KEY_GEOCOD);
                 };
                 this.infonick = function (nick) {
-                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.INFO_NICK, nick, localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                    return this.post('https://' + $location.host() + "/" + COSTANTI.ENDPOINT.INFO_NICK, nick, sessionStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                 };
 
                 this.post = function (url, data, token, config) {
@@ -238,9 +238,9 @@
                  */
                 this.connettiWS = function () {
                     if (!dataStream) {
-                        utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
+                        utl = JSON.parse(sessionStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
                         protocollo.push(utl.nick);
-                        protocollo.push(localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
+                        protocollo.push(sessionStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN));
                         // Apro connessione con il websocket in SSL
                         // (gestire i certificati self-signed)
                         dataStream = $websocket('wss://' + $location.host() + "/" + COSTANTI.ENDPOINT.NOTIFICHE_WSOCKET, protocollo);

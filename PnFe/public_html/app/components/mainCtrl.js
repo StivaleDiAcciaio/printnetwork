@@ -51,35 +51,35 @@
                         $scope.messaggio = null;
                     };
                     $scope.logout = function () {
-                        localStorage.removeItem(COSTANTI.LOCAL_STORAGE.TOKEN);
-                        localStorage.removeItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO);
+                        sessionStorage.removeItem(COSTANTI.LOCAL_STORAGE.TOKEN);
+                        sessionStorage.removeItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO);
                         $scope.notificationEngine.chiudiWs();
                     };
                     $scope.checkToken = function () {
-                        return localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN) != null;
+                        return sessionStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN) != null;
                     };
                     $scope.getUtenteLoggato = function () {
-                        var utl = JSON.parse(localStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
+                        var utl = JSON.parse(sessionStorage.getItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO));
                         return utl != null ? utl : "";
                     };
                     $scope.setUtenteLoggato = function (utenteLoggato) {
-                        localStorage.setItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO, JSON.stringify(utenteLoggato));
+                        sessionStorage.setItem(COSTANTI.LOCAL_STORAGE.UTENTE_LOGGATO, JSON.stringify(utenteLoggato));
                     };
                     $scope.getToken = function () {
-                        return localStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN);
+                        return sessionStorage.getItem(COSTANTI.LOCAL_STORAGE.TOKEN);
                     };
                     $scope.setToken = function (token) {
-                        localStorage.setItem(COSTANTI.LOCAL_STORAGE.TOKEN, token);
+                        sessionStorage.setItem(COSTANTI.LOCAL_STORAGE.TOKEN, token);
                     };
                     $scope.setRicordami = function (email, pwd) {
                         var ricordaAccesso = {};
                         ricordaAccesso.email = email;
                         ricordaAccesso.pwd = pwd;
-                        localStorage.setItem(COSTANTI.RICORDAMI, JSON.stringify(ricordaAccesso));
+                        sessionStorage.setItem(COSTANTI.RICORDAMI, JSON.stringify(ricordaAccesso));
                     };
                     $scope.getRicordami = function () {
-                        if (localStorage.getItem(COSTANTI.RICORDAMI)) {
-                            return JSON.parse(localStorage.getItem(COSTANTI.RICORDAMI));
+                        if (sessionStorage.getItem(COSTANTI.RICORDAMI)) {
+                            return JSON.parse(sessionStorage.getItem(COSTANTI.RICORDAMI));
                         }
                         return null;
                     };
